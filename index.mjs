@@ -7,8 +7,11 @@ import mongoose from 'mongoose'
 /* this is all tt is needed to create connection to our db */
 mongoose.connect("mongodb://localhost:27017/zoom_dev")
 /* 
-1. unlike sequelize, there is no ./models/index.js to create and export db  
+1. unlike sequelize, no need ./models/index.js to create and export db  
 2. just need to import models here. mongoDB connx alr made above. somehow models know which db in mongoDB to update
+3. from mongoose docs: 
+"Every model has an associated connection. When you use mongoose.model(), your model will use the default mongoose connection."
+the default connection is on line 8: mongoose.connect("mongodb://localhost:27017/zoom_dev")
 */
 import User from './models/User.mjs'
 
