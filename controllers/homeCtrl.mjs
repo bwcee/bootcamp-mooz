@@ -2,7 +2,6 @@ import BaseController from "./baseCtrl.mjs";
 import { resolve } from "path";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-const { SALT } = process.env;
 
 export default class HomeController extends BaseController {
   constructor(model, salt) {

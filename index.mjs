@@ -4,11 +4,12 @@ import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
 import webpackConfig from "./webpack_conf/webpack.dev.js";
 import mongoose from "mongoose";
-/* install dotenv here so no need to install in any other files...hopefully... */
+// import verifyToken middleware
+import verifyToken from "./middlewares/auth.mjs"
+/* get SALT here and pass it as argument to controllers below */
 import dotenv from 'dotenv'
 dotenv.config()
 const { SALT } = process.env;
-console.log("This is SALT", SALT)
 /* 
 1. this is all tt is needed to create connection to our db 
 2. the funky syntax in console.log/err just to print out in color so easier to see
@@ -22,21 +23,23 @@ mongoose
     console.err("\x1b[41m%s\x1b[0m", "error connecting to mongodb!!");
     console.err("\x1b[41m%s\x1b[0m", err);
   });
-// mongoose.connection.on(console.log())
 /* 
 1. unlike sequelize, no need ./models/index.js to create and export db  
-2. just need to import models here. mongoDB connx alr made above. somehow models know which db in mongoDB to update
-3. from mongoose docs: 
-"Every model has an associated connection. When you use mongoose.model(), your model will use the default mongoose connection."
+2. just need to import models here
+3. from mongoose docs: "Every model has an associated connection. When you use mongoose.model(), your model will use the default mongoose connection."
 the default connection is on line 8: mongoose.connect("mongodb://localhost:27017/zoom_dev")
 */
 import User from "./models/User.mjs";
+import Tclass from "./models/Tclass.mjs";
 
 /* import routes & controllers */
-import homeRoutes from "./routes/home.mjs";
+import homeRoutes from "./routes/homeRoutes.mjs";
 import HomeController from "./controllers/homeCtrl.mjs";
-/* initiate/create instance of controllers & pass in models */
+import tclassRoutes from "./routes/tclassRoutes.mjs";
+import TclassController from "./controllers/tclassCtrl.mjs";
+/* initiate/create instance of controllers & pass in models and SALT so can do jwt verification*/
 const homeControl = new HomeController(User, SALT);
+const tclassControl = new TclassController(Tclass, SALT);
 
 /* initialise express instance */
 const app = express();
@@ -71,6 +74,9 @@ if (env === "development") {
 
 /* make use of defined routes */
 app.use("/", homeRoutes(homeControl));
+/* middleware placed here so all routes below will haf to be verified first*/
+app.use(verifyToken())
+app.use("/class", tclassRoutes(tclassControl));
 
 /* set app to listen on the given port */
 const PORT = process.env.PORT || 3008;

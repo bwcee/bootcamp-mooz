@@ -6,20 +6,21 @@ const { Schema, model } = mongoose;
 --------------------
 schema description
 --------------------
-class - name of class
+className - name of class
 members - learners registered/spsed to be attending this class. array spsed to contain learner_ids
 attendance - array of objects. ea obj is attendance for a particular day. hence obj made up of date & attednded array. array spsed to contain learner_ids    
 */
 const classSchema = new Schema(
   {
-    class: { type: String, trim: true },
+    className: { type: String, trim: true },
     members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     attendance: [{ date: Date, attended: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}] }],
   },
   { timestamps: true }
 );
 
-export default model("Class", classSchema);
+/* named model Tclass rather than Class since Class is a special keyword in javascript */
+export default model("Tclass", classSchema);
 
 
 /*

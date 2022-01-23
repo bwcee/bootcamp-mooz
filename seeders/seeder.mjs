@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import User from "../models/User.mjs";
-import Class from "../models/Class.mjs";
+import Tclass from "../models/Tclass.mjs";
 import bcrypt from "bcrypt";
 
 const hash = bcrypt.hashSync("123", 8);
@@ -39,11 +39,11 @@ console.log("These are learners in the db", learners);
 // extract just _id to save into classes collection members field
 const classMembers = learners.map((el) => el._id);
 console.log("This is classMembers", classMembers);
-await Class.deleteMany({});
-const newClass = new Class({ class: "class1", members: classMembers });
+await Tclass.deleteMany({});
+const newClass = new Tclass({ className: "class1", members: classMembers });
 await newClass.save();
-const currClass = await Class.findOne({ class: "class1" })
-  .populate({ path: "members", select: "name -_id" }) //populate members field w name field and exclude _id field 
+const currClass = await Tclass.findOne({ className: "class1" })
+  .populate({ path: "members", select: "name -_id" }) //populate members field w name field and exclude _id field
   .exec();
 console.log("This is current class", currClass);
 console.log("This is current class members", currClass.members);
