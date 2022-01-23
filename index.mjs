@@ -5,10 +5,10 @@ import webpackHotMiddleware from "webpack-hot-middleware";
 import webpackConfig from "./webpack_conf/webpack.dev.js";
 import mongoose from "mongoose";
 // import verifyToken middleware
-import verifyToken from "./middlewares/auth.mjs"
+import verifyToken from "./middlewares/auth.mjs";
 /* get SALT here and pass it as argument to controllers below */
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 const { SALT } = process.env;
 /* 
 1. this is all tt is needed to create connection to our db 
@@ -75,7 +75,7 @@ if (env === "development") {
 /* make use of defined routes */
 app.use("/", homeRoutes(homeControl));
 /* middleware placed here so all routes below will haf to be verified first*/
-app.use(verifyToken())
+app.use(verifyToken());
 app.use("/class", tclassRoutes(tclassControl));
 
 /* set app to listen on the given port */

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 
-const LogIn = ({ setLoggedIn }) => {
+const LogIn = ({ setDisplay }) => {
   const emailRef = useRef();
   const passRef = useRef();
 
@@ -26,7 +26,7 @@ const LogIn = ({ setLoggedIn }) => {
         } else {
           const token = result.data;
           localStorage.setItem("sessionToken", token);
-          setLoggedIn("logged in!");
+          setDisplay("logged in!");
         }
       });
   };
