@@ -1,12 +1,12 @@
 import BaseController from "./baseCtrl.mjs";
 import { resolve } from "path";
-// import bcrypt from "bcrypt";
-// import jwt from "jsonwebtoken";
-// const { SALT } = process.env;
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+const { SALT } = process.env;
 
 export default class HomeController extends BaseController {
-  constructor(model) {
-    super(model);
+  constructor(model, salt) {
+    super(model, salt);
   }
 
   async getStart(req, res) {
@@ -16,25 +16,11 @@ export default class HomeController extends BaseController {
       return this.errorHandler(err, res);
     }
   }
-}
 
-/* async getStart(req, res) {
-    try {
-      res.render("main");
-    } catch (err) {
-      return this.errorHandler(err, res);
-    }
-  }
-
-  async doSignIn(req, res) {
+  async doLogIn(req, res) {
     const { email, password } = req.body;
     try {
-      const user = await this.model.findOne({
-        where: {
-          email: email,
-        },
-        raw: true,
-      });
+      const user = await this.model.findOne({email});
       console.log("Sign-in query result", user);
       if (!user) {
         res.send("null");
@@ -42,9 +28,10 @@ export default class HomeController extends BaseController {
         const logInSuccess = await bcrypt.compare(password, user.password);
 
         if (logInSuccess) {
-          const payload = { id: user.id, user: user.user };
-          const token = jwt.sign(payload, SALT, { expiresIn: "6h" });
-          
+          const payload = { id: user._id, user: user.name };
+          console.log("This is SALT", this.salt)
+          const token = jwt.sign(payload, this.salt, { expiresIn: "6h" });
+          console.log("This is token",token)
           res.send(token);
         } else {
           res.send("null");
@@ -54,7 +41,9 @@ export default class HomeController extends BaseController {
       this.errorHandler(err, res);
     }
   }
+}
 
+/* 
   async doLogOut(req, res) {
     res.clearCookie("loggedIn");
     res.clearCookie("userID");

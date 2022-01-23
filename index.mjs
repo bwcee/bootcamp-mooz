@@ -4,11 +4,24 @@ import webpackDevMiddleware from "webpack-dev-middleware";
 import webpackHotMiddleware from "webpack-hot-middleware";
 import webpackConfig from "./webpack_conf/webpack.dev.js";
 import mongoose from "mongoose";
-/* this is all tt is needed to create connection to our db */
+/* install dotenv here so no need to install in any other files...hopefully... */
+import dotenv from 'dotenv'
+dotenv.config()
+const { SALT } = process.env;
+console.log("This is SALT", SALT)
+/* 
+1. this is all tt is needed to create connection to our db 
+2. the funky syntax in console.log/err just to print out in color so easier to see
+*/
 mongoose
   .connect("mongodb://localhost:27017/zoom_dev")
-  .then(() => console.log("sucessfully connected to mongodb!!"))
-  .catch((err) => console.err("error connecting to mongodb!!", err));
+  .then(() =>
+    console.log("\x1b[34m%s\x1b[0m", "sucessfully connected to mongodb!!")
+  )
+  .catch((err) => {
+    console.err("\x1b[41m%s\x1b[0m", "error connecting to mongodb!!");
+    console.err("\x1b[41m%s\x1b[0m", err);
+  });
 // mongoose.connection.on(console.log())
 /* 
 1. unlike sequelize, no need ./models/index.js to create and export db  
@@ -23,7 +36,7 @@ import User from "./models/User.mjs";
 import homeRoutes from "./routes/home.mjs";
 import HomeController from "./controllers/homeCtrl.mjs";
 /* initiate/create instance of controllers & pass in models */
-const homeControl = new HomeController(User);
+const homeControl = new HomeController(User, SALT);
 
 /* initialise express instance */
 const app = express();
