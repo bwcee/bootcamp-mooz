@@ -37,16 +37,18 @@ console.log("This is result of insertMany", users);
 const learners = await User.find({ role: "learner" }).select("name").exec();
 console.log("These are learners in the db", learners);
 // extract just _id to save into classes collection members field
-const classMembers = learners.map((el) => el._id);
-console.log("This is classMembers", classMembers);
+const learnerIds = learners.map((el) => el._id);
+console.log("This is learnerIds", learnerIds);
 await Tclass.deleteMany({});
-const newClass = new Tclass({ className: "class1", members: classMembers });
-await newClass.save();
-const currClass = await Tclass.findOne({ className: "class1" })
-  .populate({ path: "members", select: "name -_id" }) //populate members field w name field and exclude _id field
-  .exec();
-console.log("This is current class", currClass);
-console.log("This is current class members", currClass.members);
+const classOne = new Tclass({ className: "class1", members: learnerIds });
+await classOne.save();
+console.log("This is class1 before population", classOne);
+await classOne.populate({ path: "members", select: "name -_id" });
+console.log("This is class1 members after population", classOne.members);
+const classTwo = new Tclass({ className: "class2", members: learnerIds.slice(0,4) });
+await classTwo.save();
+const classThree = new Tclass({ className: "class3", members: learnerIds.slice(4,8) });
+await classThree.save();
 mongoose.connection.close();
 
 /* 
