@@ -7,6 +7,6 @@ export default class BaseController {
   errorHandler = (err, res) => {
     console.error("\x1b[41m%s\x1b[0m","Error you doofus!");
     console.error("\x1b[31m%s\x1b[0m", err)
-    res.json({error: err});
+    res.send(err);
   };
 }

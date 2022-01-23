@@ -16,6 +16,7 @@ const verifyToken = () => async (req, res, next) => {
 
     next();
   } catch (err) {
+    err.msg = "not verifed to access this page dude!!"
     return res.status(403).json({ err });
   }
 };
