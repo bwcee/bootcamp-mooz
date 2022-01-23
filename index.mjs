@@ -1,11 +1,15 @@
-import express from 'express';
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import webpackConfig from './webpack_conf/webpack.dev.js';
-import mongoose from 'mongoose'
+import express from "express";
+import webpack from "webpack";
+import webpackDevMiddleware from "webpack-dev-middleware";
+import webpackHotMiddleware from "webpack-hot-middleware";
+import webpackConfig from "./webpack_conf/webpack.dev.js";
+import mongoose from "mongoose";
 /* this is all tt is needed to create connection to our db */
-mongoose.connect("mongodb://localhost:27017/zoom_dev")
+mongoose
+  .connect("mongodb://localhost:27017/zoom_dev")
+  .then(() => console.log("sucessfully connected to mongodb!!"))
+  .catch((err) => console.err("error connecting to mongodb!!", err));
+// mongoose.connection.on(console.log())
 /* 
 1. unlike sequelize, no need ./models/index.js to create and export db  
 2. just need to import models here. mongoDB connx alr made above. somehow models know which db in mongoDB to update
@@ -13,8 +17,7 @@ mongoose.connect("mongodb://localhost:27017/zoom_dev")
 "Every model has an associated connection. When you use mongoose.model(), your model will use the default mongoose connection."
 the default connection is on line 8: mongoose.connect("mongodb://localhost:27017/zoom_dev")
 */
-import User from './models/User.mjs'
-
+import User from "./models/User.mjs";
 
 /* import routes & controllers */
 import homeRoutes from "./routes/home.mjs";
@@ -30,23 +33,27 @@ app.use(express.urlencoded({ extended: false })); // handle req.body from form r
 app.use(express.json()); // handle json from axios post requests
 
 /* expose files stored in e various folders */
-app.use(express.static('public'));
-app.use(express.static('dist'));
+app.use(express.static("public"));
+app.use(express.static("dist"));
 
 /* set up webpack in dev env - taken from ra, dun know wat's going on... */
-const env = process.env.NODE_ENV || 'development';
-if (env === 'development') {
+const env = process.env.NODE_ENV || "development";
+if (env === "development") {
   const compiler = webpack(webpackConfig);
-  app.use(webpackDevMiddleware(compiler, {
-    publicPath: webpackConfig.output.publicPath,
-    // html only
-    writeToDisk: (filePath) => /\.html$/.test(filePath),
-  }));
-  app.use(webpackHotMiddleware(compiler, {
-    log: false,
-    path: '/__webpack_hmr',
-    heartbeat: 10 * 1000,
-  }));
+  app.use(
+    webpackDevMiddleware(compiler, {
+      publicPath: webpackConfig.output.publicPath,
+      // html only
+      writeToDisk: (filePath) => /\.html$/.test(filePath),
+    })
+  );
+  app.use(
+    webpackHotMiddleware(compiler, {
+      log: false,
+      path: "/__webpack_hmr",
+      heartbeat: 10 * 1000,
+    })
+  );
 }
 
 /* make use of defined routes */
