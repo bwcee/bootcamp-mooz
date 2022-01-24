@@ -1,23 +1,23 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import LogoutBtn from "./logoutBtn.jsx";
 
 const ChooseClass = ({ setDisplay }) => {
-  const emailRef = useRef();
-  const passRef = useRef();
+  const token = localStorage.getItem("sessionToken");
+  const auth = { headers: { Authorization: `Bearer ${token}` } };
 
-  const submitLogout = () => {
-    try {
-      localStorage.removeItem("sessionToken");
-      window.location = "/";
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // try {
+  //   axios.get("/class", auth).then((result) => {
+  //     console.log(result.data);
+  //     result.data ? setDisplay("chose class!") : setDisplay();
+  //   });
+  // } catch (err) {
+  //   console.log(err);
+  // }
+
+  const displayClasses = () => {};
 
   const submitClass = () => {
-    const token = localStorage.getItem("sessionToken");
-    const auth = { headers: { Authorization: `Bearer ${token}` } };
-
     try {
       axios.get("/class", auth).then((result) => {
         console.log(result.data);
@@ -34,9 +34,7 @@ const ChooseClass = ({ setDisplay }) => {
       <button className="btn btn-primary btn-sm" onClick={submitClass}>
         Chose a class
       </button>
-      <button className="btn btn-danger btn-sm" onClick={submitLogout}>
-        Log me out!
-      </button>
+      <LogoutBtn/>
     </div>
   );
 };

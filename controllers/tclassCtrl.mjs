@@ -1,6 +1,4 @@
 import BaseController from "./baseCtrl.mjs";
-import { resolve } from "path";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export default class TclassController extends BaseController {
@@ -9,6 +7,7 @@ export default class TclassController extends BaseController {
   }
 
   async getClass(req, res) {
+    /* the 2 lines below are to extract learner _id & name from token */
     const userToken = req.header("Authorization").replace("Bearer ", "");
     const payload = jwt.verify(userToken, this.salt);
     console.log("This is payload obtained from choosing class", payload);

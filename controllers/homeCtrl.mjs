@@ -20,7 +20,6 @@ export default class HomeController extends BaseController {
     const { email, password } = req.body;
     try {
       const user = await this.model.findOne({ email });
-      console.log("Sign-in query result", user);
       if (!user) {
         res.send("null");
       } else {
@@ -28,9 +27,7 @@ export default class HomeController extends BaseController {
 
         if (logInSuccess) {
           const payload = { _id: user._id, name: user.name };
-          console.log("This is SALT", this.salt);
           const token = jwt.sign(payload, this.salt, { expiresIn: "6h" });
-          console.log("This is token", token);
           res.send(token);
         } else {
           res.send("null");
@@ -42,11 +39,4 @@ export default class HomeController extends BaseController {
   }
 }
 
-/* 
-  async doLogOut(req, res) {
-    res.clearCookie("loggedIn");
-    res.clearCookie("userID");
-    res.send(
-      "this doesn't work, but think need to end w a res.send to end transaction?"
-    );
-  } */
+/* there is no doLogOut required since logging out is simply removing token from local storage. so logging out done completely in front end at src/login.jsx wo any need for back end work here */
