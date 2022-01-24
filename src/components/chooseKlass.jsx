@@ -23,7 +23,14 @@ const ChooseKlass = () => {
     displayKlasses = allKlasses.map((el, index) => {
       return (
         <li key={index}>
-          <button className="btn btn-primary btn-sm">{el.klassName}</button>
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={() => {
+              axios.get(`/class/${el._id}`, auth);
+            }}
+          >
+            {el.klassName}
+          </button>
         </li>
       );
     });
