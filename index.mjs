@@ -30,16 +30,16 @@ mongoose
 the default connection is on line 8: mongoose.connect("mongodb://localhost:27017/zoom_dev")
 */
 import User from "./models/User.mjs";
-import Tclass from "./models/Tclass.mjs";
+import Klass from "./models/Klass.mjs";
 
 /* import routes & controllers */
 import homeRoutes from "./routes/homeRoutes.mjs";
 import HomeController from "./controllers/homeCtrl.mjs";
-import tclassRoutes from "./routes/tclassRoutes.mjs";
-import TclassController from "./controllers/tclassCtrl.mjs";
+import klassRoutes from "./routes/klassRoutes.mjs";
+import KlassController from "./controllers/klassCtrl.mjs";
 /* initiate/create instance of controllers & pass in models and SALT so can do jwt verification*/
 const homeControl = new HomeController(User, SALT);
-const tclassControl = new TclassController(Tclass, SALT);
+const klassControl = new KlassController(Klass, SALT);
 
 /* initialise express instance */
 const app = express();
@@ -76,7 +76,7 @@ if (env === "development") {
 app.use("/", homeRoutes(homeControl));
 /* middleware placed here so all routes below will haf to be verified first*/
 app.use(verifyToken());
-app.use("/class", tclassRoutes(tclassControl));
+app.use("/class", klassRoutes(klassControl));
 
 /* set app to listen on the given port */
 const PORT = process.env.PORT || 3008;

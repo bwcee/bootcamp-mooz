@@ -19,14 +19,14 @@ export default class HomeController extends BaseController {
   async doLogIn(req, res) {
     const { email, password } = req.body;
     try {
-      const user = await this.model.findOne({ email });
-      if (!user) {
+      const learner = await this.model.findOne({ email });
+      if (!learner) {
         res.send("null");
       } else {
-        const logInSuccess = await bcrypt.compare(password, user.password);
+        const logInSuccess = await bcrypt.compare(password, learner.password);
 
         if (logInSuccess) {
-          const payload = { _id: user._id, name: user.name };
+          const payload = { _id: learner._id, name: learner.name };
           const token = jwt.sign(payload, this.salt, { expiresIn: "6h" });
           res.send(token);
         } else {

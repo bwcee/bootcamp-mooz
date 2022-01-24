@@ -9,10 +9,6 @@ const LogIn = ({ setDisplay }) => {
     if (!emailRef.current.value || !passRef.current.value) {
       return alert("Eh fill in all fields leh!");
     }
-    /* 
-    1. create new bill entry in bills table + store bill_id in local storage 
-    2. trigger rendering of nxt part of app
-    */
     axios
       .post("/", {
         email: emailRef.current.value,

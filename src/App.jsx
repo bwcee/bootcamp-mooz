@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import LogIn from "./components/login.jsx";
-import ChooseClass from "./components/chooseClass.jsx";
+import ChooseKlass from "./components/chooseKlass.jsx";
 import Video from "./components/video.jsx";
 
 export default function App() {
@@ -13,9 +13,9 @@ export default function App() {
       {!display ? (
         <LogIn setDisplay={setDisplay} />
       ) : display == "logged in!" ? (
-        <ChooseClass setDisplay={setDisplay} />
-      ) : display == "chose class!" ? (
-        <Video/>
+        <ChooseKlass setDisplay={setDisplay} />
+      ) : display == "chose klass!" ? (
+        <Video />
       ) : (
         <LogIn setDisplay={setDisplay} />
       )}
