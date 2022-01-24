@@ -19,8 +19,10 @@ const ChooseClass = ({ setDisplay }) => {
     const auth = { headers: { Authorization: `Bearer ${token}` } };
 
     try {
-      axios.get("/class", auth).then((result) => console.log(result.data));
-      setDisplay("chose class!");
+      axios.get("/class", auth).then((result) => {
+        console.log(result.data);
+        result.data ? setDisplay("chose class!") : setDisplay();
+      });
     } catch (err) {
       console.log(err);
     }

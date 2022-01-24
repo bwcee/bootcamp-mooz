@@ -19,7 +19,7 @@ export default class HomeController extends BaseController {
   async doLogIn(req, res) {
     const { email, password } = req.body;
     try {
-      const user = await this.model.findOne({email});
+      const user = await this.model.findOne({ email });
       console.log("Sign-in query result", user);
       if (!user) {
         res.send("null");
@@ -27,10 +27,10 @@ export default class HomeController extends BaseController {
         const logInSuccess = await bcrypt.compare(password, user.password);
 
         if (logInSuccess) {
-          const payload = { id: user._id, user: user.name };
-          console.log("This is SALT", this.salt)
+          const payload = { _id: user._id, name: user.name };
+          console.log("This is SALT", this.salt);
           const token = jwt.sign(payload, this.salt, { expiresIn: "6h" });
-          console.log("This is token",token)
+          console.log("This is token", token);
           res.send(token);
         } else {
           res.send("null");

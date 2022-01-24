@@ -11,11 +11,11 @@ export default class TclassController extends BaseController {
   async getClass(req, res) {
     const userToken = req.header("Authorization").replace("Bearer ", "");
     const payload = jwt.verify(userToken, this.salt);
-    console.log("This is payload obtained from choosing class", payload)
+    console.log("This is payload obtained from choosing class", payload);
     try {
-      res.send("you got into a verified page");
+      res.send(payload);
     } catch (err) {
       return this.errorHandler(err, res);
     }
   }
-  }
+}
