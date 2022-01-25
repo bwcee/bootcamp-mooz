@@ -13,15 +13,19 @@ attendance - array of objects. ea obj is attendance for a particular day. hence 
 const klassSchema = new Schema(
   {
     klassName: { type: String, trim: true },
-    members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    attendance: [{ date: Date, attended: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}] }],
+    members: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    attendance: [
+      {
+        date: Date,
+        attended: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+      },
+    ],
   },
   { timestamps: true }
 );
 
 /* named model Klass rather than Class since Class is a special keyword in javascript */
 export default model("Klass", klassSchema);
-
 
 /*
 -------------------------------------------

@@ -10,7 +10,7 @@ const hash = bcrypt.hashSync("123", 8);
 2. placed a seed script in package.json so just need to [npm run seed] to run this file
 */
 mongoose
-  .connect("mongodb://localhost:27017/zoom_dev")
+  .connect("mongodb://127.0.0.1:27017/zoom_dev")
   .then(() => console.log("successfully connected to mongodb!!"))
   .catch((err) => console.err("error in connecting to mongodb!!", err));
 
@@ -45,9 +45,15 @@ await classOne.save();
 console.log("This is class1 before population", classOne);
 await classOne.populate({ path: "members", select: "name -_id" });
 console.log("This is class1 members after population", classOne.members);
-const classTwo = new Klass({ klassName: "class2", members: learnerIds.slice(0,4) });
+const classTwo = new Klass({
+  klassName: "class2",
+  members: learnerIds.slice(0, 4),
+});
 await classTwo.save();
-const classThree = new Klass({ klassName: "class3", members: learnerIds.slice(4,8) });
+const classThree = new Klass({
+  klassName: "class3",
+  members: learnerIds.slice(4, 8),
+});
 await classThree.save();
 mongoose.connection.close();
 

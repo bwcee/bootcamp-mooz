@@ -40,7 +40,14 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
       id: allKlasses.learnerId,
       learner: allKlasses.learnerName,
     };
+<<<<<<< HEAD
     console.log("This is learnerDetails stored in local storage", learnerDetails)
+=======
+    console.log(
+      "This is learnerDetails stored in local storage",
+      learnerDetails
+    );
+>>>>>>> changed localhost to 127.0.0.1 to enable mongoose connection. Added sockets and peer (to be continued)
     localStorage.setItem("learnerDetails", learnerDetails);
   }
 

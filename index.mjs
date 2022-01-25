@@ -15,7 +15,8 @@ const { SALT } = process.env;
 2. the funky syntax in console.log/err just to print out in color so easier to see
 */
 mongoose
-  .connect("mongodb://localhost:27017/zoom_dev")
+  // Tristan: changed "localhost" to "127.0.0.1" because this is the only way it will work on mac
+  .connect("mongodb://127.0.0.1:27017/zoom_dev")
   .then(() =>
     console.log("\x1b[34m%s\x1b[0m", "sucessfully connected to mongodb!!")
   )
@@ -43,6 +44,14 @@ const klassControl = new KlassController(Klass, SALT);
 
 /* initialise express instance */
 const app = express();
+
+/** Get a server to be used with socket.io  */
+import http from "http";
+const server = http.Server(app);
+
+/** Bring in socket.io. we pass in server to socket.io so that socket.io knows which server we are using and how to interact with it */
+import { Server, Socket } from "socket.io";
+const io = new Server(server);
 
 /* middlewares to use */
 app.use(express.urlencoded({ extended: false })); // handle req.body from form requests
@@ -78,6 +87,18 @@ app.use("/", homeRoutes(homeControl));
 app.use(verifyToken());
 app.use("/class", klassRoutes(klassControl));
 
+/** Establish socket connection */
+io.on("connection", (socket) => {
+  socket.on("join-room", (roomId, userId) => {
+    socket.join(roomId);
+    socket.broadcast.to(roomId).emit("user-connected", userId);
+    socket.on("disconnect", () => {
+      socket.broadcast.to(roomId).emit("user-disconnected", userId);
+    });
+  });
+});
+
 /* set app to listen on the given port */
 const PORT = process.env.PORT || 3008;
-app.listen(PORT);
+/** Changed to server; its the same as using app */
+server.listen(PORT);
