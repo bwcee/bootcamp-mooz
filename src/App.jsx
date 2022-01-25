@@ -6,6 +6,7 @@ import Video from "./components/video.jsx";
 
 export default function App() {
   const [display, setDisplay] = useState();
+  const [klassId, setKlassId] = useState()
 
   return (
     <div>
@@ -13,9 +14,9 @@ export default function App() {
       {!display ? (
         <LogIn setDisplay={setDisplay} />
       ) : display == "logged in!" ? (
-        <ChooseKlass setDisplay={setDisplay} />
+        <ChooseKlass setDisplay={setDisplay} setKlassId={setKlassId} />
       ) : display == "chose klass!" ? (
-        <Video />
+        <Video klassId={klassId}/>
       ) : (
         <LogIn setDisplay={setDisplay} />
       )}

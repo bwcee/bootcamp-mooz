@@ -23,7 +23,7 @@ export default class KlassController extends BaseController {
       result.klasses = learnerKlasses;
       result.learnerId = learnerId;
       result.learnerName = learnerName;
-      console.log("This is result from getting klass",result)
+      console.log("This is result from getting klass", result);
       res.send(result);
     } catch (err) {
       return this.errorHandler(err, res);

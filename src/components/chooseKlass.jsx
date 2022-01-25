@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import LogoutBtn from "./logoutBtn.jsx";
 
-const ChooseKlass = () => {
+const ChooseKlass = ({ setDisplay, setKlassId }) => {
   const token = localStorage.getItem("sessionToken");
   const auth = { headers: { Authorization: `Bearer ${token}` } };
   const [allKlasses, setAllKlasses] = useState();
@@ -14,19 +14,20 @@ const ChooseKlass = () => {
   */
   axios.get("/class", auth).then((result) => {
     if (!allKlasses) {
-      setAllKlasses(result.data.klasses);
+      setAllKlasses(result.data);
     }
   });
 
   /* need this if condition to prevent allKlasses.map frm failing when allKlasses is not yet populated with result.data.klasses */
   if (allKlasses) {
-    displayKlasses = allKlasses.map((el, index) => {
+    displayKlasses = allKlasses.klasses.map((el, index) => {
       return (
         <li key={index}>
           <button
             className="btn btn-primary btn-sm"
             onClick={() => {
-              axios.get(`/class/${el._id}`, auth);
+              setDisplay("chose klass!");
+              setKlassId(el._id);
             }}
           >
             {el.klassName}
@@ -34,6 +35,13 @@ const ChooseKlass = () => {
         </li>
       );
     });
+    /* set local storage for learner details */
+    const learnerDetails = {
+      id: allKlasses.learnerId,
+      learner: allKlasses.learnerName,
+    };
+    console.log("This is learnerDetails stored in local storage", learnerDetails)
+    localStorage.setItem("learnerDetails", learnerDetails);
   }
 
   console.log("displayKlasses", allKlasses);

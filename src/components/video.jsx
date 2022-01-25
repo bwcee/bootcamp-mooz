@@ -1,42 +1,12 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 
-const Video = ({ setDisplay }) => {
-  const emailRef = useRef();
-  const passRef = useRef();
-
-  const submitLogout = () => {
-    try {
-      localStorage.removeItem("sessionToken");
-      window.location = "/";
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const submitClass = () => {
-    const token = localStorage.getItem("sessionToken");
-    const auth = { headers: { Authorization: `Bearer ${token}` } };
-
-    try {
-      axios.get("/class", auth).then((result) => {
-        console.log(result.data);
-        result.data ? setDisplay("chose class!") : setDisplay();
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+const Video = ({ klassId }) => {
+  
+  
   return (
     <div>
-      <p>This should show video of a particular class</p>
-      <button className="btn btn-primary btn-sm" onClick={submitClass}>
-        Chose a class
-      </button>
-      <button className="btn btn-danger btn-sm" onClick={submitLogout}>
-        Log me out!
-      </button>
+      <p>This should show video of a particular class with id {klassId}</p>
     </div>
   );
 };
