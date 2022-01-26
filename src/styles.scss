@@ -23,3 +23,28 @@ video {
   height: 100%;
   object-fit: cover;
 }
+
+#headline {
+  font-size: 90px;
+  font-weight: 900;
+}
+
+#form-container {
+  border-radius: 16px;
+  background-color: white;
+  padding: 32px 40px;
+  max-width: 564px;
+}
+
+#form-title {
+  font-size: 32px;
+}
+
+.input-wrapper {
+  height: 48px;
+  border-radius: 16px;
+}
+
+#logo-container {
+  height: 128px;
+}

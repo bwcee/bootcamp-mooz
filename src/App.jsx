@@ -10,7 +10,6 @@ export default function App() {
 
   return (
     <div>
-      <h1>Ladies and Gents, presenting... Mooz!</h1>
       {!display ? (
         <LogIn setDisplay={setDisplay} />
       ) : display == "logged in!" ? (
