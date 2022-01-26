@@ -29,4 +29,37 @@ export default class KlassController extends BaseController {
       return this.errorHandler(err, res);
     }
   }
+
+  async doAttendance(req, res) {
+    const { klassId, attended } = req.body;
+    let updatedKlass;
+    try {
+      const currentKlass = await this.model.findById(klassId).exec();
+      if (!currentKlass.attendance.date) {
+        updatedKlass = await this.model.updateOne(
+          { _id: klassId },
+          {
+            attendance: {
+              date: new Date(),
+              attended: [currentKlass.attendance.attended.push(attended)],
+            },
+          }
+        );
+        return res.send(updatedKlass);
+      } else {
+        updatedKlass = await this.model.updateOne(
+          { _id: klassId },
+          {
+            attendance: {
+              date: currentKlass.attendance.date,
+              attended: [currentKlass.attendance.attended.push(attended)],
+            },
+          }
+        );
+        return res.send(updatedKlass);
+      }
+    } catch (err) {
+      return this.errorHandler(err, res);
+    }
+  }
 }
