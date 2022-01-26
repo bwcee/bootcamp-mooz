@@ -9,7 +9,7 @@ export default function App() {
   const [klassId, setKlassId] = useState();
 
   return (
-    <div>
+    <div id="app">
       {!display ? (
         <LogIn setDisplay={setDisplay} />
       ) : display == "logged in!" ? (

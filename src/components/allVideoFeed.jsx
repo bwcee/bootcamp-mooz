@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import VideoFeed from "./videoFeed.jsx";
 
 const AllVideoFeed = ({ users }) => {
-  console.log("allviasdeofee");
+  console.log("allviasdeofeed");
   const count = useRef(0);
   count.current += 1;
   console.log("users", users);
