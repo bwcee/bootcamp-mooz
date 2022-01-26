@@ -15,10 +15,7 @@ const { SALT } = process.env;
 2. the funky syntax in console.log/err just to print out in color so easier to see
 */
 mongoose
-<<<<<<< HEAD
   // Tristan: changed "localhost" to "127.0.0.1" because this is the only way it will work on mac
-=======
->>>>>>> mongoose
   .connect("mongodb://127.0.0.1:27017/zoom_dev")
   .then(() =>
     console.log("\x1b[34m%s\x1b[0m", "sucessfully connected to mongodb!!")
