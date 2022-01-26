@@ -31,46 +31,60 @@ export default class KlassController extends BaseController {
   }
 
   async doAttendance(req, res) {
-    const { klassId, attended } = req.body;
-    let updatedKlass;
+    const { klassId, learnerId } = req.body;
+
     try {
       /* get hold of this current klass document */
       const thisKlass = await this.model.findById(klassId).exec();
-      console.log("This is thisKlass", thisKlass);
-      /* 
-      1. chk if attendance object for current date alr created 
+      console.log("This is thisKlass before adding attendance", thisKlass)
+
+      /*
+      1. chk if attendance object for current date alr created
       2. using .toLocaleDateString("en-GB") to get a string in the format dd/mm/yyyy otherwise the raw dates using el.date and new Date() are likely to be diff
       */
       const attIndex = thisKlass.attendance.findIndex((el) => {
-        el.date.toLocaleDateString("en-GB") ==
-          new Date().toLocaleDateString("en-GB");
+        return (
+          el.date.toLocaleDateString("en-GB") ==
+          new Date().toLocaleDateString("en-GB")
+        );
       });
-      /* if there is no attendance record for this date, create a new attendance object and push into attendance */
-      if (attIndex < 0) {
+      console.log("This is attIndex", attIndex);
+
+      /* 
+      1. if chks attendance for this date does not exist => just push in attendance object
+      2. for else if,  attIndex >=0 => attendance for this date exists, so && condition chks learner attendance not alr taken for this date. only if attendance not alr taken, then will push in learnerId  
+      */
+      if (thisKlass.attendance.length == 0 || attIndex < 0) {
+        /* new attendance object to be inserted into klass attendance */
         const newAtt = {
           date: new Date(),
-          attended: [attended],
+          attended: [learnerId],
         };
-        updatedKlass = await this.model.updateOne(
-          { _id: klassId },
+
+        /* thisKlass is not just a simple result from findById above, it's a mongoose query, hence can just use updateOne with thisKlass */
+        await thisKlass.updateOne(
+          {},
+          { attendance: thisKlass.attendance.push(newAtt) }
+        );
+      } else if (
+        attIndex >= 0 &&
+        !thisKlass.attendance[attIndex].attended.includes(learnerId)
+      ) {
+        await thisKlass.updateOne(
+          {},
           {
-            attendance: thisKlass.attendance.push(newAtt),
+            attendance: thisKlass.attendance[attIndex].attended.push(learnerId),
           }
         );
-        return res.send(updatedKlass);
-      } else if (!thisKlass.attendance[attIndex].attended.includes(attended)) {
-        /* 
-        1. above condition chks if learner already in attended arr for this date 
-        2. only update attended arr if learner not included so attendance for learner not taken multiple times for a single date  
-        */
-        updatedKlass = await this.model.updateOne(
-          { _id: klassId },
-          {
-            attendance: thisKlass.attendance[attIndex].attended.push(attended),
-          }
-        );
-        return res.send(updatedKlass);
       }
+
+      console.log(
+        "This is thisKlass after adding attendance",
+        thisKlass,
+        "This is thisKlass attendance array after adding attendance",
+        thisKlass.attendance
+      );
+      return res.send(thisKlass);
     } catch (err) {
       return this.errorHandler(err, res);
     }
