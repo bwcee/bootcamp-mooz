@@ -15,14 +15,17 @@ const { SALT } = process.env;
 2. the funky syntax in console.log/err just to print out in color so easier to see
 */
 mongoose
+<<<<<<< HEAD
   // Tristan: changed "localhost" to "127.0.0.1" because this is the only way it will work on mac
+=======
+>>>>>>> mongoose
   .connect("mongodb://127.0.0.1:27017/zoom_dev")
   .then(() =>
     console.log("\x1b[34m%s\x1b[0m", "sucessfully connected to mongodb!!")
   )
   .catch((err) => {
-    console.err("\x1b[41m%s\x1b[0m", "error connecting to mongodb!!");
-    console.err("\x1b[41m%s\x1b[0m", err);
+    console.error("\x1b[41m%s\x1b[0m", "error connecting to mongodb!!");
+    console.error("\x1b[41m%s\x1b[0m", err);
   });
 /* 
 1. unlike sequelize, no need ./models/index.js to create and export db  
