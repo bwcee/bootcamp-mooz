@@ -34,26 +34,39 @@ export default class KlassController extends BaseController {
     const { klassId, attended } = req.body;
     let updatedKlass;
     try {
-      const currentKlass = await this.model.findById(klassId).exec();
-      if (!currentKlass.attendance.date) {
+      /* get hold of this current klass document */
+      const thisKlass = await this.model.findById(klassId).exec();
+      console.log("This is thisKlass", thisKlass);
+      /* 
+      1. chk if attendance object for current date alr created 
+      2. using .toLocaleDateString("en-GB") to get a string in the format dd/mm/yyyy otherwise the raw dates using el.date and new Date() are likely to be diff
+      */
+      const attIndex = thisKlass.attendance.findIndex((el) => {
+        el.date.toLocaleDateString("en-GB") ==
+          new Date().toLocaleDateString("en-GB");
+      });
+      /* if there is no attendance record for this date, create a new attendance object and push into attendance */
+      if (attIndex < 0) {
+        const newAtt = {
+          date: new Date(),
+          attended: [attended],
+        };
         updatedKlass = await this.model.updateOne(
           { _id: klassId },
           {
-            attendance: {
-              date: new Date(),
-              attended: [currentKlass.attendance.attended.push(attended)],
-            },
+            attendance: thisKlass.attendance.push(newAtt),
           }
         );
         return res.send(updatedKlass);
-      } else {
+      } else if (!thisKlass.attendance[attIndex].attended.includes(attended)) {
+        /* 
+        1. above condition chks if learner already in attended arr for this date 
+        2. only update attended arr if learner not included so attendance for learner not taken multiple times for a single date  
+        */
         updatedKlass = await this.model.updateOne(
           { _id: klassId },
           {
-            attendance: {
-              date: currentKlass.attendance.date,
-              attended: [currentKlass.attendance.attended.push(attended)],
-            },
+            attendance: thisKlass.attendance[attIndex].attended.push(attended),
           }
         );
         return res.send(updatedKlass);
