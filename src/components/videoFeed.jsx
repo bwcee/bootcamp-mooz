@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 const VideoFeed = ({ stream, index }) => {
-  console.log("hi im here");
+  console.log("running VideoFeed");
   const videoRef = useRef();
 
   const playVideo = () => {
