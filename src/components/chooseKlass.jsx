@@ -20,6 +20,8 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
 
   /* need this if condition to prevent allKlasses.map frm failing when allKlasses is not yet populated with result.data.klasses */
   if (allKlasses) {
+    console.log("allKlasses", allKlasses);
+    console.log("allKlasses.klasses", allKlasses.klasses);
     displayKlasses = allKlasses.klasses.map((el, index) => {
       return (
         <li key={index}>
@@ -40,14 +42,10 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
       id: allKlasses.learnerId,
       learner: allKlasses.learnerName,
     };
-<<<<<<< HEAD
-    console.log("This is learnerDetails stored in local storage", learnerDetails)
-=======
     console.log(
       "This is learnerDetails stored in local storage",
       learnerDetails
     );
->>>>>>> changed localhost to 127.0.0.1 to enable mongoose connection. Added sockets and peer (to be continued)
     localStorage.setItem("learnerDetails", learnerDetails);
   }
 

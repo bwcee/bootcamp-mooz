@@ -89,9 +89,12 @@ app.use("/class", klassRoutes(klassControl));
 
 /** Establish socket connection */
 io.on("connection", (socket) => {
-  socket.on("join-room", (roomId, userId) => {
+  socket.on("join-room", (roomId, userId, userName, peerId) => {
+    // the moment someone joins the room, socket enters the room and broadcasts the userId, userName and userId to everyone else
     socket.join(roomId);
-    socket.broadcast.to(roomId).emit("user-connected", userId);
+    socket.broadcast
+      .to(roomId)
+      .emit("user-connected", userId, userName, peerId);
     socket.on("disconnect", () => {
       socket.broadcast.to(roomId).emit("user-disconnected", userId);
     });
