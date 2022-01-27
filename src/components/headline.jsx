@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 function HeadlineComponent({ signUpState }) {
   let bigMessage;
@@ -17,11 +17,7 @@ function HeadlineComponent({ signUpState }) {
       </>
     );
 
-    smallMessage = (
-      <>
-        *Workshops may not actually be delicious
-      </>
-    );
+    smallMessage = <>*Workshops may not actually be delicious</>;
   } else {
     bigMessage = (
       <>
@@ -33,21 +29,15 @@ function HeadlineComponent({ signUpState }) {
       </>
     );
 
-    smallMessage = (
-      <>
-        It's great to see you again!
-      </>
-    );
+    smallMessage = <>It's great to see you again!</>;
   }
 
   return (
-    <div id="test component">
+    <div>
       <p className="h2" id="headline">
         {bigMessage}
       </p>
-      <p className="h6">
-        {smallMessage}
-      </p>
+      <p className="h6">{smallMessage}</p>
     </div>
   );
 }

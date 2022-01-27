@@ -33,7 +33,6 @@ video {
   border-radius: 16px;
   background-color: white;
   padding: 32px 40px;
-  max-width: 564px;
 }
 
 #form-title {
@@ -45,6 +44,27 @@ video {
   border-radius: 16px;
 }
 
+#form-btn {
+  border-radius: 16px;
+  height: 48px;
+}
+
 #logo-container {
-  height: 64px;
+  height: 128px;
+  width: 256px;
+  margin: 24px 0px 0px -80px;
+}
+
+#app-logo {
+  font-size: 32px;
+}
+
+#app-name {
+  font-size: 32px;
+  font-weight: 900;
+}
+
+#align-form {
+  width: 564px;
+  margin-top: -48px;
 }
