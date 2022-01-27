@@ -9,8 +9,7 @@ export default function App() {
   const [klassId, setKlassId] = useState();
 
   return (
-    <div>
-      <h1>Ladies and Gents, presenting... Mooz!</h1>
+    <div id="app">
       {!display ? (
         <LogIn setDisplay={setDisplay} />
       ) : display == "logged in!" ? (
