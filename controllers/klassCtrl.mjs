@@ -37,6 +37,7 @@ export default class KlassController extends BaseController {
       /* get hold of this current klass document */
       const thisKlass = await this.model.findById(klassId).exec();
       console.log("This is thisKlass before adding attendance", thisKlass)
+      // console.log("This is result of pushing array",thisKlass.attendance.push(newAtt))
 
       /*
       1. chk if attendance object for current date alr created
@@ -49,7 +50,7 @@ export default class KlassController extends BaseController {
         );
       });
       console.log("This is attIndex", attIndex);
-
+      // const newArray = deconstructed version of 
       /* 
       1. if chks attendance for this date does not exist => just push in attendance object
       2. for else if,  attIndex >=0 => attendance for this date exists, so && condition chks learner attendance not alr taken for this date. only if attendance not alr taken, then will push in learnerId  
@@ -60,12 +61,12 @@ export default class KlassController extends BaseController {
           date: new Date(),
           attended: [learnerId],
         };
-
+        console.log("This is result of pushing array",thisKlass.attendance.push(newAtt))
         /* thisKlass is not just a simple result from findById above, it's a mongoose query, hence can just use updateOne with thisKlass */
         await thisKlass.updateOne(
           {},
           { attendance: thisKlass.attendance.push(newAtt) }
-        );
+        ).exec();
       } else if (
         attIndex >= 0 &&
         !thisKlass.attendance[attIndex].attended.includes(learnerId)
@@ -75,7 +76,7 @@ export default class KlassController extends BaseController {
           {
             attendance: thisKlass.attendance[attIndex].attended.push(learnerId),
           }
-        );
+        ).exec();
       }
 
       console.log(
