@@ -21,8 +21,8 @@ mongoose
     console.log("\x1b[34m%s\x1b[0m", "sucessfully connected to mongodb!!")
   )
   .catch((err) => {
-    console.err("\x1b[41m%s\x1b[0m", "error connecting to mongodb!!");
-    console.err("\x1b[41m%s\x1b[0m", err);
+    console.error("\x1b[41m%s\x1b[0m", "error connecting to mongodb!!");
+    console.error("\x1b[41m%s\x1b[0m", err);
   });
 /* 
 1. unlike sequelize, no need ./models/index.js to create and export db  
