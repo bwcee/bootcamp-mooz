@@ -23,7 +23,7 @@ export default class KlassController extends BaseController {
       result.klasses = learnerKlasses;
       result.learnerId = learnerId;
       result.learnerName = learnerName;
-      console.log("This is result from getting klass", result);
+      // console.log("This is result from getting klass", result);
       res.send(result);
     } catch (err) {
       return this.errorHandler(err, res);
@@ -36,8 +36,6 @@ export default class KlassController extends BaseController {
     try {
       /* get hold of this current klass document */
       const thisKlass = await this.model.findById(klassId).exec();
-      console.log("This is thisKlass before adding attendance", thisKlass)
-      // console.log("This is result of pushing array",thisKlass.attendance.push(newAtt))
 
       /*
       1. chk if attendance object for current date alr created
@@ -49,8 +47,7 @@ export default class KlassController extends BaseController {
           new Date().toLocaleDateString("en-GB")
         );
       });
-      console.log("This is attIndex", attIndex);
-      // const newArray = deconstructed version of 
+      // console.log("This is attIndex", attIndex);
       /* 
       1. if chks attendance for this date does not exist => just push in attendance object
       2. for else if,  attIndex >=0 => attendance for this date exists, so && condition chks learner attendance not alr taken for this date. only if attendance not alr taken, then will push in learnerId  
@@ -61,30 +58,17 @@ export default class KlassController extends BaseController {
           date: new Date(),
           attended: [learnerId],
         };
-        console.log("This is result of pushing array",thisKlass.attendance.push(newAtt))
-        /* thisKlass is not just a simple result from findById above, it's a mongoose query, hence can just use updateOne with thisKlass */
-        await thisKlass.updateOne(
-          {},
-          { attendance: thisKlass.attendance.push(newAtt) }
-        ).exec();
+
+        /* thisKlass is a mongoose document. can just manipulate it directly and use .save() to save changes to the db */
+        thisKlass.attendance.push(newAtt);
+        await thisKlass.save();
       } else if (
         attIndex >= 0 &&
         !thisKlass.attendance[attIndex].attended.includes(learnerId)
       ) {
-        await thisKlass.updateOne(
-          {},
-          {
-            attendance: thisKlass.attendance[attIndex].attended.push(learnerId),
-          }
-        ).exec();
+        thisKlass.attendance[attIndex].attended.push(learnerId);
+        await thisKlass.save();
       }
-
-      console.log(
-        "This is thisKlass after adding attendance",
-        thisKlass,
-        "This is thisKlass attendance array after adding attendance",
-        thisKlass.attendance
-      );
       return res.send(thisKlass);
     } catch (err) {
       return this.errorHandler(err, res);
