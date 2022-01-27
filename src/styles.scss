@@ -23,3 +23,48 @@ video {
   height: 100%;
   object-fit: cover;
 }
+
+#headline {
+  font-size: 90px;
+  font-weight: 900;
+}
+
+#form-container {
+  border-radius: 16px;
+  background-color: white;
+  padding: 32px 40px;
+}
+
+#form-title {
+  font-size: 32px;
+}
+
+.input-wrapper {
+  height: 48px;
+  border-radius: 16px;
+}
+
+#form-btn {
+  border-radius: 16px;
+  height: 48px;
+}
+
+#logo-container {
+  height: 128px;
+  width: 256px;
+  margin: 24px 0px 0px -80px;
+}
+
+#app-logo {
+  font-size: 32px;
+}
+
+#app-name {
+  font-size: 32px;
+  font-weight: 900;
+}
+
+#align-form {
+  width: 564px;
+  margin-top: -48px;
+}

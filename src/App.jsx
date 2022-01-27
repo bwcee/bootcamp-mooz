@@ -19,8 +19,7 @@ export default function App() {
   // Question to figure out: why do we need a "return ()"?
 
   return (
-    <div>
-      <h1>Ladies and Gents, presenting... Mooz!</h1>
+    <div id="app">
       {!display ? (
         <LogIn setDisplay={setDisplay} />
       ) : display == "logged in!" ? (

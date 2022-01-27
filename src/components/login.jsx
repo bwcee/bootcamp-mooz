@@ -1,43 +1,35 @@
-import React, { useState, useRef } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import HeadlineComponent from "./headline.jsx";
+import FormComponent from "./form.jsx";
 
 const LogIn = ({ setDisplay }) => {
-  const emailRef = useRef();
-  const passRef = useRef();
-
-  const submitLogin = () => {
-    if (!emailRef.current.value || !passRef.current.value) {
-      return alert("Eh fill in all fields leh!");
-    }
-    axios
-      .post("/", {
-        email: emailRef.current.value,
-        password: passRef.current.value,
-      })
-      .then((result) => {
-        if (!result.data) {
-          emailRef.current.value = "";
-          passRef.current.value = "";
-          return alert("eh salah inputs la");
-        } else {
-          const token = result.data;
-          localStorage.setItem("sessionToken", token);
-          setDisplay("logged in!");
-        }
-      });
-  };
+  const [signUpState, setSignUpState] = useState(false);
 
   return (
-    <div>
-      <label>
-        Input email:
-        <input type="email" ref={emailRef} />
-      </label>
-      <label>
-        Input password:
-        <input type="password" ref={passRef} />
-        <input type="submit" value="Submit" onClick={submitLogin} />
-      </label>
+    <div id="login">
+      <div className="container p-0">
+        <div className="row vh-100">
+          <div className="col-lg d-flex flex-column p-0">
+            <div className="p-0 col-12" id="logo-container">
+              <i class="far fa-hand-spock" id="app-logo"></i>
+              <span className="h4" id="app-name">
+                {" "}
+                mooz
+              </span>
+            </div>
+            <HeadlineComponent signUpState={signUpState} />
+          </div>
+          <div className="col-lg d-flex justify-content-end align-items-center p-0">
+            <div id="align-form">
+              <FormComponent
+                signUpState={signUpState}
+                setDisplay={setDisplay}
+                setSignUpState={setSignUpState}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
