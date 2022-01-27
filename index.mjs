@@ -90,6 +90,7 @@ app.use("/class", klassRoutes(klassControl));
 /** Establish socket connection */
 io.on("connection", (socket) => {
   socket.on("join-room", (roomId, userId, userName, peerId) => {
+    console.log(`${peerId} joined ${roomId}`);
     // the moment someone joins the room, socket enters the room and broadcasts the userId, userName and userId to everyone else
     socket.join(roomId);
     socket.broadcast

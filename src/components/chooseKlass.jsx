@@ -20,8 +20,8 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
 
   /* need this if condition to prevent allKlasses.map frm failing when allKlasses is not yet populated with result.data.klasses */
   if (allKlasses) {
-    console.log("allKlasses", allKlasses);
-    console.log("allKlasses.klasses", allKlasses.klasses);
+    // console.log("allKlasses", allKlasses);
+    // console.log("allKlasses.klasses", allKlasses.klasses);
     displayKlasses = allKlasses.klasses.map((el, index) => {
       return (
         <li key={index}>
@@ -42,14 +42,14 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
       id: allKlasses.learnerId,
       learner: allKlasses.learnerName,
     };
-    console.log(
-      "This is learnerDetails stored in local storage",
-      learnerDetails
-    );
+    // console.log(
+    //   "This is learnerDetails stored in local storage",
+    //   learnerDetails
+    // );
     localStorage.setItem("learnerDetails", learnerDetails);
   }
 
-  console.log("displayKlasses", allKlasses);
+  // console.log("displayKlasses", allKlasses);
 
   return (
     <div>

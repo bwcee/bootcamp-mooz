@@ -17,20 +17,20 @@ const Klassroom = ({ setDisplay, klassId }) => {
   const [users, setUsers] = useState([]);
   const [userId, setUserId] = useState();
   const [userName, setUserName] = useState();
-  /** The moment a new user connects with peerjs (webrtc), user emit ROOM_ID and USER_ID to server (server will then broadcast to everyone else in the room that the user has connected) */
-  myPeer.on("open", (peerId) => {
-    const learnerDetails = localStorage.getItem("learnerDetails");
-    console.log("learnerDetails", learnerDetails);
-    setUserId(learnerDetails.id);
-    setUserName(learnerDetails.learner);
-    socket.emit("join-room", klassId, userId, userName, peerId);
-    console.log("emitted join-room data via sockets");
-  });
 
   /** Get the video stream via peerjs(webrtc) */
   useEffect(() => {
+    /** The moment a new user connects with peerjs (webrtc), user emit ROOM_ID and USER_ID to server (server will then broadcast to everyone else in the room that the user has connected) */
+    myPeer.on("open", (peerId) => {
+      const learnerDetails = localStorage.getItem("learnerDetails");
+      console.log("learnerDetails", learnerDetails);
+      setUserId(learnerDetails.id);
+      setUserName(learnerDetails.learner);
+      socket.emit("join-room", klassId, userId, userName, peerId);
+      console.log("emitted join-room data via sockets");
+    });
+
     const getStream = async () => {
-      console.log("2. running getStream");
       try {
         stream = await navigator.mediaDevices.getUserMedia({
           video: true,
@@ -40,19 +40,16 @@ const Klassroom = ({ setDisplay, klassId }) => {
         console.log(err);
       }
 
-      console.log("stream", stream);
+      // console.log("stream", stream);
       // push (current user's data) {stream (for now)} to users array
       users.push(stream);
       // setUsers(users) doesn't trigger a re-render of the component because we are calling setUsers and passing it the array it already has. Therefore, React doesn't see any reason to re-render because the state hasn't changed; the new array is the old array
       //setUsers([...users]) modifies the state, so this will trigger a re-render
       setUsers([...users]);
-      console.log(users);
-      console.log("3. completed getStream");
-      console.log("users:", users);
+      // console.log(users);
+      // console.log("users:", users);
     };
-    console.log("1. this is right before getStream is ran");
     getStream();
-    console.log("4. this should appear after 3");
   }, []);
 
   // call other users in the room
