@@ -132,43 +132,6 @@ const Klassroom = ({ setDisplay, klassId }) => {
     return peer;
   };
 
-  // useEffect(() => {
-  //   console.log("PEERSSSS", peers);
-
-  //   socket.current.on("user-disconnected", (disconnectedSocketId) => {
-  //     console.log("starting peersRef", peersRef.current);
-  //     // console.log("starting peers", peers);
-  //     console.log('received "user-disconnected"');
-  //     console.log(disconnectedSocketId);
-  //     // // find peer to be destroyed
-  //     peerToBeDestroyed.current = peersRef.current.find((peerObj) => {
-  //       return peerObj.peerId === disconnectedSocketId;
-  //     });
-  //     // console.log("peertobedestroyed", peerToBeDestroyed.current);
-  //     // const newPeers = peers.filter((peer) => peer !== peerToBeDestroyed.peer);
-  //     // console.log("NEW PEERS", newPeers);
-  //     // setPeers(newPeers);
-
-  //     // close peer connection for that peer - destroy()
-  //     peerToBeDestroyed.current.peer.destroy();
-
-  //     // remove peerID and peer from peersRef
-  //     peersRef.current = peersRef.current.filter(
-  //       (peerObj) => peerObj.peerId !== disconnectedSocketId
-  //     );
-  //     // console.log("i made it here!");
-  //     console.log("ending peersRef", peersRef.current);
-  //     // console.log("ending peers", peers);
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log("LATEST PEERS THAT I CAN ACCESS", peers);
-  //   socket.current.on("user-disconnected", (disconnectedSocketId) => {
-  //     console.log("LATEST PEERS THAT I CAN ACCESS", peers);
-  //   });
-  // }, [peers]);
-
   return (
     <div>
       <AllVideoFeed peers={peers} userVideo={userVideo} />

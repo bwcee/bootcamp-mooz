@@ -8,6 +8,7 @@ const AllVideoFeed = ({ peers, userVideo }) => {
   useEffect(() => {
     setCount((count) => count + 1);
     console.log("COUNT", count);
+    console.log(peers);
   }, [peers]);
 
   return (
