@@ -1,36 +1,25 @@
 import AllVideoFeed from "./allVideoFeed.jsx";
 import React, { useState, useRef, useEffect } from "react";
-import axios from "axios";
-
-/** Establish "socket" as socket.io connection */
-const socket = io("/");
-/** Set up webrtc connection via peerjs at PORT = 3001 */
-const myPeer = new Peer(undefined, {
-  host: "/",
-  port: "3001",
-});
-/** Initialize object to hold userIds */
-const peers = {};
-let stream;
+import Peer from "simple-peer";
+import io from "socket.io-client";
 
 const Klassroom = ({ setDisplay, klassId }) => {
-  const [users, setUsers] = useState([]);
-  const [userId, setUserId] = useState();
-  const [userName, setUserName] = useState();
+  const [peers, setPeers] = useState([]);
+  const socket = useRef();
+  const userVideo = useRef();
+  const peersRef = useRef([]);
+  const userId = useRef();
+  const userName = useRef();
+  const peerToBeDestroyed = useRef({});
 
   /** Get the video stream via peerjs(webrtc) */
   useEffect(() => {
-    /** The moment a new user connects with peerjs (webrtc), user emit ROOM_ID and USER_ID to server (server will then broadcast to everyone else in the room that the user has connected) */
-    myPeer.on("open", (peerId) => {
-      const learnerDetails = localStorage.getItem("learnerDetails");
-      console.log("learnerDetails", learnerDetails);
-      setUserId(learnerDetails.id);
-      setUserName(learnerDetails.learner);
-      socket.emit("join-room", klassId, userId, userName, peerId);
-      console.log("emitted join-room data via sockets");
-    });
+    socket.current = io.connect("/");
 
     const getStream = async () => {
+      let stream;
+
+      // get stream
       try {
         stream = await navigator.mediaDevices.getUserMedia({
           video: true,
@@ -40,76 +29,149 @@ const Klassroom = ({ setDisplay, klassId }) => {
         console.log(err);
       }
 
-      // console.log("stream", stream);
-      // push (current user's data) {stream (for now)} to users array
-      users.push(stream);
-      // setUsers(users) doesn't trigger a re-render of the component because we are calling setUsers and passing it the array it already has. Therefore, React doesn't see any reason to re-render because the state hasn't changed; the new array is the old array
-      //setUsers([...users]) modifies the state, so this will trigger a re-render
-      setUsers([...users]);
-      // console.log(users);
-      // console.log("users:", users);
+      // add stream to main user's video
+      if (userVideo.current) {
+        userVideo.current.srcObject = stream;
+      }
+
+      // get userId and userName
+      const learnerDetails = localStorage.getItem("learnerDetails");
+      userId.current = learnerDetails.id;
+      userName.current = learnerDetails.learner;
+
+      // emit roomId via sockets "join-room"
+      socket.current.emit("join-room", klassId, userId, userName);
+
+      socket.current.on("all-users", (users) => {
+        console.log("socket connected", "all-users ran");
+        // const emptyPeers = [];
+        users.forEach((userSocketId) => {
+          const peer = createPeer(userSocketId, socket.current.id, stream);
+          peersRef.current.push({
+            peerId: userSocketId,
+            peer,
+          });
+          // emptyPeers.push(peer);
+          setPeers((oldPeers) => [...oldPeers, { peerId: userSocketId, peer }]);
+        });
+      });
+
+      // To add newly joined user's peer into peersRef and peers state
+      socket.current.on("user-joined", (payload) => {
+        console.log('received "user-joined"');
+        const peer = addPeer(payload.signal, payload.callerId, stream);
+        peersRef.current.push({
+          peerId: payload.callerId,
+          peer,
+        });
+        setPeers((oldPeers) => [
+          ...oldPeers,
+          { peerId: payload.callerId, peer },
+        ]);
+      });
+
+      socket.current.on("receiving-returned-signal", (payload) => {
+        console.log('receiving "returned signal"');
+        const item = peersRef.current.find((p) => p.peerId === payload.id);
+        console.log("item", item);
+        item.peer.signal(payload.signal);
+      });
+
+      socket.current.on("user-disconnected", (disconnectedSocketId) => {
+        const peerObj = peersRef.current.find(
+          (p) => p.peerId === disconnectedSocketId
+        );
+        if (peerObj) {
+          peerObj.peer.destroy();
+        }
+        const newPeers = peersRef.current.filter(
+          (p) => p.peerId !== disconnectedSocketId
+        );
+        peersRef.current = newPeers;
+        console.log(newPeers);
+        setPeers(newPeers);
+      });
     };
     getStream();
   }, []);
 
-  // call other users in the room
-  socket.on("user-connected", (userId, userName, peerId) => {
-    console.log("a new user is connected");
-    connectToNewUser(userId, userName, peerId, stream);
-  });
-
-  myPeer.on("call", (call) => {
-    console.log("answer call");
-    // sends stream to caller (caller receives stream with "call.on('stream', ...)")
-    call.answer(stream);
-
-    call.on("stream", (userVideoStream) => {
-      // push {stream (for now)}
-      users.push(userVideoStream);
-      setUsers([...users]);
-      console.log("users", users);
-    });
-  });
-
-  const connectToNewUser = (userId, userName, peerId, stream) => {
-    console.log("calling new participant in the room");
-    // call other users in the room
-    const call = myPeer.call(peerId, stream);
-
-    call.on("stream", (userVideoStream) => {
-      // push {stream (for now)} to users
-      users.push(userVideoStream);
-      setUsers([...users]);
-      console.log("users", users);
-      // add the caller video to your stream
+  // initiate call to userToSignal. "Inititator: true" enables user to emit signal to userToSignal immediately
+  const createPeer = (userToSignal, callerId, stream) => {
+    const peer = new Peer({
+      initiator: true,
+      trickle: false,
+      stream,
     });
 
-    // call.on("close", () => {
-    //   otherUserVideo.remove();
+    peer.on("signal", (signal) => {
+      socket.current.emit("sending-signal", { userToSignal, callerId, signal });
+    });
+
+    // peer.on("close", () => {
+    //   peer.destroy();
     // });
-    peers[userId] = call;
+
+    return peer;
   };
 
-  socket.on("user-disconnected", (userId) => {
-    if (peers[userId]) peers[userId].close();
-  });
+  const addPeer = (incomingSignal, callerId, stream) => {
+    const peer = new Peer({
+      initiator: false,
+      trickle: false,
+      stream,
+    });
 
-  //------------------------------------------------------
-  // NOT DONE: The moment a user enters the room, update the Klass db with the new user
+    peer.on("signal", (signal) => {
+      console.log('emitting "returning-signal"');
+      console.log("PEER", peer);
+      socket.current.emit("returning-signal", { signal, callerId });
+    });
 
-  // const addUsers = async (user) => {
-  //   // PUT request to update db with new user
-  //   setUsers([...users, { USER_ID, USER_NAME }]);
-  // };
+    peer.signal(incomingSignal);
 
-  // NOT DONE:
-  // 1. Within a useEffect() function, axios.get the array of users in the room from db (presentUsers).
-  // 2. setUsers(presentUsers)
-  // This will ensure that whenever this component is loaded, we have the latest list of users
+    return peer;
+  };
+
+  // useEffect(() => {
+  //   console.log("PEERSSSS", peers);
+
+  //   socket.current.on("user-disconnected", (disconnectedSocketId) => {
+  //     console.log("starting peersRef", peersRef.current);
+  //     // console.log("starting peers", peers);
+  //     console.log('received "user-disconnected"');
+  //     console.log(disconnectedSocketId);
+  //     // // find peer to be destroyed
+  //     peerToBeDestroyed.current = peersRef.current.find((peerObj) => {
+  //       return peerObj.peerId === disconnectedSocketId;
+  //     });
+  //     // console.log("peertobedestroyed", peerToBeDestroyed.current);
+  //     // const newPeers = peers.filter((peer) => peer !== peerToBeDestroyed.peer);
+  //     // console.log("NEW PEERS", newPeers);
+  //     // setPeers(newPeers);
+
+  //     // close peer connection for that peer - destroy()
+  //     peerToBeDestroyed.current.peer.destroy();
+
+  //     // remove peerID and peer from peersRef
+  //     peersRef.current = peersRef.current.filter(
+  //       (peerObj) => peerObj.peerId !== disconnectedSocketId
+  //     );
+  //     // console.log("i made it here!");
+  //     console.log("ending peersRef", peersRef.current);
+  //     // console.log("ending peers", peers);
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log("LATEST PEERS THAT I CAN ACCESS", peers);
+  //   socket.current.on("user-disconnected", (disconnectedSocketId) => {
+  //     console.log("LATEST PEERS THAT I CAN ACCESS", peers);
+  //   });
+  // }, [peers]);
 
   return (
     <div>
-      <AllVideoFeed users={users} />
+      <AllVideoFeed peers={peers} userVideo={userVideo} />
       <p>This should show video of a particular class with id {klassId}</p>
     </div>
   );

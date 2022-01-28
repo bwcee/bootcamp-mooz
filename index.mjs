@@ -87,18 +87,58 @@ app.use("/", homeRoutes(homeControl));
 app.use(verifyToken());
 app.use("/class", klassRoutes(klassControl));
 
+const users = {};
+const socketToRoom = {};
+
 /** Establish socket connection */
 io.on("connection", (socket) => {
-  socket.on("join-room", (roomId, userId, userName, peerId) => {
-    console.log(`${peerId} joined ${roomId}`);
-    // the moment someone joins the room, socket enters the room and broadcasts the userId, userName and userId to everyone else
-    socket.join(roomId);
-    socket.broadcast
-      .to(roomId)
-      .emit("user-connected", userId, userName, peerId);
-    socket.on("disconnect", () => {
-      socket.broadcast.to(roomId).emit("user-disconnected", userId);
+  socket.on("join-room", (roomId, userId, userName) => {
+    // the moment someone joins the room, socket enters the room and broadcasts the userId and userName to everyone else
+    if (users[roomId]) {
+      const length = users[roomId].length;
+      if (length === 4) {
+        socket.emit("room-full");
+        return;
+      }
+      users[roomId].push(socket.id);
+    } else {
+      users[roomId] = [socket.id];
+    }
+    // To keep track of roomId by socket.id (for disconnect purpose)
+    socketToRoom[socket.id] = roomId;
+    const usersInThisRoom = users[roomId].filter((id) => id !== socket.id);
+    console.log("USERS in this room", usersInThisRoom);
+
+    socket.emit("all-users", usersInThisRoom);
+  });
+
+  socket.on("sending-signal", (payload) => {
+    console.log("sending signal successful", payload);
+    io.to(payload.userToSignal).emit("user-joined", {
+      signal: payload.signal,
+      callerId: payload.callerId,
     });
+  });
+
+  socket.on("returning-signal", (payload) => {
+    console.log('executing "returning-signal"', payload);
+    io.to(payload.callerId).emit("receiving-returned-signal", {
+      signal: payload.signal,
+      id: socket.id,
+    });
+  });
+
+  socket.on("disconnect", () => {
+    console.log(`disconnected socket is ran. socket.id = ${socket.id}`);
+    const roomId = socketToRoom[socket.id];
+    let room = users[roomId];
+    if (room) {
+      room = room.filter((id) => id !== socket.id);
+      users[roomId] = room;
+    }
+    // send
+    socket.broadcast.emit("user-disconnected", socket.id);
+    console.log("user-disconnected is sent out");
   });
 });
 
