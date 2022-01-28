@@ -106,12 +106,12 @@ server.listen(8000, () => console.log("server is running on port 8000"));
 
 ### WebMDN
 
-- [Navigator]((https://developer.mozilla.org/en-US/docs/Web/API/Navigator)
+- [Navigator](https://developer.mozilla.org/en-US/docs/Web/API/Navigator)
   - Navigator is an object tt contains certain properties of a client sys, and has methods to access certain parts of a client sys
   - Navigator.mediaDevices returns a MediaDevices object, which provides access to connected media input devices like cameras and microphones
   - Navigator.mediaDevices.getUserMedia() => has params to specify type of media to request for; returns a promise tt resolves depending on whether user grants permission & whether e client sys can provide e type of media requested; if resolved successfully, a mediaStream object is returned
 - [Video](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video)
-  - <video> html element and it's attributes
+  - `<video>` html element and it's attributes
 - [srcObject](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/srcObject)
-  - <video> generally uses src attribute which is a url/file path in order to gain access to video to play
+  - `<video>` generally uses src attribute which is a url/file path in order to gain access to video to play
   - in our case, we haf a mediaStream object returned frm Navigator.mediaDevices.getUserMedia(), so haf to use srcObject instead
