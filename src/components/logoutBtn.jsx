@@ -11,9 +11,11 @@ const LogoutBtn = () => {
   };
 
   return (
-    <button className="btn btn-danger btn-sm" onClick={submitLogout}>
-      Log me out!
-    </button>
+    <>
+      <a class="dropdown-item" href="#" onClick={submitLogout}>
+        Sign out
+      </a>
+    </>
   );
 };
 

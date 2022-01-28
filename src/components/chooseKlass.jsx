@@ -53,7 +53,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
 
   return (
     <div id="dashboard">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
+      <nav class="navbar navbar-expand-lg navbar-light" id="navbar">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
             <i class="far fa-hand-spock" id="app-logo"></i>
@@ -120,9 +120,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
                     <hr class="dropdown-divider" />
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
-                      Sign out
-                    </a>
+                    <LogoutBtn />
                   </li>
                 </ul>
               </li>
@@ -130,9 +128,45 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
           </div>
         </div>
       </nav>
-      <p>Sucessfully logged in</p>
+      <div className="row vh-100">
+        <div className="col-2 d-flex flex-column" id="left-pane">
+          <div
+            class="btn-group-vertical btn-group-lg shadow-sm mb-4"
+            id="top-btn-group"
+          >
+            <button type="button" class="btn btn-outline-dark">
+              <p className="m-0 text-start">
+                <i class="fas fa-cube"></i> Rooms
+              </p>
+            </button>
+            <button type="button" class="btn btn-outline-dark">
+              <p className="m-0 text-start">
+                <i class="far fa-folder-open"></i> Recaps
+              </p>
+            </button>
+            <button type="button" class="btn btn-outline-dark">
+              <p className="m-0 text-start">
+                <i class="fas fa-cog"></i> Settings
+              </p>
+            </button>
+          </div>
+          <div class="btn-group-vertical btn-group-lg shadow-sm" role="group">
+            <button type="button" class="btn btn-outline-dark">
+              <p className="m-0 text-start">
+                <i class="far fa-heart"></i> Referrals
+              </p>
+            </button>
+            <button type="button" class="btn btn-outline-dark">
+              <p className="m-0 text-start">
+                <i class="far fa-file-alt"></i> Moov Handbook
+              </p>
+            </button>
+          </div>
+        </div>
+        <div className="col-10"></div>
+      </div>
+      <hr />
       <ul>{displayKlasses}</ul>
-      <LogoutBtn />
     </div>
   );
 };

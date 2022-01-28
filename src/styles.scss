@@ -1,5 +1,5 @@
 body {
-  background-color: pink;
+  background-color: white;
 }
 
 #root {
@@ -77,4 +77,13 @@ video {
 #navbar {
   padding: 0px 32px 4px;
   border-bottom: 1px solid;
+}
+// used in dashboard
+#left-pane {
+  padding-left: 36px;
+  position: fixed;
+}
+// used in dashboard
+#top-btn-group {
+  margin-top: 128px;
 }
