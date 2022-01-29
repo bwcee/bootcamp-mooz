@@ -24,17 +24,34 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
     // console.log("allKlasses.klasses", allKlasses.klasses);
     displayKlasses = allKlasses.klasses.map((el, index) => {
       return (
-        <li key={index}>
-          <button
-            className="btn btn-primary btn-sm"
-            onClick={() => {
-              setDisplay("chose klass!");
-              setKlassId(el._id);
-            }}
-          >
-            {el.klassName}
-          </button>
-        </li>
+        <div className="col-lg-6" key={index}>
+          <div className="card rooms">
+            <div className="row g-0">
+              <div className="col-3" id="sizing">
+                <img src="..." alt="..." className="img-fluid rounded-start" />
+              </div>
+              <div className="col-9">
+                <div className="card-body">
+                  <h5 className="card-title">{el.klassName}</h5>
+                  <h6 className="card-subtitle text-muted">Card Subtitle</h6>
+                  <a href="#" className="btn btn-primary">
+                    Setup
+                  </a>
+                  <a
+                    href="#"
+                    className="btn btn-warning"
+                    onClick={() => {
+                      setDisplay("chose klass!");
+                      setKlassId(el._id);
+                    }}
+                  >
+                    Start session
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       );
     });
     /* set local storage for learner details */
@@ -129,44 +146,86 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
         </div>
       </nav>
       <div className="row vh-100">
-        <div className="col-2 d-flex flex-column" id="left-pane">
-          <div
-            class="btn-group-vertical btn-group-lg shadow-sm mb-4"
-            id="top-btn-group"
-          >
-            <button type="button" class="btn btn-outline-dark">
-              <p className="m-0 text-start">
-                <i class="fas fa-cube"></i> Rooms
-              </p>
-            </button>
-            <button type="button" class="btn btn-outline-dark">
-              <p className="m-0 text-start">
-                <i class="far fa-folder-open"></i> Recaps
-              </p>
-            </button>
-            <button type="button" class="btn btn-outline-dark">
-              <p className="m-0 text-start">
-                <i class="fas fa-cog"></i> Settings
-              </p>
-            </button>
-          </div>
-          <div class="btn-group-vertical btn-group-lg shadow-sm" role="group">
-            <button type="button" class="btn btn-outline-dark">
-              <p className="m-0 text-start">
-                <i class="far fa-heart"></i> Referrals
-              </p>
-            </button>
-            <button type="button" class="btn btn-outline-dark">
-              <p className="m-0 text-start">
-                <i class="far fa-file-alt"></i> Moov Handbook
-              </p>
-            </button>
+        <div className="col-2">
+          <div className="d-flex flex-column" id="left-pane">
+            <div
+              class="btn-group-vertical btn-group-lg shadow-sm mb-4"
+              id="top-btn-group"
+            >
+              <button type="button" class="btn btn-outline-dark">
+                <p className="m-0 text-start">
+                  <i class="fas fa-cube"></i> Rooms
+                </p>
+              </button>
+              <button type="button" class="btn btn-outline-dark">
+                <p className="m-0 text-start">
+                  <i class="far fa-folder-open"></i> Recaps
+                </p>
+              </button>
+              <button type="button" class="btn btn-outline-dark">
+                <p className="m-0 text-start">
+                  <i class="fas fa-cog"></i> Settings
+                </p>
+              </button>
+            </div>
+            <div class="btn-group-vertical btn-group-lg shadow-sm" role="group">
+              <button type="button" class="btn btn-outline-dark">
+                <p className="m-0 text-start">
+                  <i class="far fa-heart"></i> Referrals
+                </p>
+              </button>
+              <button type="button" class="btn btn-outline-dark">
+                <p className="m-0 text-start">
+                  <i class="far fa-file-alt"></i> Moov Handbook
+                </p>
+              </button>
+            </div>
           </div>
         </div>
-        <div className="col-10"></div>
+        <div className="col" id="right-pane">
+          <div className="d-flex justify-content-between mb-4">
+            <div className="d-flex">
+              <p className="m-0 me-3" id="rooms-title">
+                Rooms
+              </p>
+              <div className="ms-3 me-3 align-self-center">
+                <a href="#" className="btn-sm btn-light text-decoration-none">
+                  <small className="fw-bold">My rooms</small>
+                </a>
+              </div>
+              <div className="align-self-center">
+                <a href="#" className="btn-sm btn-light text-decoration-none">
+                  <small className="fw-bold text-muted">Shared with me</small>
+                </a>
+              </div>
+            </div>
+            <div className="d-flex">
+              <button className="join-btn btn btn-outline-dark me-2">
+                <small className="">
+                  <i class="fas fa-external-link-alt"></i> Join a session
+                </small>
+              </button>
+              <button className="join-btn btn btn-dark">
+                <small className="">
+                  <i class="fas fa-plus"></i> New room
+                </small>
+              </button>
+            </div>
+          </div>
+          <div className="d-flex justify-content-between mb-4">
+            <p className="m-0 h5 fw-bold align-self-end">Your rooms</p>
+            <input
+              className=""
+              type="text"
+              placeholder="Search"
+              id="searchbar"
+            />
+          </div>
+          <div className="container p-0" id="rooms-container">
+            <div className="row">{displayKlasses}</div>
+          </div>
+        </div>
       </div>
-      <hr />
-      <ul>{displayKlasses}</ul>
     </div>
   );
 };

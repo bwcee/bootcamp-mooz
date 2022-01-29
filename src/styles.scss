@@ -87,3 +87,41 @@ video {
 #top-btn-group {
   margin-top: 128px;
 }
+// used in dashboard
+#right-pane {
+  padding: 12px;
+}
+// used in dashboard
+#rooms-title {
+  font-size: 28px;
+  font-weight: 800;
+}
+.join-btn {
+  border-radius: 12px;
+}
+#searchbar {
+  border-radius: 12px;
+  border: 1px solid;
+  height: 42px;
+  padding: 12px;
+  font-size: 14px;
+}
+
+#rooms-container {
+  // background-color: red;
+}
+
+.rooms {
+  height: 178px;
+  border: 1px solid lightgrey;
+  border-radius: 16px;
+  transition: box-shadow 0.3s;
+}
+
+.rooms:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}
+
+#sizing {
+  background-color: yellow;
+}
