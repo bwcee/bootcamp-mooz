@@ -129,8 +129,10 @@ video {
   border-top-left-radius: 16px;
   border-bottom-left-radius: 16px;
   overflow: hidden;
+  max-height: 178px;
 }
 
 img {
   object-fit: cover;
+  object-position: 0px -16px;
 }

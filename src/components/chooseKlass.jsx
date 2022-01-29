@@ -27,7 +27,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
         <div className="col-lg-6" key={index}>
           <div className="card rooms">
             <div className="row g-0">
-              <div className="col-3 img-cap">
+              <div className="col-3 img-cap text-center">
                 <img
                   src="../default-cover-image.png"
                   alt="cover-img"
@@ -37,8 +37,12 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
               <div className="col-9 d-flex">
                 <div className="card-body d-flex flex-column ">
                   <div className="d-flex flex-column flex-fill">
-                    <h5 className="card-title">{el.klassName}</h5>
-                    <h6 className="card-subtitle text-muted">Card Subtitle</h6>
+                    <h5 className="card-title text-capitalize fw-bold">
+                      {el.klassName}
+                    </h5>
+                    <h6 className="card-subtitle text-muted">
+                      <small>Personal Room</small>
+                    </h6>
                   </div>
                   <div className="d-flex justify-content-end">
                     <a href="#" className="btn btn-outline-dark me-2 room-btn">
