@@ -11,7 +11,7 @@ const LogIn = ({ setDisplay }) => {
         <div className="row vh-100">
           <div className="col-lg d-flex flex-column p-0">
             <div className="p-0 col-12" id="logo-container">
-              <i class="far fa-hand-spock" id="app-logo"></i>
+              <i className="far fa-hand-spock" id="app-logo"></i>
               <span className="h4" id="app-name">
                 {" "}
                 mooz

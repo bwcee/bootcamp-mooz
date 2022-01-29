@@ -1,25 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
-const VideoFeed = ({ stream, index }) => {
+import StyledVideo from "./styledVideo.jsx";
+
+const VideoFeed = ({ peer }) => {
   console.log("running VideoFeed");
   const videoRef = useRef();
 
-  const playVideo = () => {
-    videoRef.current.play();
-    if (index === 0) {
-      videoRef.current.muted = true;
-    }
-  };
-  /** Get the video stream via peerjs(webrtc) */
+  /** Get the video stream via simple-peer (webrtc) */
   useEffect(() => {
-    if (videoRef.current) videoRef.current.srcObject = stream;
-  }, [videoRef]);
+    peer.on("stream", (stream) => {
+      videoRef.current.srcObject = stream;
+    });
+  });
 
   return (
-    <div id="video-grid">
-      <h1>A video should be playing here</h1>
-      <div>
-        <video ref={videoRef} onLoadedMetadata={playVideo}></video>
-      </div>
+    <div>
+      <StyledVideo playsInline autoPlay ref={videoRef} />
     </div>
   );
 };

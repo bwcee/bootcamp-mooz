@@ -23,48 +23,58 @@ video {
   height: 100%;
   object-fit: cover;
 }
-
+// used in auth
 #headline {
   font-size: 90px;
   font-weight: 900;
 }
-
+// used in auth
 #form-container {
   border-radius: 16px;
   background-color: white;
   padding: 32px 40px;
 }
-
+// used in auth
 #form-title {
   font-size: 32px;
 }
-
+// used in auth
 .input-wrapper {
   height: 48px;
   border-radius: 16px;
 }
-
+// used in auth
 #form-btn {
   border-radius: 16px;
   height: 48px;
 }
-
+// used in auth
 #logo-container {
   height: 128px;
   width: 256px;
   margin: 24px 0px 0px -80px;
 }
-
+// used in dashboard, auth
 #app-logo {
   font-size: 32px;
 }
-
+// used in dashboard, auth
 #app-name {
   font-size: 32px;
   font-weight: 900;
 }
-
+// used in auth
 #align-form {
   width: 564px;
   margin-top: -48px;
+}
+// used in dashboard
+#dropdown-icon {
+  font-size: 32px;
+  color: black;
+}
+// used in dashboard
+#navbar {
+  padding: 0px 32px 4px;
+  border-bottom: 1px solid;
 }

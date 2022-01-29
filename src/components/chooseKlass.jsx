@@ -20,8 +20,8 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
 
   /* need this if condition to prevent allKlasses.map frm failing when allKlasses is not yet populated with result.data.klasses */
   if (allKlasses) {
-    console.log("allKlasses", allKlasses);
-    console.log("allKlasses.klasses", allKlasses.klasses);
+    // console.log("allKlasses", allKlasses);
+    // console.log("allKlasses.klasses", allKlasses.klasses);
     displayKlasses = allKlasses.klasses.map((el, index) => {
       return (
         <li key={index}>
@@ -42,17 +42,94 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
       id: allKlasses.learnerId,
       learner: allKlasses.learnerName,
     };
-    console.log(
-      "This is learnerDetails stored in local storage",
-      learnerDetails
-    );
+    // console.log(
+    //   "This is learnerDetails stored in local storage",
+    //   learnerDetails
+    // );
     localStorage.setItem("learnerDetails", learnerDetails);
   }
 
-  console.log("displayKlasses", allKlasses);
+  // console.log("displayKlasses", allKlasses);
 
   return (
-    <div>
+    <div id="dashboard">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <i class="far fa-hand-spock" id="app-logo"></i>
+            <span className="h4" id="app-name">
+              {" "}
+              mooz
+            </span>
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavDropdown"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse justify-content-end"
+            id="navbarNavDropdown"
+          >
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="fw-bold btn btn-light nav-link" href="#">
+                  <small>
+                    <i class="fas fa-bullhorn"></i> Feeback?
+                  </small>
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link"
+                  href="#"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="far fa-user-circle" id="dropdown-icon"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      What's new
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      Moov Handbook
+                    </a>
+                  </li>
+                  <li>
+                    <hr class="dropdown-divider" />
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      Get desktop app
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      Calendar Integration
+                    </a>
+                  </li>
+                  <li>
+                    <hr class="dropdown-divider" />
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">
+                      Sign out
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
       <p>Sucessfully logged in</p>
       <ul>{displayKlasses}</ul>
       <LogoutBtn />
