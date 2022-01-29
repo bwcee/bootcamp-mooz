@@ -115,3 +115,9 @@ server.listen(8000, () => console.log("server is running on port 8000"));
 - [srcObject](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/srcObject)
   - `<video>` generally uses src attribute which is a url/file path in order to gain access to video to play
   - in our case, we haf a mediaStream object returned frm Navigator.mediaDevices.getUserMedia(), so haf to use srcObject instead
+
+# Notes on how we debugged errors:
+
+Error #1: When one user closes the browser, the other users' browsers will display an error called "process is not defined".
+
+- Solution: Reason is because peer.destroy only works when we install "process" i.e. npm i process + add some polyfill code (i dont know what polyfills are either). See https://github.com/feross/simple-peer/issues/611

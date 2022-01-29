@@ -7,6 +7,7 @@ const VideoFeed = ({ peer }) => {
 
   /** Get the video stream via simple-peer (webrtc) */
   useEffect(() => {
+    // receive remote video stream and assign stream to video object
     peer.on("stream", (stream) => {
       videoRef.current.srcObject = stream;
     });
@@ -14,7 +15,7 @@ const VideoFeed = ({ peer }) => {
 
   return (
     <div>
-      <StyledVideo playsInline autoPlay ref={videoRef} />
+      <video playsInline autoPlay ref={videoRef}></video>;
     </div>
   );
 };

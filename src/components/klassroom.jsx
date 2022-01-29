@@ -2,6 +2,11 @@ import AllVideoFeed from "./allVideoFeed.jsx";
 import React, { useState, useRef, useEffect } from "react";
 import Peer from "simple-peer";
 import io from "socket.io-client";
+import * as process from "process";
+
+window.global = window;
+window.process = process;
+window.Buffer = [];
 
 const Klassroom = ({ setDisplay, klassId }) => {
   const [peers, setPeers] = useState([]);
@@ -106,10 +111,6 @@ const Klassroom = ({ setDisplay, klassId }) => {
     peer.on("signal", (signal) => {
       socket.current.emit("sending-signal", { userToSignal, callerId, signal });
     });
-
-    // peer.on("close", () => {
-    //   peer.destroy();
-    // });
 
     return peer;
   };
