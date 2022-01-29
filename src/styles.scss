@@ -112,7 +112,6 @@ video {
 }
 
 .rooms {
-  height: 178px;
   border: 1px solid lightgrey;
   border-radius: 16px;
   transition: box-shadow 0.3s;
@@ -122,6 +121,16 @@ video {
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
 
-#sizing {
-  background-color: yellow;
+.room-btn {
+  border-radius: 12px;
+}
+
+.img-cap {
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  overflow: hidden;
+}
+
+img {
+  object-fit: cover;
 }
