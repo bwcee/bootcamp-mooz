@@ -4,6 +4,7 @@ const LogoutBtn = () => {
   const submitLogout = () => {
     try {
       localStorage.removeItem("sessionToken");
+      localStorage.removeItem("learnerDetails");
       window.location = "/";
     } catch (err) {
       console.log(err);

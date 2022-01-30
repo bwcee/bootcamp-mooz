@@ -36,26 +36,26 @@ function FormComponent({ signUpState, setDisplay, setSignUpState }) {
     ) {
       return alert("Eh fill in all fields leh!");
     }
-
-    // Need to modify for create user route below
-    // axios
-    //   .post("/", {
-    //     email: emailRef.current.value,
-    //     password: passRef.current.value,
-    //   })
-    //   .then((result) => {
-    //     if (!result.data) {
-    //       emailRef.current.value = "";
-    //       passRef.current.value = "";
-    //       return alert("eh salah inputs la");
-    //     } else {
-    //       const token = result.data;
-    //       localStorage.setItem("sessionToken", token);
-    //       setDisplay("logged in!");
-    //     }
-    //   });
-
-    console.log("attemping sign-up");
+    axios
+      .post("/signup", {
+        name: nameRef.current.value,
+        email: emailRef.current.value,
+        password: passRef.current.value,
+      })
+      .then((result) => {
+        if (!result.data || result.data.code == 11000 || result.data.errors) {
+          emailRef.current.value = "";
+          passRef.current.value = "";
+          nameRef.current.value = "";
+          return alert(
+            "thousand apologies, something went wrong, mayhaps the email is already used, or you did not key in a proper email, pls try again"
+          );
+        } else {
+          const token = result.data;
+          localStorage.setItem("sessionToken", token);
+          setDisplay("logged in!");
+        }
+      });
   };
 
   const changeLayout = () => {
