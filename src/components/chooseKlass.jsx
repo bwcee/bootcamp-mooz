@@ -46,7 +46,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
     //   "This is learnerDetails stored in local storage",
     //   learnerDetails
     // );
-    localStorage.setItem("learnerDetails", learnerDetails);
+    localStorage.setItem("learnerDetails", JSON.stringify(learnerDetails));
   }
 
   // console.log("displayKlasses", allKlasses);
