@@ -16,9 +16,6 @@ const Klassroom = ({ setDisplay, klassId }) => {
 
   // get userId and userName
   const learnerDetails = JSON.parse(localStorage.getItem("learnerDetails"));
-  // learnerId.current = learnerDetails.id;
-  // // console.log("LEARNERID.CURRENT", learnerId.current);
-  // learnerName.current = learnerDetails.learner;
 
   const learnerId = useRef(learnerDetails.id);
   const learnerName = useRef(learnerDetails.learner);
@@ -193,7 +190,6 @@ const Klassroom = ({ setDisplay, klassId }) => {
         learnerName={learnerName}
         userVideo={userVideo}
       />
-      {/* <p>Class ID: {klassId}</p> */}
     </div>
   );
 };
