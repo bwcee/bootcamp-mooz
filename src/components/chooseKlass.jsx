@@ -24,17 +24,46 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
     // console.log("allKlasses.klasses", allKlasses.klasses);
     displayKlasses = allKlasses.klasses.map((el, index) => {
       return (
-        <li key={index}>
-          <button
-            className="btn btn-primary btn-sm"
-            onClick={() => {
-              setDisplay("chose klass!");
-              setKlassId(el._id);
-            }}
-          >
-            {el.klassName}
-          </button>
-        </li>
+        <div className="col-lg-6" key={index}>
+          <div className="card rooms">
+            <div className="row g-0">
+              <div className="col-3 img-cap text-center">
+                <img
+                  src="../default-cover-image.png"
+                  alt="cover-img"
+                  className="img-fluid rounded-start"
+                />
+              </div>
+              <div className="col-9 d-flex">
+                <div className="card-body d-flex flex-column ">
+                  <div className="d-flex flex-column flex-fill">
+                    <h5 className="card-title text-capitalize fw-bold">
+                      {el.klassName}
+                    </h5>
+                    <h6 className="card-subtitle text-muted">
+                      <small>Personal Room</small>
+                    </h6>
+                  </div>
+                  <div className="d-flex justify-content-end">
+                    <a href="#" className="btn btn-outline-dark me-2 room-btn">
+                      Setup
+                    </a>
+                    <a
+                      href="#"
+                      className="btn btn-outline-dark room-btn"
+                      onClick={() => {
+                        setDisplay("chose klass!");
+                        setKlassId(el._id);
+                      }}
+                    >
+                      Start session
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       );
     });
     /* set local storage for learner details */
@@ -53,7 +82,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
 
   return (
     <div id="dashboard">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
+      <nav class="navbar navbar-expand-lg navbar-light" id="navbar">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
             <i class="far fa-hand-spock" id="app-logo"></i>
@@ -120,9 +149,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
                     <hr class="dropdown-divider" />
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
-                      Sign out
-                    </a>
+                    <LogoutBtn />
                   </li>
                 </ul>
               </li>
@@ -130,9 +157,87 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
           </div>
         </div>
       </nav>
-      <p>Sucessfully logged in</p>
-      <ul>{displayKlasses}</ul>
-      <LogoutBtn />
+      <div className="row vh-100">
+        <div className="col-2">
+          <div className="d-flex flex-column" id="left-pane">
+            <div
+              class="btn-group-vertical btn-group-lg shadow-sm mb-4"
+              id="top-btn-group"
+            >
+              <button type="button" class="btn btn-outline-dark">
+                <p className="m-0 text-start">
+                  <i class="fas fa-cube"></i> Rooms
+                </p>
+              </button>
+              <button type="button" class="btn btn-outline-dark">
+                <p className="m-0 text-start">
+                  <i class="far fa-folder-open"></i> Recaps
+                </p>
+              </button>
+              <button type="button" class="btn btn-outline-dark">
+                <p className="m-0 text-start">
+                  <i class="fas fa-cog"></i> Settings
+                </p>
+              </button>
+            </div>
+            <div class="btn-group-vertical btn-group-lg shadow-sm" role="group">
+              <button type="button" class="btn btn-outline-dark">
+                <p className="m-0 text-start">
+                  <i class="far fa-heart"></i> Referrals
+                </p>
+              </button>
+              <button type="button" class="btn btn-outline-dark">
+                <p className="m-0 text-start">
+                  <i class="far fa-file-alt"></i> Moov Handbook
+                </p>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="col" id="right-pane">
+          <div className="d-flex justify-content-between mb-4">
+            <div className="d-flex">
+              <p className="m-0 me-3" id="rooms-title">
+                Rooms
+              </p>
+              <div className="ms-3 me-3 align-self-center">
+                <a href="#" className="btn-sm btn-light text-decoration-none">
+                  <small className="fw-bold">My rooms</small>
+                </a>
+              </div>
+              <div className="align-self-center">
+                <a href="#" className="btn-sm btn-light text-decoration-none">
+                  <small className="fw-bold text-muted">Shared with me</small>
+                </a>
+              </div>
+            </div>
+            <div className="d-flex">
+              <button className="join-btn btn btn-outline-dark me-2">
+                <small className="">
+                  <i class="fas fa-external-link-alt"></i> Join a session
+                </small>
+              </button>
+              <button className="join-btn btn btn-dark">
+                <small className="">
+                  <i class="fas fa-plus"></i> New room
+                </small>
+              </button>
+            </div>
+          </div>
+          <div className="d-flex justify-content-between mb-4">
+            <p className="m-0 h5 fw-bold align-self-end">Your rooms</p>
+            <input
+              className=""
+              type="text"
+              placeholder="Search"
+              id="searchbar"
+            />
+          </div>
+          <div className="container p-0" id="rooms-container">
+            <div className="row">{displayKlasses}</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
