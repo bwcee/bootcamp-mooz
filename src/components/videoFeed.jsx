@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import StyledVideo from "./styledVideo.jsx";
 
-const VideoFeed = ({ peer }) => {
+const VideoFeed = ({ peer, learnerId, learnerName }) => {
   console.log("running VideoFeed");
+  console.log("LearnerId", learnerId);
+  console.log("LearnerName:", learnerName);
   const videoRef = useRef();
 
   /** Get the video stream via simple-peer (webrtc) */
@@ -15,7 +16,9 @@ const VideoFeed = ({ peer }) => {
 
   return (
     <div>
-      <video playsInline autoPlay ref={videoRef}></video>;
+      <video playsInline autoPlay ref={videoRef}></video>
+      <p>LearnerId: {learnerId}</p>
+      <p>LearnerName: {learnerName}</p>
     </div>
   );
 };

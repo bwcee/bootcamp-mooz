@@ -92,36 +92,51 @@ const socketToRoom = {};
 
 /** Establish socket connection */
 io.on("connection", (socket) => {
-  socket.on("join-room", (roomId, userId, userName) => {
-    // the moment someone joins the room, socket enters the room and broadcasts the userId and userName to everyone else
+  socket.on("join-room", (roomId, learnerId, learnerName) => {
     if (users[roomId]) {
-      const length = users[roomId].length;
-      if (length === 4) {
-        socket.emit("room-full");
-        return;
-      }
-      users[roomId].push(socket.id);
+      /** The following code is to limit the number of users in the room */
+      // const length = users[roomId].length;
+      // if (length === 4) {
+      //   socket.emit("room-full");
+      //   return;
+      // }
+      users[roomId].push({
+        socketId: socket.id,
+        learnerId: learnerId,
+        learnerName: learnerName,
+      });
     } else {
-      users[roomId] = [socket.id];
+      users[roomId] = [
+        {
+          socketId: socket.id,
+          learnerId: learnerId,
+          learnerName: learnerName,
+        },
+      ];
     }
     // To keep track of roomId by socket.id (for disconnect purpose)
     socketToRoom[socket.id] = roomId;
-    const usersInThisRoom = users[roomId].filter((id) => id !== socket.id);
-    console.log("USERS in this room", usersInThisRoom);
+    const usersInThisRoom = users[roomId].filter(
+      (userObj) => userObj.socketId !== socket.id
+    );
 
-    socket.emit("all-users", usersInThisRoom);
+    socket.emit("all-users-data", usersInThisRoom);
   });
 
+  // Transfer newly joined user (caller)'s signal (+ other data) to each user (call recipients) in the room
   socket.on("sending-signal", (payload) => {
-    console.log("sending signal successful", payload);
+    console.log('running "sending-signal"', payload);
     io.to(payload.userToSignal).emit("user-joined", {
       signal: payload.signal,
       callerId: payload.callerId,
+      learnerId: payload.learnerIdOfCaller,
+      learnerName: payload.learnerNameOfCaller,
     });
   });
 
+  // Send user (call recipient)'s signal to newly joined user (caller)
   socket.on("returning-signal", (payload) => {
-    console.log('executing "returning-signal"', payload);
+    console.log('running "returning-signal"', payload);
     io.to(payload.callerId).emit("receiving-returned-signal", {
       signal: payload.signal,
       id: socket.id,
@@ -133,10 +148,10 @@ io.on("connection", (socket) => {
     const roomId = socketToRoom[socket.id];
     let room = users[roomId];
     if (room) {
-      room = room.filter((id) => id !== socket.id);
+      room = room.filter((userObj) => userObj.socketId !== socket.id);
       users[roomId] = room;
     }
-    // send
+    // send socketId of disconnected user to everyone in the room
     socket.broadcast.emit("user-disconnected", socket.id);
     console.log("user-disconnected is sent out");
   });

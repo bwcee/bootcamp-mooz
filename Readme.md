@@ -186,8 +186,39 @@
   - `<video>` generally uses src attribute which is a url/file path in order to gain access to video to play
   - in our case, we haf a mediaStream object returned frm Navigator.mediaDevices.getUserMedia(), so haf to use srcObject instead
 
+# HOW SIMPLE-PEER CODE WORKS
+
+## peersRef:
+
+- Responsible for establishing signal connection with each user in the room
+- Contains each user's information
+  {
+  peerId: payload.callerId,
+  learnerId: userObj.learnerId,
+  learnerName: userObj.learnerName,
+  peer,
+  }
+- "peer" refers to a Peer object that contains a lot of different meta data.
+- When this peer accepts a signal from another user, it will send its own signal back to the user (via sockets) and the other user's peer will accept the incoming signal
+- This completes the "handshake", meaning these two users have established a signal connection between just the two of them.
+
+## peers:
+
+- Responsible for rendering each user's video stream on the frontend
+- Contains each user's peer
+- { peer1, peer2 ...}
+
 # Notes on how we debugged errors:
 
-Error #1: When one user closes the browser, the other users' browsers will display an error called "process is not defined".
+## Error #1:
+
+- Error: When one user closes the browser, the other users' browsers will display an error called "process is not defined".
 
 - Solution: Reason is because peer.destroy only works when we install "process" i.e. npm i process + add some polyfill code (i dont know what polyfills are either). See https://github.com/feross/simple-peer/issues/611
+
+## Error #2:
+
+- Problem: Cannot read object that was stored in localStorage
+
+- Solution: local storage limited to handle only string key/value pairs. To store and access object in local storage, you should use JSON.stringify to store and JSON.parse to get the object
+  https://stackoverflow.com/questions/42020577/storing-objects-in-localstorage
