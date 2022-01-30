@@ -13,8 +13,15 @@ const Klassroom = ({ setDisplay, klassId }) => {
   const socket = useRef();
   const userVideo = useRef();
   const peersRef = useRef([]);
-  const learnerId = useRef();
-  const learnerName = useRef();
+
+  // get userId and userName
+  const learnerDetails = JSON.parse(localStorage.getItem("learnerDetails"));
+  // learnerId.current = learnerDetails.id;
+  // // console.log("LEARNERID.CURRENT", learnerId.current);
+  // learnerName.current = learnerDetails.learner;
+
+  const learnerId = useRef(learnerDetails.id);
+  const learnerName = useRef(learnerDetails.learner);
 
   /** Get the video stream via peerjs(webrtc) */
   useEffect(() => {
@@ -37,12 +44,6 @@ const Klassroom = ({ setDisplay, klassId }) => {
       if (userVideo.current) {
         userVideo.current.srcObject = stream;
       }
-
-      // get userId and userName
-      const learnerDetails = JSON.parse(localStorage.getItem("learnerDetails"));
-      learnerId.current = learnerDetails.id;
-      // console.log("LEARNERID.CURRENT", learnerId.current);
-      learnerName.current = learnerDetails.learner;
 
       // emit roomId via sockets "join-room"
       socket.current.emit(
@@ -92,16 +93,16 @@ const Klassroom = ({ setDisplay, klassId }) => {
         const peer = addPeer(payload.signal, payload.callerId, stream);
         peersRef.current.push({
           peerId: payload.callerId,
-          learnerId: payload.learnerIdOfCaller,
-          learnerName: payload.learnerNameOfCaller,
+          learnerId: payload.learnerId,
+          learnerName: payload.learnerName,
           peer,
         });
         setPeers((oldPeers) => [
           ...oldPeers,
           {
             peerId: payload,
-            learnerId: payload.learnerIdOfCaller,
-            learnerName: payload.learnerNameOfCaller,
+            learnerId: payload.learnerId,
+            learnerName: payload.learnerName,
             peer,
           },
         ]);
@@ -148,6 +149,7 @@ const Klassroom = ({ setDisplay, klassId }) => {
       trickle: false,
       stream,
     });
+    console.log("createPeer running");
 
     // emit own signal to users already in the room
     peer.on("signal", (signal) => {
@@ -165,12 +167,12 @@ const Klassroom = ({ setDisplay, klassId }) => {
   };
 
   const addPeer = (incomingSignal, callerId, stream) => {
-    console.log("created new Peer for newly joined user");
     const peer = new Peer({
       initiator: false,
       trickle: false,
       stream,
     });
+    console.log("created new Peer for newly joined user");
     /** Sends signal to newly joined user */
     peer.on("signal", (signal) => {
       console.log("emitting signal to newly joined user");
