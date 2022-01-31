@@ -20,10 +20,10 @@ const Klassroom = ({ setDisplay, klassId }) => {
   const learnerId = useRef(learnerDetails.id);
   const learnerName = useRef(learnerDetails.learner);
 
-  /** Get the video stream via peerjs(webrtc) */
   useEffect(() => {
     socket.current = io.connect("/");
 
+    /** Get the video stream via peerjs(webrtc) */
     const getStream = async () => {
       let stream;
 
