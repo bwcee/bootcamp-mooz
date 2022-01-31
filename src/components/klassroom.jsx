@@ -2,15 +2,15 @@ import AllVideoFeed from "./allVideoFeed.jsx";
 import React, { useState, useRef, useEffect } from "react";
 import Peer from "simple-peer";
 import io from "socket.io-client";
-import * as process from "process";
 
+// necessary to avoid error display on screen when one user closes the browser
+import * as process from "process";
 window.global = window;
 window.process = process;
 window.Buffer = [];
 
-const Klassroom = ({ setDisplay, klassId }) => {
+const Klassroom = ({ setDisplay, klassId, socket }) => {
   const [peers, setPeers] = useState([]);
-  const socket = useRef();
   const userVideo = useRef();
   const peersRef = useRef([]);
 
@@ -20,10 +20,10 @@ const Klassroom = ({ setDisplay, klassId }) => {
   const learnerId = useRef(learnerDetails.id);
   const learnerName = useRef(learnerDetails.learner);
 
-  /** Get the video stream via peerjs(webrtc) */
   useEffect(() => {
     socket.current = io.connect("/");
 
+    /** Get the video stream via peerjs(webrtc) */
     const getStream = async () => {
       let stream;
 
@@ -94,15 +94,8 @@ const Klassroom = ({ setDisplay, klassId }) => {
           learnerName: payload.learnerName,
           peer,
         });
-        setPeers((oldPeers) => [
-          ...oldPeers,
-          {
-            peerId: payload,
-            learnerId: payload.learnerId,
-            learnerName: payload.learnerName,
-            peer,
-          },
-        ]);
+        // Need to use this method to update setPeers if not after one user disconnects and reconnects, the remaining users will see two videos of the reconnected user.
+        setPeers([...peersRef.current]);
       });
 
       // Accepts signal from user in the room (call recipient) in a signal handshake
@@ -124,7 +117,6 @@ const Klassroom = ({ setDisplay, klassId }) => {
           (p) => p.peerId !== disconnectedSocketId
         );
         peersRef.current = newPeers;
-        console.log(newPeers);
         setPeers(newPeers);
       });
     };

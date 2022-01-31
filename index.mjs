@@ -93,6 +93,7 @@ const socketToRoom = {};
 /** Establish socket connection */
 io.on("connection", (socket) => {
   socket.on("join-room", (roomId, learnerId, learnerName) => {
+    console.log('running "join-room"');
     if (users[roomId]) {
       /** The following code is to limit the number of users in the room */
       // const length = users[roomId].length;
@@ -119,13 +120,13 @@ io.on("connection", (socket) => {
     const usersInThisRoom = users[roomId].filter(
       (userObj) => userObj.socketId !== socket.id
     );
-
+    // socket.emit : emit to just one socket
+    // io.sockets.emit : emit to all sockets
     socket.emit("all-users-data", usersInThisRoom);
   });
 
   // Transfer newly joined user (caller)'s signal (+ other data) to each user (call recipients) in the room
   socket.on("sending-signal", (payload) => {
-    console.log('running "sending-signal"', payload);
     io.to(payload.userToSignal).emit("user-joined", {
       signal: payload.signal,
       callerId: payload.callerId,
@@ -136,7 +137,6 @@ io.on("connection", (socket) => {
 
   // Send user (call recipient)'s signal to newly joined user (caller)
   socket.on("returning-signal", (payload) => {
-    console.log('running "returning-signal"', payload);
     io.to(payload.callerId).emit("receiving-returned-signal", {
       signal: payload.signal,
       id: socket.id,
