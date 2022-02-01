@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const VideoFeed = ({ peer, learnerId, learnerName, index }) => {
+const VideoFeed = ({ peer, learnerId, learnerName }) => {
   console.log("running VideoFeed");
   console.log("LearnerId", learnerId);
   console.log("LearnerName:", learnerName);
@@ -19,7 +19,6 @@ const VideoFeed = ({ peer, learnerId, learnerName, index }) => {
       <video playsInline autoPlay ref={videoRef}></video>
       <p>LearnerId: {learnerId}</p>
       <p>LearnerName: {learnerName}</p>
-      <p>index: {index}</p>
     </div>
   );
 };

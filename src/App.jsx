@@ -3,11 +3,15 @@ import React, { useState, useRef, useEffect } from "react";
 import LogIn from "./components/login.jsx";
 import ChooseKlass from "./components/chooseKlass.jsx";
 import Klassroom from "./components/klassroom.jsx";
+import io from "socket.io-client";
 
 export default function App() {
   const [display, setDisplay] = useState();
   const [klassId, setKlassId] = useState();
   const socket = useRef();
+  useEffect(() => {
+    socket.current = io.connect("/");
+  });
 
   /* 
   1. brackets below encapsulate react elements/ components to be returned 

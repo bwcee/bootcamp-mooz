@@ -13,7 +13,7 @@ const LogoutBtn = () => {
 
   return (
     <>
-      <a class="dropdown-item" href="#" onClick={submitLogout}>
+      <a className="dropdown-item" href="#" onClick={submitLogout}>
         Sign out
       </a>
     </>

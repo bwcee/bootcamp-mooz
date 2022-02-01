@@ -92,8 +92,19 @@ const socketToRoom = {};
 
 /** Establish socket connection */
 io.on("connection", (socket) => {
+  socket.on("room-mode", (roomId) => {
+    console.log('running "check-room-in-use"');
+    if (users[roomId]) {
+      socket.emit("room-mode", "Join session");
+    } else {
+      socket.emit("room-mode", "Start session");
+    }
+  });
+
   socket.on("join-room", (roomId, learnerId, learnerName) => {
     console.log('running "join-room"');
+    socket.join(roomId);
+    io.to(roomId).emit("user-connected", learnerName);
     if (users[roomId]) {
       /** The following code is to limit the number of users in the room */
       // const length = users[roomId].length;
@@ -143,9 +154,8 @@ io.on("connection", (socket) => {
     });
   });
 
-  socket.on("disconnect", () => {
-    console.log(`disconnected socket is ran. socket.id = ${socket.id}`);
-    const roomId = socketToRoom[socket.id];
+  socket.on("disconnect-me", (roomId) => {
+    console.log(`disconnecting ${socket.id} in klass ${roomId}`);
     let room = users[roomId];
     if (room) {
       room = room.filter((userObj) => userObj.socketId !== socket.id);
@@ -155,6 +165,17 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("user-disconnected", socket.id);
     console.log("user-disconnected is sent out");
   });
+
+  socket.on("disconnect-all-users", (roomId) => {
+    console.log(`disconnecting all users in klass ${roomId}`);
+    users[roomId] = [];
+
+    io.to(roomId).emit("disconnect-all-users");
+  });
+
+  // socket.on("disconnect-all-users", (roomId) => {
+  //   io.in(roomId).disconnectSockets();
+  // });
 });
 
 /* set app to listen on the given port */
