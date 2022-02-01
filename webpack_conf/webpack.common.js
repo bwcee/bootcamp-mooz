@@ -1,13 +1,12 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require("path");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
-  plugins: [
-    new MiniCssExtractPlugin(),
-  ],
+  plugins: [new MiniCssExtractPlugin(), new Dotenv()],
   output: {
-    filename: '[name]-[contenthash].bundle.js',
-    path: path.resolve(__dirname, '../dist'),
+    filename: "[name]-[contenthash].bundle.js",
+    path: path.resolve(__dirname, "../dist"),
   },
   module: {
     rules: [
@@ -16,9 +15,9 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader',
+            loader: "css-loader",
           },
-          'sass-loader',
+          "sass-loader",
         ],
       },
     ],

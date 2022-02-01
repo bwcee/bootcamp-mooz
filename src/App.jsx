@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-// import axios from "axios";
 import LogIn from "./components/login.jsx";
 import ChooseKlass from "./components/chooseKlass.jsx";
 import Klassroom from "./components/klassroom.jsx";

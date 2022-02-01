@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import LogoutBtn from "./logoutBtn.jsx";
+// No need to import dotenv here (dotenv does not work on client side. Dotenv is imported in webpack.common.js)
+const baseUrl = process.env.baseURL || "http://localhost:3008";
 
 const ChooseKlass = ({ setDisplay, setKlassId }) => {
   const token = localStorage.getItem("sessionToken");
@@ -12,11 +14,17 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
   1. if condition below prevents infinite loop from taking place
   2. basically this component will keep re-running until result comes bck from axios.get
   */
-  axios.get("/class", auth).then((result) => {
-    if (!allKlasses) {
-      setAllKlasses(result.data);
-    }
-  });
+
+  axios
+    .get(
+      "https://afternoon-gorge-22810.herokuapp.com/" + baseUrl + "/class",
+      auth
+    )
+    .then((result) => {
+      if (!allKlasses) {
+        setAllKlasses(result.data);
+      }
+    });
 
   /* need this if condition to prevent allKlasses.map frm failing when allKlasses is not yet populated with result.data.klasses */
   if (allKlasses) {

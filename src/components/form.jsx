@@ -1,5 +1,7 @@
 import React, { useRef } from "react";
 import axios from "axios";
+// No need to import dotenv here (dotenv does not work on client side. Dotenv is imported in webpack.common.js)
+const baseUrl = process.env.baseURL || "http://localhost:3008";
 
 function FormComponent({ signUpState, setDisplay, setSignUpState }) {
   const emailRef = useRef();
@@ -11,7 +13,7 @@ function FormComponent({ signUpState, setDisplay, setSignUpState }) {
       return alert("Eh fill in all fields leh!");
     }
     axios
-      .post("/", {
+      .post("https://afternoon-gorge-22810.herokuapp.com/" + baseUrl + "/", {
         email: emailRef.current.value,
         password: passRef.current.value,
       })
@@ -37,11 +39,14 @@ function FormComponent({ signUpState, setDisplay, setSignUpState }) {
       return alert("Eh fill in all fields leh!");
     }
     axios
-      .post("/signup", {
-        name: nameRef.current.value,
-        email: emailRef.current.value,
-        password: passRef.current.value,
-      })
+      .post(
+        "https://afternoon-gorge-22810.herokuapp.com/" + baseUrl + "/signup",
+        {
+          name: nameRef.current.value,
+          email: emailRef.current.value,
+          password: passRef.current.value,
+        }
+      )
       .then((result) => {
         if (!result.data || result.data.code == 11000 || result.data.errors) {
           emailRef.current.value = "";
