@@ -1,7 +1,6 @@
 import AllVideoFeed from "./allVideoFeed.jsx";
 import React, { useState, useRef, useEffect } from "react";
 import Peer from "simple-peer";
-import io from "socket.io-client";
 
 // necessary to avoid error display on screen when one user closes the browser
 import * as process from "process";
@@ -21,8 +20,6 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
   const learnerName = useRef(learnerDetails.learner);
 
   useEffect(() => {
-    socket.current = io.connect("/");
-
     /** Get the video stream via peerjs(webrtc) */
     const getStream = async () => {
       let stream;
@@ -107,6 +104,7 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
 
       // Destroys peer connection and removes peer from peersRef and peers when disconnecting
       socket.current.on("user-disconnected", (disconnectedSocketId) => {
+        // if (peersRef.current !== []) {
         const peerObj = peersRef.current.find(
           (p) => p.peerId === disconnectedSocketId
         );
@@ -118,6 +116,22 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
         );
         peersRef.current = newPeers;
         setPeers(newPeers);
+        // }
+      });
+
+      socket.current.on("disconnect-all-users", () => {
+        console.log("DISCONNECTING ALL USERS!");
+        peersRef.current.forEach((peerObj) => {
+          peerObj.peer.destroy();
+        });
+        peersRef.current = [];
+        setPeers([]);
+        socket.current.disconnect();
+        setDisplay("logged in!");
+      });
+
+      socket.current.on("user-connected", (learnerName) => {
+        console.log(`${learnerName} joined the room`);
       });
     };
     getStream();
@@ -176,6 +190,26 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
 
   return (
     <div>
+      <button
+        className="btn btn-outline-dark room-btn"
+        onClick={() => {
+          setDisplay("logged in!");
+          socket.current.emit("disconnect-me", klassId);
+          socket.current.disconnect();
+        }}
+      >
+        Leave session
+      </button>
+      <button
+        className="btn btn-outline-dark room-btn"
+        onClick={() => {
+          setDisplay("logged in!");
+          socket.current.emit("disconnect-all-users", klassId);
+          // socket.current.disconnect();
+        }}
+      >
+        End session for all
+      </button>
       <AllVideoFeed
         peers={peers}
         learnerId={learnerId}
