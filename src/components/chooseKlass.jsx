@@ -15,7 +15,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
   2. basically this component will keep re-running until result comes bck from axios.get
   */
 
-  axios.get(baseUrl + "/class", auth).then((result) => {
+  axios.get("/class", auth).then((result) => {
     if (!allKlasses) {
       setAllKlasses(result.data);
     }
