@@ -1,5 +1,6 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
+// To support dotenv on frontend (not required now)
 const Dotenv = require("dotenv-webpack");
 
 module.exports = {

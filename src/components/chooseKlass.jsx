@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import LogoutBtn from "./logoutBtn.jsx";
-// No need to import dotenv here (dotenv does not work on client side. Dotenv is imported in webpack.common.js)
-const baseUrl = process.env.baseURL || "http://localhost:3008";
 
 const ChooseKlass = ({ setDisplay, setKlassId }) => {
   const token = localStorage.getItem("sessionToken");

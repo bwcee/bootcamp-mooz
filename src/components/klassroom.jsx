@@ -138,7 +138,8 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
 
   /** Initiate call to other each user in room.
    * 1. Initialize new Peer for each user in the room.
-   * 2. Emit own signal via sockets to each user in the room. "Inititator: true" enables user to emit signal to userToSignal immediately. */
+   * 2. Emit own signal via sockets to each user in the room.
+   * "Inititator: true" enables user to emit signal to userToSignal immediately. */
   const createPeer = (
     userToSignal,
     callerId,
@@ -167,7 +168,10 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
 
     return peer;
   };
-
+  // To accept a call from the newly joined user.
+  // * 1. Initialize new Peer for newly joined user in the room
+  // * 2. Emit own signal via sockets to newly joined user.
+  // * 3. Accept signal from newly-joined user to establish signal handshake.
   const addPeer = (incomingSignal, callerId, stream) => {
     const peer = new Peer({
       initiator: false,

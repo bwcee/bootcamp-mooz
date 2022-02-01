@@ -1,7 +1,5 @@
 import React, { useRef } from "react";
 import axios from "axios";
-// // No need to import dotenv here (dotenv does not work on client side. Dotenv is imported in webpack.common.js)
-// const baseUrl = process.env.baseURL || "http://localhost:3008";
 
 function FormComponent({ signUpState, setDisplay, setSignUpState }) {
   const emailRef = useRef();
