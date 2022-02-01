@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import LogoutBtn from "./logoutBtn.jsx";
-import io, { Socket } from "socket.io-client";
 
-const ChooseKlass = ({ setDisplay, setKlassId, socket }) => {
+const ChooseKlass = ({ setDisplay, setKlassId }) => {
   const token = localStorage.getItem("sessionToken");
   const auth = { headers: { Authorization: `Bearer ${token}` } };
   const [allKlasses, setAllKlasses] = useState();
