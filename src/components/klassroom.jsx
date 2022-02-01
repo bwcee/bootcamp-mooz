@@ -78,6 +78,7 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
               peer,
             },
           ]);
+          console.log("PEERSREF LENGTH", peersRef.current.length);
         });
       });
 
@@ -104,7 +105,6 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
 
       // Destroys peer connection and removes peer from peersRef and peers when disconnecting
       socket.current.on("user-disconnected", (disconnectedSocketId) => {
-        // if (peersRef.current !== []) {
         const peerObj = peersRef.current.find(
           (p) => p.peerId === disconnectedSocketId
         );
@@ -116,7 +116,6 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
         );
         peersRef.current = newPeers;
         setPeers(newPeers);
-        // }
       });
 
       socket.current.on("disconnect-all-users", () => {

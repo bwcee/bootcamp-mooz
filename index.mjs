@@ -154,6 +154,28 @@ io.on("connection", (socket) => {
     });
   });
 
+  socket.on("disconnect", () => {
+    console.log(
+      "RUNNING DISCONNECT. Socket ID of disconnected user:",
+      socket.id
+    );
+    const roomId = socketToRoom[socket.id];
+    let room = users[roomId];
+    if (room) {
+      console.log("EXECUTING DISCONNECT", room);
+      if (room.some((userObj) => userObj.socketId === socket.id)) {
+        console.log("EXECUTING ACTUAL DISCONNECT");
+        let room = users[roomId];
+        if (room) {
+          room = room.filter((userObj) => userObj.socketId !== socket.id);
+          users[roomId] = room;
+        }
+        socket.broadcast.emit("user-disconnected", socket.id);
+        console.log("user-disconnected is sent out");
+      }
+    }
+  });
+
   socket.on("disconnect-me", (roomId) => {
     console.log(`disconnecting ${socket.id} in klass ${roomId}`);
     let room = users[roomId];
