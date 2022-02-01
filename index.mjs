@@ -92,14 +92,26 @@ const socketToRoom = {};
 
 /** Establish socket connection */
 io.on("connection", (socket) => {
+  socket.on("room-mode", (roomId) => {
+    console.log('running "check-room-in-use"');
+    if (users[roomId]) {
+      socket.emit("room-mode", "Join session");
+    } else {
+      socket.emit("room-mode", "Start session");
+    }
+  });
+
   socket.on("join-room", (roomId, learnerId, learnerName) => {
+    console.log('running "join-room"');
+    socket.join(roomId);
+    io.to(roomId).emit("user-connected", learnerName);
     if (users[roomId]) {
       /** The following code is to limit the number of users in the room */
-      // const length = users[roomId].length;
-      // if (length === 4) {
-      //   socket.emit("room-full");
-      //   return;
-      // }
+      const length = users[roomId].length;
+      if (length === 4) {
+        socket.emit("room-full");
+        return;
+      }
       users[roomId].push({
         socketId: socket.id,
         learnerId: learnerId,
@@ -119,13 +131,13 @@ io.on("connection", (socket) => {
     const usersInThisRoom = users[roomId].filter(
       (userObj) => userObj.socketId !== socket.id
     );
-
+    // socket.emit : emit to just one socket
+    // io.sockets.emit : emit to all sockets
     socket.emit("all-users-data", usersInThisRoom);
   });
 
   // Transfer newly joined user (caller)'s signal (+ other data) to each user (call recipients) in the room
   socket.on("sending-signal", (payload) => {
-    console.log('running "sending-signal"', payload);
     io.to(payload.userToSignal).emit("user-joined", {
       signal: payload.signal,
       callerId: payload.callerId,
@@ -136,16 +148,15 @@ io.on("connection", (socket) => {
 
   // Send user (call recipient)'s signal to newly joined user (caller)
   socket.on("returning-signal", (payload) => {
-    console.log('running "returning-signal"', payload);
     io.to(payload.callerId).emit("receiving-returned-signal", {
       signal: payload.signal,
       id: socket.id,
     });
   });
 
-  socket.on("disconnect", () => {
-    console.log(`disconnected socket is ran. socket.id = ${socket.id}`);
-    const roomId = socketToRoom[socket.id];
+  // Trigger sender of "disconnect-me" to disconnect
+  socket.on("disconnect-me", (roomId) => {
+    console.log(`disconnecting ${socket.id} in klass ${roomId}`);
     let room = users[roomId];
     if (room) {
       room = room.filter((userObj) => userObj.socketId !== socket.id);
@@ -154,6 +165,32 @@ io.on("connection", (socket) => {
     // send socketId of disconnected user to everyone in the room
     socket.broadcast.emit("user-disconnected", socket.id);
     console.log("user-disconnected is sent out");
+  });
+
+  // Trigger all users in room to disconnect
+  socket.on("disconnect-all-users", (roomId) => {
+    console.log(`disconnecting all users in klass ${roomId}`);
+    users[roomId] = [];
+
+    io.to(roomId).emit("disconnect-all-users");
+  });
+
+  // This enables the user to disconnect properly when the user disconnects by closing the browser window
+  socket.on("disconnect", () => {
+    const roomId = socketToRoom[socket.id];
+    let room = users[roomId];
+    if (room) {
+      if (room.some((userObj) => userObj.socketId === socket.id)) {
+        console.log(`disconnecting ${socket.id} in klass ${roomId}`);
+        let room = users[roomId];
+        if (room) {
+          room = room.filter((userObj) => userObj.socketId !== socket.id);
+          users[roomId] = room;
+        }
+        socket.broadcast.emit("user-disconnected", socket.id);
+        console.log("user-disconnected is sent out");
+      }
+    }
   });
 });
 

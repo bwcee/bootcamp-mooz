@@ -1,8 +1,5 @@
 # Technical Notes
 
-- Run this command in terminal to start peerjs server:
-  npx peerjs --port 3001
-
 - Run this command in terminal to start mongoose:
   mongosh
 
@@ -39,6 +36,7 @@
     "updatedAt" : ISODate("2022-01-27T08:41:02.308Z"),
     "__v" : 2
 }
+
 ```
 
 - this is what displayKlasses looks like
@@ -60,7 +58,7 @@
 
 # Project Learning Notes
 
-- used a few new techs/ concepts for this project:
+- used/ learned a few new techs/ concepts for this project:
 
   - Server side
     - mongodb/ mongoose
@@ -69,6 +67,7 @@
     - socket.io-client
     - simple-peer
     - Navigator object & `<video>` html element
+    - localStorage limitations
 
 - very importantly, also learnt we need to ensure we know how to use the tools within the context of our chosen tech stack => in this case MongoDB, Express, React, Node (MERN)
 
@@ -116,7 +115,6 @@
          io.emit("message", body)
      })
    })
-
 
 
    server.listen(8000, () => console.log("server is running on port 8000"));
@@ -185,6 +183,12 @@
 - [srcObject](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/srcObject)
   - `<video>` generally uses src attribute which is a url/file path in order to gain access to video to play
   - in our case, we haf a mediaStream object returned frm Navigator.mediaDevices.getUserMedia(), so haf to use srcObject instead
+
+## localStorage
+
+- [Storing and retrieving JavaScript objects in localStorage](https://blog.logrocket.com/storing-retrieving-javascript-objects-localstorage/)
+  - turns out localStorage can only store strings. so if want to store objects, need to use `JSON.stringify()` to convert objec to a JSON string before storage
+  - on retrieval. use `JSON.parse()` to convert the JSON string back into a javascript object literal
 
 # HOW SIMPLE-PEER CODE WORKS
 

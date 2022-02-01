@@ -4,6 +4,7 @@ const LogoutBtn = () => {
   const submitLogout = () => {
     try {
       localStorage.removeItem("sessionToken");
+      localStorage.removeItem("learnerDetails");
       window.location = "/";
     } catch (err) {
       console.log(err);
@@ -12,7 +13,7 @@ const LogoutBtn = () => {
 
   return (
     <>
-      <a class="dropdown-item" href="#" onClick={submitLogout}>
+      <a className="dropdown-item" href="#" onClick={submitLogout}>
         Sign out
       </a>
     </>
