@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.mjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "node seeders/seeder.mjs",
-    "start": "nodemon index.mjs",
-    "watch": "nodemon index.mjs"
+    "start": "node index.mjs",
+    "start:dev": "nodemon index.mjs"
   },
   "keywords": [],
   "author": "",
