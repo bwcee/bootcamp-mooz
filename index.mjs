@@ -9,14 +9,14 @@ import verifyToken from "./middlewares/auth.mjs";
 /* get SALT here and pass it as argument to controllers below */
 import dotenv from "dotenv";
 dotenv.config();
-const { SALT } = process.env;
+const { SALT, DATABASE } = process.env;
 /* 
 1. this is all tt is needed to create connection to our db 
 2. the funky syntax in console.log/err just to print out in color so easier to see
 */
 mongoose
-  // Tristan: changed "localhost" to "127.0.0.1" because this is the only way it will work on mac
-  .connect("mongodb://127.0.0.1:27017/zoom_dev")
+  // DATABASE refers to "DATABASE" in .env file
+  .connect(DATABASE)
   .then(() =>
     console.log("\x1b[34m%s\x1b[0m", "sucessfully connected to mongodb!!")
   )

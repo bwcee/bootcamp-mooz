@@ -5,13 +5,16 @@ import bcrypt from "bcrypt";
 
 const hash = bcrypt.hashSync("123", 8);
 
+import dotenv from "dotenv";
+dotenv.config();
+const { DATABASE } = process.env;
 /* 
 1. need to put the connection here cos this file runs independently of index.mjs in root folder where connection defined 
 2. placed a seed script in package.json so just need to [npm run seed] to run this file
 */
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/zoom_dev")
+  .connect(DATABASE)
   .then(() => console.log("successfully connected to mongodb!!"))
   .catch((err) => console.err("error in connecting to mongodb!!", err));
 

@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.mjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "node seeders/seeder.mjs",
-    "start": "nodemon index.mjs",
-    "watch": "nodemon index.mjs"
+    "start": "node index.mjs",
+    "start:dev": "nodemon index.mjs"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +16,7 @@
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.7",
+    "nodemon": "^2.0.15",
     "process": "^0.11.10",
     "simple-peer": "^9.11.0",
     "socket.io": "^4.4.1",
