@@ -15,16 +15,11 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
   2. basically this component will keep re-running until result comes bck from axios.get
   */
 
-  axios
-    .get(
-      "https://afternoon-gorge-22810.herokuapp.com/" + baseUrl + "/class",
-      auth
-    )
-    .then((result) => {
-      if (!allKlasses) {
-        setAllKlasses(result.data);
-      }
-    });
+  axios.get(baseUrl + "/class", auth).then((result) => {
+    if (!allKlasses) {
+      setAllKlasses(result.data);
+    }
+  });
 
   /* need this if condition to prevent allKlasses.map frm failing when allKlasses is not yet populated with result.data.klasses */
   if (allKlasses) {

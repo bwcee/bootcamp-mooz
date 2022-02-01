@@ -13,7 +13,7 @@ function FormComponent({ signUpState, setDisplay, setSignUpState }) {
       return alert("Eh fill in all fields leh!");
     }
     axios
-      .post("https://afternoon-gorge-22810.herokuapp.com/" + baseUrl + "/", {
+      .post(baseUrl + "/", {
         email: emailRef.current.value,
         password: passRef.current.value,
       })
@@ -39,14 +39,11 @@ function FormComponent({ signUpState, setDisplay, setSignUpState }) {
       return alert("Eh fill in all fields leh!");
     }
     axios
-      .post(
-        "https://afternoon-gorge-22810.herokuapp.com/" + baseUrl + "/signup",
-        {
-          name: nameRef.current.value,
-          email: emailRef.current.value,
-          password: passRef.current.value,
-        }
-      )
+      .post(baseUrl + "/signup", {
+        name: nameRef.current.value,
+        email: emailRef.current.value,
+        password: passRef.current.value,
+      })
       .then((result) => {
         if (!result.data || result.data.code == 11000 || result.data.errors) {
           emailRef.current.value = "";
