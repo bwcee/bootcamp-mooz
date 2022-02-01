@@ -5,7 +5,9 @@
   "main": "index.mjs",
   "scripts": {
     "seed": "node seeders/seeder.mjs",
-    "start": "node index.mjs"
+    "start": "node index.mjs",
+    "start:dev": "nodemon index.mjs",
+    "build": "webpack --config webpack_conf/webpack.prod.js"
   },
   "keywords": [],
   "author": "",
@@ -38,7 +40,7 @@
     "react-refresh": "^0.11.0",
     "sass": "^1.49.0",
     "sass-loader": "^12.4.0",
-    "webpack": "^5.66.0",
+    "webpack": "^5.68.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-middleware": "^5.3.0",
     "webpack-dev-server": "^4.7.3",
