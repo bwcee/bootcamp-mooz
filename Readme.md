@@ -226,3 +226,16 @@
 
 - Solution: local storage limited to handle only string key/value pairs. To store and access object in local storage, you should use JSON.stringify to store and JSON.parse to get the object
   https://stackoverflow.com/questions/42020577/storing-objects-in-localstorage
+
+# DEPLOYMENT ONLINE
+
+## Mongo Atlas
+
+- DB is hosted on mongo atlas (free plan)
+- Updated mongoose URL (see .env details sent on chat)
+
+## Heroku
+
+- Tristan uploaded it on his personal heroku account.
+- To push to heroku, just push all new changes to origin main.
+- Tristan will push to heroku using my account from there
