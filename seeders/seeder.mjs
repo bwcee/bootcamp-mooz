@@ -9,21 +9,37 @@ const hash = bcrypt.hashSync("123", 8);
 1. need to put the connection here cos this file runs independently of index.mjs in root folder where connection defined 
 2. placed a seed script in package.json so just need to [npm run seed] to run this file
 */
+
 mongoose
   .connect("mongodb://127.0.0.1:27017/zoom_dev")
   .then(() => console.log("successfully connected to mongodb!!"))
   .catch((err) => console.err("error in connecting to mongodb!!", err));
 
 const userSeeds = [
-  { name: "teacha", email: "teacha@teacha.com", password: hash, role: "admin" },
-  { name: "boya", email: "boya@boya.com", password: hash, role: "learner" },
-  { name: "boyb", email: "boyb@boyb.com", password: hash, role: "learner" },
-  { name: "boyc", email: "boyc@boyc.com", password: hash, role: "learner" },
-  { name: "boyd", email: "boyd@boyd.com", password: hash, role: "learner" },
-  { name: "boye", email: "boye@boye.com", password: hash, role: "learner" },
-  { name: "boyf", email: "boyf@boyf.com", password: hash, role: "learner" },
-  { name: "boyg", email: "boyg@boyg.com", password: hash, role: "learner" },
-  { name: "boyhg", email: "boyh@boyh.com", password: hash, role: "learner" },
+  {
+    name: "Daddy Foong",
+    email: "teacha@teacha.com",
+    password: hash,
+    role: "admin",
+  },
+  { name: "Boon Wee", email: "boya@boya.com", password: hash, role: "learner" },
+  { name: "Justus", email: "boyb@boyb.com", password: hash, role: "learner" },
+  { name: "Tristan", email: "boyc@boyc.com", password: hash, role: "learner" },
+  {
+    name: "Bad Boi Foong",
+    email: "boyd@boyd.com",
+    password: hash,
+    role: "learner",
+  },
+  {
+    name: "Naughty Foong",
+    email: "boye@boye.com",
+    password: hash,
+    role: "learner",
+  },
+  { name: "Gary", email: "boyf@boyf.com", password: hash, role: "learner" },
+  { name: "Jia Hao", email: "boyg@boyg.com", password: hash, role: "learner" },
+  { name: "Dom", email: "boyh@boyh.com", password: hash, role: "learner" },
 ];
 
 /* 

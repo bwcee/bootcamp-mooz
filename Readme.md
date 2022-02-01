@@ -1,8 +1,5 @@
 # Technical Notes
 
-- Run this command in terminal to start peerjs server:
-  npx peerjs --port 3001
-
 - Run this command in terminal to start mongoose:
   mongosh
 
@@ -39,6 +36,7 @@
     "updatedAt" : ISODate("2022-01-27T08:41:02.308Z"),
     "__v" : 2
 }
+
 ```
 
 - this is what displayKlasses looks like
@@ -117,7 +115,6 @@
          io.emit("message", body)
      })
    })
-
 
 
    server.listen(8000, () => console.log("server is running on port 8000"));

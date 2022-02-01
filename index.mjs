@@ -107,11 +107,11 @@ io.on("connection", (socket) => {
     io.to(roomId).emit("user-connected", learnerName);
     if (users[roomId]) {
       /** The following code is to limit the number of users in the room */
-      // const length = users[roomId].length;
-      // if (length === 4) {
-      //   socket.emit("room-full");
-      //   return;
-      // }
+      const length = users[roomId].length;
+      if (length === 4) {
+        socket.emit("room-full");
+        return;
+      }
       users[roomId].push({
         socketId: socket.id,
         learnerId: learnerId,
@@ -154,28 +154,7 @@ io.on("connection", (socket) => {
     });
   });
 
-  socket.on("disconnect", () => {
-    console.log(
-      "RUNNING DISCONNECT. Socket ID of disconnected user:",
-      socket.id
-    );
-    const roomId = socketToRoom[socket.id];
-    let room = users[roomId];
-    if (room) {
-      console.log("EXECUTING DISCONNECT", room);
-      if (room.some((userObj) => userObj.socketId === socket.id)) {
-        console.log("EXECUTING ACTUAL DISCONNECT");
-        let room = users[roomId];
-        if (room) {
-          room = room.filter((userObj) => userObj.socketId !== socket.id);
-          users[roomId] = room;
-        }
-        socket.broadcast.emit("user-disconnected", socket.id);
-        console.log("user-disconnected is sent out");
-      }
-    }
-  });
-
+  // Trigger sender of "disconnect-me" to disconnect
   socket.on("disconnect-me", (roomId) => {
     console.log(`disconnecting ${socket.id} in klass ${roomId}`);
     let room = users[roomId];
@@ -188,6 +167,7 @@ io.on("connection", (socket) => {
     console.log("user-disconnected is sent out");
   });
 
+  // Trigger all users in room to disconnect
   socket.on("disconnect-all-users", (roomId) => {
     console.log(`disconnecting all users in klass ${roomId}`);
     users[roomId] = [];
@@ -195,9 +175,23 @@ io.on("connection", (socket) => {
     io.to(roomId).emit("disconnect-all-users");
   });
 
-  // socket.on("disconnect-all-users", (roomId) => {
-  //   io.in(roomId).disconnectSockets();
-  // });
+  // This enables the user to disconnect properly when the user disconnects by closing the browser window
+  socket.on("disconnect", () => {
+    const roomId = socketToRoom[socket.id];
+    let room = users[roomId];
+    if (room) {
+      if (room.some((userObj) => userObj.socketId === socket.id)) {
+        console.log(`disconnecting ${socket.id} in klass ${roomId}`);
+        let room = users[roomId];
+        if (room) {
+          room = room.filter((userObj) => userObj.socketId !== socket.id);
+          users[roomId] = room;
+        }
+        socket.broadcast.emit("user-disconnected", socket.id);
+        console.log("user-disconnected is sent out");
+      }
+    }
+  });
 });
 
 /* set app to listen on the given port */

@@ -13,8 +13,8 @@ const AllVideoFeed = ({ peers, learnerId, learnerName, userVideo }) => {
       <div id="video-grid">
         <div>
           <video muted ref={userVideo} autoPlay playsInline></video>
-          <p>LearnerId: {learnerId.current}</p>
-          <p>LearnerName: {learnerName.current} </p>
+          {/* <p>LearnerId: {learnerId.current}</p> */}
+          <p>{learnerName.current} </p>
         </div>
         {peers.map((peer) => {
           return (
