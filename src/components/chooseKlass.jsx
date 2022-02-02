@@ -203,7 +203,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
         </div>
       </nav>
       <div className="d-flex vh-100" id="dash-container">
-        <div className="col-2 p-0">
+        <div className="col-2">
           <div className="d-flex flex-column" id="left-pane">
             <div
               className="btn-group-vertical btn-group-lg shadow-sm mb-4"
@@ -242,7 +242,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
             </div>
           </div>
         </div>
-        <div className="col-10 p-0" id="right-pane">
+        <div className="col-10" id="right-pane">
           <div className="d-flex justify-content-between mb-4">
             <div className="d-flex">
               <p className="m-0 me-3" id="rooms-title">
