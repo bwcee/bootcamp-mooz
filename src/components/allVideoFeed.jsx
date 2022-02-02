@@ -32,7 +32,6 @@ const AllVideoFeed = ({
   const hideVideo = async () => {
     console.log('running "hideVideo');
     const videoTrack = userStream.current.getTracks()[1];
-    // console.log("This is the userStream", userStream.current.getTracks()[1]);
 
     if (videoTrack.enabled) {
       videoTrack.enabled = false;
