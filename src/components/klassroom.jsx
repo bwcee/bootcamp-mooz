@@ -8,8 +8,15 @@ window.global = window;
 window.process = process;
 window.Buffer = [];
 
+// Helper function to capitalize names
+
+function capitalizeName(name) {
+  return name.replace(/\b(\w)/g, (s) => s.toUpperCase());
+}
+
 const Klassroom = ({ setDisplay, klassId, socket }) => {
   const [peers, setPeers] = useState([]);
+  const userStream = useRef();
   const userVideo = useRef();
   const peersRef = useRef([]);
 
@@ -17,16 +24,16 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
   const learnerDetails = JSON.parse(localStorage.getItem("learnerDetails"));
 
   const learnerId = useRef(learnerDetails.id);
-  const learnerName = useRef(learnerDetails.learner);
+  const learnerName = useRef(capitalizeName(learnerDetails.learner));
 
   useEffect(() => {
     /** Get the video stream via peerjs(webrtc) */
     const getStream = async () => {
-      let stream;
+      // let stream;
 
       // get stream
       try {
-        stream = await navigator.mediaDevices.getUserMedia({
+        userStream.current = await navigator.mediaDevices.getUserMedia({
           video: true,
           audio: true,
         });
@@ -36,7 +43,7 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
 
       // add stream to main user's video
       if (userVideo.current) {
-        userVideo.current.srcObject = stream;
+        userVideo.current.srcObject = userStream.current;
       }
 
       // emit roomId via sockets "join-room"
@@ -61,7 +68,7 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
             // your own learnerName
             learnerName.current,
             // your own stream
-            stream
+            userStream.current
           );
           peersRef.current.push({
             peerId: userObj.socketId,
@@ -85,7 +92,11 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
       // To add newly joined user's peer into peersRef and peers state
       socket.current.on("user-joined", (payload) => {
         console.log("received signal from newly joined user");
-        const peer = addPeer(payload.signal, payload.callerId, stream);
+        const peer = addPeer(
+          payload.signal,
+          payload.callerId,
+          userStream.current
+        );
         peersRef.current.push({
           peerId: payload.callerId,
           learnerId: payload.learnerId,
@@ -218,6 +229,8 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
         learnerId={learnerId}
         learnerName={learnerName}
         userVideo={userVideo}
+        userStream={userStream}
+        socket={socket}
       />
     </div>
   );
