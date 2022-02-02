@@ -8,12 +8,12 @@ const AllVideoFeed = ({
   userVideo,
   userStream,
   socket,
+  paxInRoom,
+  setPaxInRoom,
 }) => {
-  const audioOn = useRef(true);
   const [audioButton, setAudioButton] = useState("Mute");
   const [videoButton, setVideoButton] = useState("Hide cam");
 
-  const [paxInRoom, setPaxInRoom] = useState();
   useEffect(() => {
     setPaxInRoom(peers.length + 1);
   }, [peers]);
@@ -44,7 +44,6 @@ const AllVideoFeed = ({
 
   return (
     <>
-      <div className="btn btn-outline-dark room-btn">{paxInRoom} in room</div>
       <div id="video-grid">
         <div className="d-flex flex-fill">
           <video muted ref={userVideo} autoPlay playsInline></video>

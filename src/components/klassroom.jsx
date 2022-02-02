@@ -19,6 +19,7 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
   const userStream = useRef();
   const userVideo = useRef();
   const peersRef = useRef([]);
+  const [paxInRoom, setPaxInRoom] = useState();
 
   // get userId and userName
   const learnerDetails = JSON.parse(localStorage.getItem("learnerDetails"));
@@ -232,7 +233,7 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
           <div className="top-bar-border">
             <a href="#" className="btn">
               <i class="fas fa-users fs-5"></i>
-              <span className="ms-2">1 / 4</span>
+              <span className="ms-2">{paxInRoom} / 4</span>
             </a>
           </div>
         </div>
@@ -276,6 +277,8 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
             userVideo={userVideo}
             userStream={userStream}
             socket={socket}
+            paxInRoom={paxInRoom}
+            setPaxInRoom={setPaxInRoom}
           />
         </div>
         <div className="d-flex align-items-center">
