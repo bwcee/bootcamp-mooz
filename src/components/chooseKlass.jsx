@@ -7,11 +7,14 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
   const auth = { headers: { Authorization: `Bearer ${token}` } };
   const [allKlasses, setAllKlasses] = useState();
   let displayKlasses;
+  const downloadLink = useRef();
+  const [attendCSV, setAttendCSV] = useState();
 
   /* 
   1. if condition below prevents infinite loop from taking place
   2. basically this component will keep re-running until result comes bck from axios.get
   */
+
   axios.get("/class", auth).then((result) => {
     if (!allKlasses) {
       setAllKlasses(result.data);
@@ -52,10 +55,46 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
                       onClick={() => {
                         setDisplay("chose klass!");
                         setKlassId(el._id);
+                        /* attendance only taken for learners, not teachers */
+                        if (allKlasses.learnerRole == "learner") {
+                          axios.put(
+                            "/class/attendance",
+                            {
+                              klassId: el._id,
+                              learnerId: allKlasses.learnerId,
+                            },
+                            auth
+                          );
+                        }
                       }}
                     >
-                      Start session
+                      Join session
                     </a>
+                    {/* show download attendance btn only if learnerRole is not learner */}
+                    {allKlasses.learnerRole !== "learner" ? (
+                      <a
+                        href="#"
+                        className="btn btn-outline-dark room-btn"
+                        onClick={() => {
+                          /* function to download attendance here... */
+                          axios
+                            .get(`/class/attendance/${el._id}`, auth)
+                            .then((result) => {
+                              console.log("This is attendance csv", result);
+
+                              if (!attendCSV) {
+                                setAttendCSV(result.data);
+                              } else {
+                                resetAttendCSV();
+                              }
+                            });
+                        }}
+                      >
+                        Download attendance
+                      </a>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>
@@ -64,13 +103,21 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
         </div>
       );
     });
+
     /* set local storage for learner details */
     const learnerDetails = {
       id: allKlasses.learnerId,
       learner: allKlasses.learnerName,
+      role: allKlasses.learnerRole,
     };
     localStorage.setItem("learnerDetails", JSON.stringify(learnerDetails));
   }
+
+  /* function to call  */
+  const resetAttendCSV = () => {
+    downloadLink.current.click();
+    setAttendCSV();
+  };
   return (
     <div id="dashboard">
       <nav className="navbar navbar-expand-lg navbar-light" id="navbar">
@@ -82,6 +129,13 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
               mooz
             </span>
           </a>
+          {/* "invisible link to enable auto-download of csv file" */}
+          <a
+            ref={downloadLink}
+            href={"data:text/csv;charset=utf-8," + attendCSV}
+            target="blank"
+            download="exported.csv"
+          ></a>
           <button
             className="navbar-toggler"
             type="button"

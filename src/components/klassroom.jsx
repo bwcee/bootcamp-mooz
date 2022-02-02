@@ -1,16 +1,22 @@
 import AllVideoFeed from "./allVideoFeed.jsx";
 import React, { useState, useRef, useEffect } from "react";
 import Peer from "simple-peer";
-import io from "socket.io-client";
-import * as process from "process";
 
+// necessary to avoid error display on screen when one user closes the browser
+import * as process from "process";
 window.global = window;
 window.process = process;
 window.Buffer = [];
 
-const Klassroom = ({ setDisplay, klassId }) => {
+// Helper function to capitalize names
+
+function capitalizeName(name) {
+  return name.replace(/\b(\w)/g, (s) => s.toUpperCase());
+}
+
+const Klassroom = ({ setDisplay, klassId, socket }) => {
   const [peers, setPeers] = useState([]);
-  const socket = useRef();
+  const userStream = useRef();
   const userVideo = useRef();
   const peersRef = useRef([]);
 
@@ -18,18 +24,16 @@ const Klassroom = ({ setDisplay, klassId }) => {
   const learnerDetails = JSON.parse(localStorage.getItem("learnerDetails"));
 
   const learnerId = useRef(learnerDetails.id);
-  const learnerName = useRef(learnerDetails.learner);
+  const learnerName = useRef(capitalizeName(learnerDetails.learner));
 
-  /** Get the video stream via peerjs(webrtc) */
   useEffect(() => {
-    socket.current = io.connect("/");
-
+    /** Get the video stream via peerjs(webrtc) */
     const getStream = async () => {
-      let stream;
+      // let stream;
 
       // get stream
       try {
-        stream = await navigator.mediaDevices.getUserMedia({
+        userStream.current = await navigator.mediaDevices.getUserMedia({
           video: true,
           audio: true,
         });
@@ -39,7 +43,7 @@ const Klassroom = ({ setDisplay, klassId }) => {
 
       // add stream to main user's video
       if (userVideo.current) {
-        userVideo.current.srcObject = stream;
+        userVideo.current.srcObject = userStream.current;
       }
 
       // emit roomId via sockets "join-room"
@@ -64,7 +68,7 @@ const Klassroom = ({ setDisplay, klassId }) => {
             // your own learnerName
             learnerName.current,
             // your own stream
-            stream
+            userStream.current
           );
           peersRef.current.push({
             peerId: userObj.socketId,
@@ -81,28 +85,26 @@ const Klassroom = ({ setDisplay, klassId }) => {
               peer,
             },
           ]);
+          console.log("PEERSREF LENGTH", peersRef.current.length);
         });
       });
 
       // To add newly joined user's peer into peersRef and peers state
       socket.current.on("user-joined", (payload) => {
         console.log("received signal from newly joined user");
-        const peer = addPeer(payload.signal, payload.callerId, stream);
+        const peer = addPeer(
+          payload.signal,
+          payload.callerId,
+          userStream.current
+        );
         peersRef.current.push({
           peerId: payload.callerId,
           learnerId: payload.learnerId,
           learnerName: payload.learnerName,
           peer,
         });
-        setPeers((oldPeers) => [
-          ...oldPeers,
-          {
-            peerId: payload,
-            learnerId: payload.learnerId,
-            learnerName: payload.learnerName,
-            peer,
-          },
-        ]);
+        // Need to use this method to update setPeers if not after one user disconnects and reconnects, the remaining users will see two videos of the reconnected user.
+        setPeers([...peersRef.current]);
       });
 
       // Accepts signal from user in the room (call recipient) in a signal handshake
@@ -124,8 +126,22 @@ const Klassroom = ({ setDisplay, klassId }) => {
           (p) => p.peerId !== disconnectedSocketId
         );
         peersRef.current = newPeers;
-        console.log(newPeers);
         setPeers(newPeers);
+      });
+
+      socket.current.on("disconnect-all-users", () => {
+        console.log("DISCONNECTING ALL USERS!");
+        peersRef.current.forEach((peerObj) => {
+          peerObj.peer.destroy();
+        });
+        peersRef.current = [];
+        setPeers([]);
+        socket.current.disconnect();
+        setDisplay("logged in!");
+      });
+
+      socket.current.on("user-connected", (learnerName) => {
+        console.log(`${learnerName} joined the room`);
       });
     };
     getStream();
@@ -133,7 +149,8 @@ const Klassroom = ({ setDisplay, klassId }) => {
 
   /** Initiate call to other each user in room.
    * 1. Initialize new Peer for each user in the room.
-   * 2. Emit own signal via sockets to each user in the room. "Inititator: true" enables user to emit signal to userToSignal immediately. */
+   * 2. Emit own signal via sockets to each user in the room.
+   * "Inititator: true" enables user to emit signal to userToSignal immediately. */
   const createPeer = (
     userToSignal,
     callerId,
@@ -162,7 +179,10 @@ const Klassroom = ({ setDisplay, klassId }) => {
 
     return peer;
   };
-
+  // To accept a call from the newly joined user.
+  // * 1. Initialize new Peer for newly joined user in the room
+  // * 2. Emit own signal via sockets to newly joined user.
+  // * 3. Accept signal from newly-joined user to establish signal handshake.
   const addPeer = (incomingSignal, callerId, stream) => {
     const peer = new Peer({
       initiator: false,
@@ -254,6 +274,8 @@ const Klassroom = ({ setDisplay, klassId }) => {
             learnerId={learnerId}
             learnerName={learnerName}
             userVideo={userVideo}
+            userStream={userStream}
+            socket={socket}
           />
         </div>
         <div className="d-flex align-items-center">
@@ -267,11 +289,25 @@ const Klassroom = ({ setDisplay, klassId }) => {
                 <i class="fas fa-bolt side-icon"></i>
                 <span className="side-text">Toolbox</span>
               </button>
-              <button className="btn d-flex flex-column align-items-center">
+              <button
+                className="btn d-flex flex-column align-items-center"
+                onClick={() => {
+                  setDisplay("logged in!");
+                  socket.current.emit("disconnect-all-users", klassId);
+                  // socket.current.disconnect();
+                }}
+              >
                 <i class="far fa-question-circle side-icon"></i>
                 <span className="side-text">Help</span>
               </button>
-              <button className="btn d-flex flex-column align-items-center">
+              <button
+                className="btn d-flex flex-column align-items-center"
+                onClick={() => {
+                  setDisplay("logged in!");
+                  socket.current.emit("disconnect-me", klassId);
+                  socket.current.disconnect();
+                }}
+              >
                 <i class="fas fa-sign-out-alt side-icon"></i>
                 <span className="side-text">Leave</span>
               </button>

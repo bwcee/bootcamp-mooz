@@ -8,7 +8,7 @@ schema description
 --------------------
 klassName - name of class
 members - learners registered/spsed to be attending this class. array spsed to contain learner_ids
-attendance - array of objects. ea obj is attendance for a particular day. hence obj made up of date & attednded array. array spsed to contain learner_ids    
+attendance - array of objects. ea obj is attendance for a particular day. hence obj made up of date & attended array. array in turn contains obj made of _id and endedClass keys     
 */
 const klassSchema = new Schema(
   {
@@ -17,7 +17,12 @@ const klassSchema = new Schema(
     attendance: [
       {
         date: Date,
-        attended: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+        attended: [
+          {
+            _id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+            endedClass: { type: Boolean, default: false },
+          },
+        ],
       },
     ],
   },

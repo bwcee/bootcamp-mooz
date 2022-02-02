@@ -1,8 +1,5 @@
 # Technical Notes
 
-- Run this command in terminal to start peerjs server:
-  npx peerjs --port 3001
-
 - Run this command in terminal to start mongoose:
   mongosh
 
@@ -39,24 +36,11 @@
     "updatedAt" : ISODate("2022-01-27T08:41:02.308Z"),
     "__v" : 2
 }
+
 ```
 
-- this is what displayKlasses looks like
-
-  ```
-  {
-    klasses:
-      [
-        {_id: '61eeb983d239cc6a736a50d7', klassName: 'class1'},
-        {_id: '61eeb983d239cc6a736a50da', klassName: 'class2'}
-      ],
-    learnerId: '61eeb983d239cc6a736a50cc',
-    learnerName: 'boyb'
-  }
-  ```
-
-- learnerDetails stored in local storage with `localStorage.setItem("learnerDetails", learnerDetails)`
-  <br>sample learnerDetails: `{id: '61eeb983d239cc6a736a50cc', learner: 'boyb'}`
+- learnerDetails stored in local storage with `localStorage.setItem("learnerDetails", JSON.stringify(learnerDetails))` (see ## localStorage below on need to use JSON.stringify )
+  <br>sample learnerDetails: `{"id":"61f9ff939db94bf7f7bec157","learner":"daddy foong","role":"admin"}`
 
 # Project Learning Notes
 
@@ -117,7 +101,6 @@
          io.emit("message", body)
      })
    })
-
 
 
    server.listen(8000, () => console.log("server is running on port 8000"));
@@ -193,6 +176,11 @@
   - turns out localStorage can only store strings. so if want to store objects, need to use `JSON.stringify()` to convert objec to a JSON string before storage
   - on retrieval. use `JSON.parse()` to convert the JSON string back into a javascript object literal
 
+## Misc References/ Notes
+
+- [Convert an array of objects to CSV string in JavaScript](https://dev.to/samueldjones/convert-an-array-of-objects-to-csv-string-in-javascript-337d) used this as ref to convert attendance results to csv string
+- There are many ways to download a csv file from the frontend, including creating an actual file, storing it somewhere in the backend and sending tt file file to the frontend. Chose the simplest way to do it => send csv data to frontend, use an invisible html link to download the data as a file. Prob not the most efficient way...
+
 # HOW SIMPLE-PEER CODE WORKS
 
 ## peersRef:
@@ -229,3 +217,16 @@
 
 - Solution: local storage limited to handle only string key/value pairs. To store and access object in local storage, you should use JSON.stringify to store and JSON.parse to get the object
   https://stackoverflow.com/questions/42020577/storing-objects-in-localstorage
+
+# DEPLOYMENT ONLINE
+
+## Mongo Atlas
+
+- DB is hosted on mongo atlas (free plan)
+- Updated mongoose URL (see .env details sent on chat)
+
+## Heroku
+
+- Tristan uploaded it on his personal heroku account.
+- To push to heroku, just push all new changes to origin main.
+- Tristan will push to heroku using my account from there
