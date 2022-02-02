@@ -19,6 +19,13 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
   const userStream = useRef();
   const userVideo = useRef();
   const peersRef = useRef([]);
+  const [paxInRoom, setPaxInRoom] = useState();
+  const [audioIcon, setAudioIcon] = useState(
+    <i className="fas fa-microphone side-icon"></i>
+  );
+  const [videoIcon, setVideoIcon] = useState(
+    <i class="fas fa-video side-icon"></i>
+  );
 
   // get userId and userName
   const learnerDetails = JSON.parse(localStorage.getItem("learnerDetails"));
@@ -144,6 +151,7 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
         console.log(`${learnerName} joined the room`);
       });
     };
+
     getStream();
   }, []);
 
@@ -202,37 +210,151 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
     return peer;
   };
 
+  const muteVideo = () => {
+    const audioTrack = userStream.current.getTracks()[0];
+    if (audioTrack.enabled) {
+      audioTrack.enabled = false;
+      setAudioIcon(<i class="fas fa-microphone-slash side-icon"></i>);
+    } else {
+      audioTrack.enabled = true;
+      setAudioIcon(<i className="fas fa-microphone side-icon"></i>);
+    }
+  };
+
+  const hideVideo = async () => {
+    console.log('running "hideVideo');
+    const videoTrack = userStream.current.getTracks()[1];
+    console.log(userStream.current.getTracks());
+    if (videoTrack.enabled) {
+      videoTrack.enabled = false;
+      setVideoIcon(<i class="fas fa-video-slash side-icon"></i>);
+    } else {
+      videoTrack.enabled = true;
+      setVideoIcon(<i class="fas fa-video side-icon"></i>);
+    }
+  };
+
+  useEffect(() => {
+    setPaxInRoom(peers.length + 1);
+  }, [peers]);
+
   return (
-    <div>
-      <button
-        className="btn btn-outline-dark room-btn"
-        onClick={() => {
-          setDisplay("logged in!");
-          socket.current.emit("disconnect-me", klassId);
-          socket.current.disconnect();
-        }}
-      >
-        Leave session
-      </button>
-      <button
-        className="btn btn-outline-dark room-btn"
-        onClick={() => {
-          setDisplay("logged in!");
-          socket.current.emit("disconnect-all-users", klassId);
-          // socket.current.disconnect();
-        }}
-      >
-        End session for all
-      </button>
-      <AllVideoFeed
-        peers={peers}
-        learnerId={learnerId}
-        learnerName={learnerName}
-        userVideo={userVideo}
-        userStream={userStream}
-        socket={socket}
-      />
-    </div>
+    <>
+      <div className="d-flex justify-content-between" id="top-bar">
+        <div className="d-flex align-items-center">
+          <div className="mx-3">
+            <i className="far fa-hand-spock" id="app-logo"></i>
+          </div>
+          <div className="d-flex align-items-center p-1 top-bar-border">
+            <div className="mx-3">
+              <small className="text-muted fw-bold">No agenda set</small>
+            </div>
+            <a href="#" className="btn btn-outline-dark" id="top-agenda-btn">
+              <small className="fw-bold mx-1">Set agenda</small>
+            </a>
+          </div>
+        </div>
+        <div className="d-flex align-items-center">
+          <div className="top-bar-border">
+            <a href="#" className="btn">
+              <i class="fas fa-cog fs-5"></i>
+            </a>
+          </div>
+          <div className="top-bar-border mx-1">
+            <a href="#" className="btn">
+              <i class="fas fa-user-plus fs-5"></i>
+            </a>
+          </div>
+          <div className="top-bar-border">
+            <a href="#" className="btn">
+              <i class="fas fa-users fs-5"></i>
+              <span className="ms-2">{paxInRoom} / 4</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className="d-flex video-container">
+        <div className="d-flex align-items-center">
+          <div className="side-bar m-3 py-2">
+            <div class="btn-group-vertical d-flex flex-column">
+              <button className="btn" onClick={muteVideo}>
+                {audioIcon}
+                <span className="side-text">Mic</span>
+              </button>
+              <button
+                className="btn d-flex flex-column align-items-center"
+                onClick={hideVideo}
+              >
+                {videoIcon}
+                <span className="side-text">Video</span>
+              </button>
+              <button className="btn d-flex flex-column align-items-center">
+                <i class="fas fa-desktop side-icon"></i>
+                <span className="side-text">Share</span>
+              </button>
+              <button className="btn d-flex flex-column align-items-center">
+                <i class="far fa-hand-point-up side-icon"></i>
+                <span className="side-text">Queue</span>
+              </button>
+              <button className="btn d-flex flex-column align-items-center">
+                <i class="far fa-comment-dots side-icon"></i>
+                <span className="side-text">Chat</span>
+              </button>
+              <button className="btn d-flex flex-column align-items-center">
+                <i class="fas fa-pencil-alt side-icon"></i>
+                <span className="side-text">Notes</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="flex-fill">
+          <AllVideoFeed
+            peers={peers}
+            learnerId={learnerId}
+            learnerName={learnerName}
+            userVideo={userVideo}
+            userStream={userStream}
+            socket={socket}
+          />
+        </div>
+        <div className="d-flex align-items-center">
+          <div className="side-bar m-3 py-2">
+            <div className="btn-group-vertical d-flex flex-column">
+              <button className="btn d-flex flex-column align-items-center">
+                <i class="far fa-file-alt side-icon"></i>
+                <span className="side-text">Agenda</span>
+              </button>
+              <button className="btn d-flex flex-column align-items-center">
+                <i class="fas fa-bolt side-icon"></i>
+                <span className="side-text">Toolbox</span>
+              </button>
+              <button
+                className="btn d-flex flex-column align-items-center"
+                onClick={() => {
+                  setDisplay("logged in!");
+                  socket.current.emit("disconnect-all-users", klassId);
+                  // socket.current.disconnect();
+                }}
+              >
+                <i class="far fa-question-circle side-icon"></i>
+                <span className="side-text">Help</span>
+              </button>
+              <button
+                className="btn d-flex flex-column align-items-center"
+                onClick={() => {
+                  setDisplay("logged in!");
+                  socket.current.emit("disconnect-me", klassId);
+                  socket.current.disconnect();
+                }}
+              >
+                <i class="fas fa-sign-out-alt side-icon"></i>
+                <span className="side-text">Leave</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

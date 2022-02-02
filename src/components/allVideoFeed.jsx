@@ -9,53 +9,13 @@ const AllVideoFeed = ({
   userStream,
   socket,
 }) => {
-  const audioOn = useRef(true);
-  const [audioButton, setAudioButton] = useState("Mute");
-  const [videoButton, setVideoButton] = useState("Hide cam");
-
-  const [paxInRoom, setPaxInRoom] = useState();
-  useEffect(() => {
-    setPaxInRoom(peers.length + 1);
-  }, [peers]);
-
-  const muteVideo = () => {
-    if (audioOn.current === true) {
-      userVideo.current.muted = true;
-      setAudioButton("Unmute");
-    } else {
-      userVideo.current.muted = false;
-      setAudioButton("Mute");
-    }
-    audioOn.current = !audioOn.current;
-  };
-
-  const hideVideo = async () => {
-    console.log('running "hideVideo');
-    const videoTrack = userStream.current.getTracks()[1];
-
-    if (videoTrack.enabled) {
-      videoTrack.enabled = false;
-      setVideoButton("Show cam");
-    } else {
-      videoTrack.enabled = true;
-      setVideoButton("Hide cam");
-    }
-  };
-
   return (
     <>
-      <div className="btn btn-outline-dark room-btn">{paxInRoom} in room</div>
       <div id="video-grid">
-        <div>
+        <div className="d-flex flex-fill">
           <video muted ref={userVideo} autoPlay playsInline></video>
           {/* <p>LearnerId: {learnerId.current}</p> */}
           <p>{learnerName.current} </p>
-          <button className="btn btn-outline-dark room-btn" onClick={muteVideo}>
-            {audioButton}
-          </button>
-          <button className="btn btn-outline-dark room-btn" onClick={hideVideo}>
-            {videoButton}
-          </button>
         </div>
         {peers.map((peer) => {
           return (
