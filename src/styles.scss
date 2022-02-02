@@ -2,6 +2,10 @@ body {
   background-color: white;
 }
 
+#login {
+  background-color: rgb(255, 236, 95);
+}
+
 #root {
   margin: auto;
   margin-top: 10px;
@@ -79,10 +83,10 @@ video {
 #navbar {
   padding: 0px 32px 4px;
   border-bottom: 1px solid;
+  background-color: rgb(255, 236, 95);
 }
 // used in dashboard
 #left-pane {
-  padding-left: 36px;
   position: fixed;
 }
 // used in dashboard
@@ -134,15 +138,11 @@ video {
   max-height: 178px;
 }
 
-img {
-  object-fit: cover;
-  object-position: 0px -16px;
-}
-
 // used in class room
 #top-bar {
   height: 10vh;
   padding: 12px;
+  background-color: rgb(255, 236, 95);
 }
 
 .top-bar-border {
@@ -179,4 +179,20 @@ img {
 
 .video-container {
   height: 90vh;
+}
+
+.cow-logo {
+  object-fit: cover;
+  width: auto;
+  height: 60%;
+  max-height: 52px;
+}
+
+.class-img {
+  object-fit: cover;
+  object-position: 0px -16px;
+}
+
+#dash-container {
+  width: 100vw;
 }

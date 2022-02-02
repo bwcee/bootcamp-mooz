@@ -32,7 +32,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
                 <img
                   src="../default-cover-image.png"
                   alt="cover-img"
-                  className="img-fluid rounded-start"
+                  className="img-fluid rounded-start class-img"
                 />
               </div>
               <div className="col-9 d-flex">
@@ -74,7 +74,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
                     {allKlasses.learnerRole !== "learner" ? (
                       <a
                         href="#"
-                        className="btn btn-outline-dark room-btn"
+                        className="btn btn-outline-dark room-btn mx-2"
                         onClick={() => {
                           /* function to download attendance here... */
                           axios
@@ -123,7 +123,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
       <nav className="navbar navbar-expand-lg navbar-light" id="navbar">
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
-            <i className="far fa-hand-spock" id="app-logo"></i>
+            <img src="../cow-logo.jpg" alt="cow-logo" className="cow-logo" />
             <span className="h4" id="app-name">
               {" "}
               mooz
@@ -150,7 +150,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
           >
             <ul className="navbar-nav">
               <li className="nav-item">
-                <a className="fw-bold btn btn-light nav-link" href="#">
+                <a className="fw-bold btn btn-outline-light nav-link" href="#">
                   <small>
                     <i className="fas fa-bullhorn"></i> Feeback?
                   </small>
@@ -202,8 +202,8 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
           </div>
         </div>
       </nav>
-      <div className="row vh-100">
-        <div className="col-2">
+      <div className="d-flex vh-100" id="dash-container">
+        <div className="col-2 p-0">
           <div className="d-flex flex-column" id="left-pane">
             <div
               className="btn-group-vertical btn-group-lg shadow-sm mb-4"
@@ -242,7 +242,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
             </div>
           </div>
         </div>
-        <div className="col" id="right-pane">
+        <div className="col-10 p-0" id="right-pane">
           <div className="d-flex justify-content-between mb-4">
             <div className="d-flex">
               <p className="m-0 me-3" id="rooms-title">
