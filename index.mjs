@@ -15,8 +15,11 @@ const { SALT, DATABASE } = process.env;
 2. the funky syntax in console.log/err just to print out in color so easier to see
 */
 mongoose
-  // DATABASE refers to "DATABASE" in .env file
-  .connect(DATABASE)
+  /* 
+  1. DATABASE refers to "DATABASE" in .env file 
+  2. if not avail, connect to mongobd connected on local machine 
+  */
+  .connect(DATABASE ? DATABASE : "mongodb://127.0.0.1:27017/zoom_dev")
   .then(() =>
     console.log("\x1b[34m%s\x1b[0m", "sucessfully connected to mongodb!!")
   )
