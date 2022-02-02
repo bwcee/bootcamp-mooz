@@ -19,20 +19,20 @@ const AllVideoFeed = ({
   }, [peers]);
 
   const muteVideo = () => {
-    if (audioOn.current === true) {
-      userVideo.current.muted = true;
+    const audioTrack = userStream.current.getTracks()[0];
+    if (audioTrack.enabled) {
+      audioTrack.enabled = false;
       setAudioButton("Unmute");
     } else {
-      userVideo.current.muted = false;
+      audioTrack.enabled = true;
       setAudioButton("Mute");
     }
-    audioOn.current = !audioOn.current;
   };
 
   const hideVideo = async () => {
     console.log('running "hideVideo');
     const videoTrack = userStream.current.getTracks()[1];
-
+    console.log(userStream.current.getTracks());
     if (videoTrack.enabled) {
       videoTrack.enabled = false;
       setVideoButton("Show cam");
