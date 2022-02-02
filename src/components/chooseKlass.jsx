@@ -171,7 +171,10 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
                 </p>
               </button>
             </div>
-            <div className="btn-group-vertical btn-group-lg shadow-sm" role="group">
+            <div
+              className="btn-group-vertical btn-group-lg shadow-sm"
+              role="group"
+            >
               <button type="button" className="btn btn-outline-dark">
                 <p className="m-0 text-start">
                   <i className="far fa-heart"></i> Referrals
