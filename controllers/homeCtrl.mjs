@@ -26,7 +26,11 @@ export default class HomeController extends BaseController {
         const logInSuccess = await bcrypt.compare(password, learner.password);
 
         if (logInSuccess) {
-          const payload = { _id: learner._id, name: learner.name };
+          const payload = {
+            _id: learner._id,
+            name: learner.name,
+            role: learner.role,
+          };
           const token = jwt.sign(payload, this.salt, { expiresIn: "6h" });
           res.send(token);
         } else {
@@ -58,7 +62,11 @@ export default class HomeController extends BaseController {
       if (!newUser) {
         res.send("null");
       } else {
-        const payload = { _id: newUser._id, name: newUser.name };
+        const payload = {
+          _id: newUser._id,
+          name: newUser.name,
+          role: newUser.role,
+        };
         const token = jwt.sign(payload, this.salt, { expiresIn: "6h" });
         res.send(token);
       }

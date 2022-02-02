@@ -39,22 +39,8 @@
 
 ```
 
-- this is what displayKlasses looks like
-
-  ```
-  {
-    klasses:
-      [
-        {_id: '61eeb983d239cc6a736a50d7', klassName: 'class1'},
-        {_id: '61eeb983d239cc6a736a50da', klassName: 'class2'}
-      ],
-    learnerId: '61eeb983d239cc6a736a50cc',
-    learnerName: 'boyb'
-  }
-  ```
-
-- learnerDetails stored in local storage with `localStorage.setItem("learnerDetails", learnerDetails)`
-  <br>sample learnerDetails: `{id: '61eeb983d239cc6a736a50cc', learner: 'boyb'}`
+- learnerDetails stored in local storage with `localStorage.setItem("learnerDetails", JSON.stringify(learnerDetails))` (see ## localStorage below on need to use JSON.stringify )
+  <br>sample learnerDetails: `{"id":"61f9ff939db94bf7f7bec157","learner":"daddy foong","role":"admin"}`
 
 # Project Learning Notes
 
@@ -189,6 +175,11 @@
 - [Storing and retrieving JavaScript objects in localStorage](https://blog.logrocket.com/storing-retrieving-javascript-objects-localstorage/)
   - turns out localStorage can only store strings. so if want to store objects, need to use `JSON.stringify()` to convert objec to a JSON string before storage
   - on retrieval. use `JSON.parse()` to convert the JSON string back into a javascript object literal
+
+## Misc References/ Notes
+
+- [Convert an array of objects to CSV string in JavaScript](https://dev.to/samueldjones/convert-an-array-of-objects-to-csv-string-in-javascript-337d) used this as ref to convert attendance results to csv string
+- There are many ways to download a csv file from the frontend, including creating an actual file, storing it somewhere in the backend and sending tt file file to the frontend. Chose the simplest way to do it => send csv data to frontend, use an invisible html link to download the data as a file. Prob not the most efficient way...
 
 # HOW SIMPLE-PEER CODE WORKS
 
