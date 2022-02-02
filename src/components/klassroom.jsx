@@ -20,6 +20,12 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
   const userVideo = useRef();
   const peersRef = useRef([]);
   const [paxInRoom, setPaxInRoom] = useState();
+  const [audioIcon, setAudioIcon] = useState(
+    <i className="fas fa-microphone side-icon"></i>
+  );
+  const [videoIcon, setVideoIcon] = useState(
+    <i class="fas fa-video side-icon"></i>
+  );
 
   // get userId and userName
   const learnerDetails = JSON.parse(localStorage.getItem("learnerDetails"));
@@ -145,6 +151,7 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
         console.log(`${learnerName} joined the room`);
       });
     };
+
     getStream();
   }, []);
 
@@ -203,6 +210,34 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
     return peer;
   };
 
+  const muteVideo = () => {
+    const audioTrack = userStream.current.getTracks()[0];
+    if (audioTrack.enabled) {
+      audioTrack.enabled = false;
+      setAudioIcon(<i class="fas fa-microphone-slash side-icon"></i>);
+    } else {
+      audioTrack.enabled = true;
+      setAudioIcon(<i className="fas fa-microphone side-icon"></i>);
+    }
+  };
+
+  const hideVideo = async () => {
+    console.log('running "hideVideo');
+    const videoTrack = userStream.current.getTracks()[1];
+    console.log(userStream.current.getTracks());
+    if (videoTrack.enabled) {
+      videoTrack.enabled = false;
+      setVideoIcon(<i class="fas fa-video-slash side-icon"></i>);
+    } else {
+      videoTrack.enabled = true;
+      setVideoIcon(<i class="fas fa-video side-icon"></i>);
+    }
+  };
+
+  useEffect(() => {
+    setPaxInRoom(peers.length + 1);
+  }, [peers]);
+
   return (
     <>
       <div className="d-flex justify-content-between" id="top-bar">
@@ -242,12 +277,15 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
         <div className="d-flex align-items-center">
           <div className="side-bar m-3 py-2">
             <div class="btn-group-vertical d-flex flex-column">
-              <button className="btn">
-                <i className="fas fa-microphone side-icon"></i>
+              <button className="btn" onClick={muteVideo}>
+                {audioIcon}
                 <span className="side-text">Mic</span>
               </button>
-              <button className="btn d-flex flex-column align-items-center">
-                <i class="fas fa-video side-icon"></i>
+              <button
+                className="btn d-flex flex-column align-items-center"
+                onClick={hideVideo}
+              >
+                {videoIcon}
                 <span className="side-text">Video</span>
               </button>
               <button className="btn d-flex flex-column align-items-center">
@@ -277,8 +315,6 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
             userVideo={userVideo}
             userStream={userStream}
             socket={socket}
-            paxInRoom={paxInRoom}
-            setPaxInRoom={setPaxInRoom}
           />
         </div>
         <div className="d-flex align-items-center">
