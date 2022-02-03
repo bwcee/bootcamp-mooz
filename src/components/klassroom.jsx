@@ -243,7 +243,7 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
       <div className="d-flex justify-content-between" id="top-bar">
         <div className="d-flex align-items-center">
           <div className="mx-3">
-            <i className="far fa-hand-spock" id="app-logo"></i>
+            <img src="../cow-logo.jpg" alt="cow-log" className="cow-logo" />
           </div>
           <div className="d-flex align-items-center p-1 top-bar-border">
             <div className="mx-3">
@@ -336,8 +336,8 @@ const Klassroom = ({ setDisplay, klassId, socket }) => {
                   // socket.current.disconnect();
                 }}
               >
-                <i class="far fa-question-circle side-icon"></i>
-                <span className="side-text">Help</span>
+                <i class="far fa-window-close side-icon"></i>
+                <span className="side-text">End Session</span>
               </button>
               <button
                 className="btn d-flex flex-column align-items-center"

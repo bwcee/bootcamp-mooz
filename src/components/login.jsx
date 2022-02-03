@@ -11,7 +11,7 @@ const LogIn = ({ setDisplay }) => {
         <div className="row vh-100">
           <div className="col-lg d-flex flex-column p-0">
             <div className="p-0 col-12" id="logo-container">
-              <i className="far fa-hand-spock" id="app-logo"></i>
+              <img src="../cow-logo.jpg" alt="cow-logo" className="cow-logo" />
               <span className="h4" id="app-name">
                 {" "}
                 mooz

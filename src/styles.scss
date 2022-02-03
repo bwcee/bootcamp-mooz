@@ -2,6 +2,10 @@ body {
   background-color: white;
 }
 
+#login {
+  background-color: rgb(255, 236, 95);
+}
+
 #root {
   margin: auto;
   margin-top: 10px;
@@ -11,21 +15,54 @@ body {
   text-align: center;
 }
 
+.video-container {
+  padding: 10px 0px;
+}
+
+.video-row {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 #video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, auto);
+  // The following allows you to set a minimum height of 100px. If your content exceeds 100px, the row height will follow
+  // grid-auto-rows: minmax(100px, auto);
   grid-auto-rows: auto;
+<<<<<<< HEAD
   border: solid 10px rgb(167, 19, 19);
   object-fit: cover;
   max-width: calc(100vw - 50px);
   max-height: calc(100vh - 100px);
+=======
+  grid-gap: 1px;
+  border: solid 1px red;
+  // object-fit: cover;
+  max-width: calc(100vw - 200px);
+  max-height: calc(100vw - 100px);
+>>>>>>> main
 }
 
 video {
   aspect-ratio: 16 / 9;
+<<<<<<< HEAD
   border-radius: 16px;
   // object-fit: cover;
   padding: 10px 20px;
+=======
+  // border-radius: 16px;
+  // object-fit: cover;
+  // padding: 1px 1px;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.video-col {
+  padding: 0px;
+  max-width: 100%;
+  max-height: 100%;
+>>>>>>> main
 }
 // used in auth
 #headline {
@@ -81,11 +118,12 @@ video {
 #navbar {
   padding: 0px 32px 4px;
   border-bottom: 1px solid;
+  background-color: rgb(255, 236, 95);
 }
 // used in dashboard
 #left-pane {
-  padding-left: 36px;
   position: fixed;
+  padding-left: 36px;
 }
 // used in dashboard
 #top-btn-group {
@@ -136,15 +174,11 @@ video {
   max-height: 178px;
 }
 
-img {
-  object-fit: cover;
-  object-position: 0px -16px;
-}
-
 // used in class room
 #top-bar {
   height: 10vh;
   padding: 12px;
+  background-color: rgb(255, 236, 95);
 }
 
 .top-bar-border {
@@ -181,4 +215,20 @@ img {
 
 .video-container {
   height: 90vh;
+}
+
+.cow-logo {
+  object-fit: cover;
+  width: auto;
+  height: 60%;
+  max-height: 52px;
+}
+
+.class-img {
+  object-fit: cover;
+  object-position: 0px -16px;
+}
+
+#dash-container {
+  width: 100vw;
 }
