@@ -25,7 +25,7 @@ const VideoFeed = ({ peerId, peer, learnerId, learnerName, socket }) => {
     <div>
       <video playsInline autoPlay ref={videoRef}></video>
       {/* <p>LearnerId: {learnerId}</p> */}
-      <p>{learnerName}</p>
+      {/* <p>{learnerName}</p> */}
     </div>
   );
 };
