@@ -15,19 +15,41 @@ body {
   text-align: center;
 }
 
+.video-container {
+  padding: 10px 0px;
+}
+
+.video-row {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 #video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, auto);
+  // The following allows you to set a minimum height of 100px. If your content exceeds 100px, the row height will follow
+  // grid-auto-rows: minmax(100px, auto);
   grid-auto-rows: auto;
-  border: solid 1px white;
-  object-fit: cover;
+  grid-gap: 1px;
+  border: solid 1px red;
+  // object-fit: cover;
+  max-width: calc(100vw - 200px);
+  max-height: calc(100vw - 100px);
 }
 
 video {
   aspect-ratio: 16 / 9;
-  border-radius: 16px;
-  object-fit: cover;
-  padding: 20px 20px 0px 0px;
+  // border-radius: 16px;
+  // object-fit: cover;
+  // padding: 1px 1px;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.video-col {
+  padding: 0px;
+  max-width: 100%;
+  max-height: 100%;
 }
 // used in auth
 #headline {
