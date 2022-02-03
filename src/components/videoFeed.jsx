@@ -14,7 +14,6 @@ const VideoFeed = ({
   console.log("LearnerName:", learnerName);
   const thisStream = useRef();
   const videoRef = useRef();
-  const [refresh, setRefresh] = useState();
 
   /** Get the video stream via simple-peer (webrtc) */
   useEffect(() => {
@@ -34,11 +33,11 @@ const VideoFeed = ({
   return (
     <>
       {/* {index === 1 ? <div className="w-100"></div> : <></>} */}
-      {/* <div className="video-div"> */}
-      <video playsInline autoPlay ref={videoRef}></video>
-      {/* <p>LearnerId: {learnerId}</p> */}
-      {/* <p>{learnerName}</p> */}
-      {/* </div> */}
+      <div className="video-div">
+        <video playsInline autoPlay ref={videoRef}></video>
+        {/* <p>LearnerId: {learnerId}</p> */}
+        <div className="learner-name">{learnerName}</div>
+      </div>
     </>
   );
 };

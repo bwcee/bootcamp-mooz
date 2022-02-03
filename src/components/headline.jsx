@@ -7,17 +7,17 @@ function HeadlineComponent({ signUpState }) {
   if (signUpState) {
     bigMessage = (
       <>
-        Smooth,
+        Easy,
         <br />
-        delicious
+        fun-filled
         <br />
         virtual
         <br />
-        workshops.
+        classes.
       </>
     );
 
-    smallMessage = <>*Workshops may not actually be delicious</>;
+    // smallMessage = <>*Workshops may not actually be delicious</>;
   } else {
     bigMessage = (
       <>
@@ -25,7 +25,7 @@ function HeadlineComponent({ signUpState }) {
         <br />
         back,
         <br />
-        buttercup!
+        steaks!
       </>
     );
 

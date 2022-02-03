@@ -111,7 +111,7 @@ io.on("connection", (socket) => {
     if (users[roomId]) {
       /** The following code is to limit the number of users in the room */
       const length = users[roomId].length;
-      if (length === 4) {
+      if (length === 8) {
         socket.emit("room-full");
         return;
       }
