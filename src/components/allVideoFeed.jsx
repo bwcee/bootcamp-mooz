@@ -11,8 +11,8 @@ const AllVideoFeed = ({
 }) => {
   return (
     <>
-      <div id="video-grid">
-        <div className="d-flex flex-fill">
+      <div id="video-grid" className="d-flex flex-row flex-wrap flex-fill">
+        <div>
           <video muted ref={userVideo} autoPlay playsInline></video>
           {/* <p>LearnerId: {learnerId.current}</p> */}
           <p>{learnerName.current} </p>
