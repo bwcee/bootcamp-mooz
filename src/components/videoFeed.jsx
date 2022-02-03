@@ -34,12 +34,11 @@ const VideoFeed = ({
   return (
     <>
       {/* {index === 1 ? <div className="w-100"></div> : <></>} */}
-      <></>
-      <div className="col video-col">
-        <video playsInline autoPlay ref={videoRef}></video>
-        {/* <p>LearnerId: {learnerId}</p> */}
-        {/* <p>{learnerName}</p> */}
-      </div>
+      {/* <div className="video-div"> */}
+      <video playsInline autoPlay ref={videoRef}></video>
+      {/* <p>LearnerId: {learnerId}</p> */}
+      {/* <p>{learnerName}</p> */}
+      {/* </div> */}
     </>
   );
 };

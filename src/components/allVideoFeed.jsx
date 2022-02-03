@@ -11,27 +11,29 @@ const AllVideoFeed = ({
 }) => {
   return (
     <>
-      <div className="video-container d-flex align-items-center">
-        <div className="row video-row">
-          <div className="col video-col">
+      <div className="d-flex align-items-center video-flex-container">
+        <div className="d-flex">
+          <div id="video-grid">
+            {/* <div className="video-div"> */}
             <video muted ref={userVideo} autoPlay playsInline></video>
             {/* <p>LearnerId: {learnerId.current}</p> */}
             {/* <p>{learnerName.current} </p> */}
+            {/* </div> */}
+            {peers.map((peer, index) => {
+              return (
+                <VideoFeed
+                  key={peer.peerId}
+                  peerId={peer.peerId}
+                  peer={peer.peer}
+                  learnerId={peer.learnerId}
+                  learnerName={peer.learnerName}
+                  socket={socket}
+                  noScreens={peers.length + 1}
+                  index={index}
+                />
+              );
+            })}
           </div>
-          {peers.map((peer, index) => {
-            return (
-              <VideoFeed
-                key={peer.peerId}
-                peerId={peer.peerId}
-                peer={peer.peer}
-                learnerId={peer.learnerId}
-                learnerName={peer.learnerName}
-                socket={socket}
-                noScreens={peers.length + 1}
-                index={index}
-              />
-            );
-          })}
         </div>
       </div>
     </>
