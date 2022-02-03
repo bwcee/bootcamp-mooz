@@ -122,7 +122,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
     <div id="dashboard">
       <nav className="navbar navbar-expand-lg navbar-light" id="navbar">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" id="navbar-brand-custom" href="#">
             <img src="../cow-logo.jpg" alt="cow-logo" className="cow-logo" />
             <span className="h4" id="app-name">
               {" "}

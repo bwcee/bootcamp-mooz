@@ -33,7 +33,7 @@ function HeadlineComponent({ signUpState }) {
   }
 
   return (
-    <div>
+    <div id="headline-container">
       <p className="h2" id="headline">
         {bigMessage}
       </p>

@@ -98,9 +98,18 @@ video {
 }
 // used in auth
 #logo-container {
-  height: 128px;
+  height: 64px;
   width: 256px;
-  margin: 24px 0px 0px -80px;
+  margin: 24px 0px 0px 0px;
+  display: flex;
+  align-items: center;
+}
+
+#headline-container {
+  height: calc(75vh);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 // used in dashboard, auth
 #app-logo {
@@ -127,9 +136,15 @@ video {
   border-bottom: 1px solid;
   background-color: rgb(255, 236, 95);
 }
+
+#navbar-brand-custom {
+  display: flex;
+  align-items: center;
+}
+
 // used in dashboard
 #left-pane {
-  position: fixed;
+  // position: fixed;
   padding-left: 36px;
 }
 // used in dashboard
@@ -184,7 +199,7 @@ video {
 // used in class room
 #top-bar {
   height: 10vh;
-  padding: 12px;
+  padding: 5px 12px;
   background-color: rgb(255, 236, 95);
 }
 
@@ -227,8 +242,8 @@ video {
 .cow-logo {
   object-fit: cover;
   width: auto;
-  height: 60%;
-  max-height: 52px;
+  height: 100%;
+  max-height: 64px;
 }
 
 .class-img {
@@ -237,5 +252,5 @@ video {
 }
 
 #dash-container {
-  width: 100vw;
+  // width: 100vw;
 }
