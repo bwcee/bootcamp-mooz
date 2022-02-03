@@ -15,7 +15,7 @@ const AllVideoFeed = ({
         <div className="d-flex flex-fill">
           <video muted ref={userVideo} autoPlay playsInline></video>
           {/* <p>LearnerId: {learnerId.current}</p> */}
-          <p>{learnerName.current} </p>
+          {/* <p>{learnerName.current} </p> */}
         </div>
         {peers.map((peer) => {
           return (
