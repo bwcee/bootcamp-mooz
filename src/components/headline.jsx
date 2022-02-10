@@ -25,7 +25,7 @@ function HeadlineComponent({ signUpState }) {
         <br />
         back,
         <br />
-        steaks!
+        calves!
       </>
     );
 
