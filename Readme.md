@@ -44,7 +44,7 @@ We do that by first automating a tedious but key admin task - attendance taking.
 First, you can sign up or log in.
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/90031266/163422699-86dd1718-fdcd-430d-93a8-36c65809b7a4.gif" />
+  <img src="https://user-images.githubusercontent.com/90031266/163424237-a6587544-f8b0-42a7-8a08-ed9adf4b3b17.gif" />
 </div>
 
 You will enter the lobby where you can see all the classes that you have enrolled for. Click "join session to join the selected class instantly".
@@ -57,10 +57,8 @@ You will enter the lobby where you can see all the classes that you have enrolle
 
 Upon joining the room, you will see a gallery view of all the other users in the room. You can choose to mute and unmute yourself, and switch on and off your camera using the toolbar on the left hand side.
 
-< insert gif >
-
 <div align="center">
-  <img src="" />
+  <img src="https://user-images.githubusercontent.com/90031266/163424187-8c1c4e15-0320-4a09-ac90-a972df9845be.gif" />
 </div>
 
 If you are signing in as an admin (these could be teachers or school staff), you will see an additional button called "Download attendance" in the lobby. Everytime a student joins the class, he/she will be added to the attendance list automatically. The user with an admin role can choose to download the attendance any time. 
