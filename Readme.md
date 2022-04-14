@@ -14,10 +14,9 @@ A video conferencing app with automated attendance-taking to ease teachers' admi
 </details>
 
 ## About The Project
-<img width="816" alt="Screenshot 2022-04-14 at 11 03 18 PM" src="https://user-images.githubusercontent.com/90031266/163418556-ebb32c65-cb2c-4930-8d6e-e8f301415cb8.png">
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/40411953/160347715-d4f57c90-615a-4913-9891-1b178f84c85e.png" />
+  <img src="https://user-images.githubusercontent.com/90031266/163418556-ebb32c65-cb2c-4930-8d6e-e8f301415cb8.png" />
 </div>
 
 We all loved the energy of being part of great classes and workshops - where we leave the session feeling inspired and connected with people. But when teachers tried facilitating online classes ever since the pandemic started, something seemed to be off. Online workshops just didn’t feel as engaging as they used to be when they were in person. 
@@ -44,15 +43,25 @@ We do that by first automating a tedious but key admin task - attendance taking.
 
 First, you can sign up or log in.
 
-![mooz-scan1](https://user-images.githubusercontent.com/90031266/163422514-50793611-fd1b-45dd-90d3-76363ccdf784.gif)
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/90031266/163422699-86dd1718-fdcd-430d-93a8-36c65809b7a4.gif" />
+</div>
 
 You will enter the lobby where you can see all the classes that you have enrolled for. Click "join session to join the selected class instantly".
 
 < insert gif >
 
+<div align="center">
+  <img src="" />
+</div>
+
 Upon joining the room, you will see a gallery view of all the other users in the room. You can choose to mute and unmute yourself, and switch on and off your camera using the toolbar on the left hand side.
 
 < insert gif >
+
+<div align="center">
+  <img src="" />
+</div>
 
 If you are signing in as an admin (these could be teachers or school staff), you will see an additional button called "Download attendance" in the lobby. Everytime a student joins the class, he/she will be added to the attendance list automatically. The user with an admin role can choose to download the attendance any time. 
 
