@@ -47,7 +47,7 @@ First, you can sign up or log in.
 <br/>
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/90031266/163424237-a6587544-f8b0-42a7-8a08-ed9adf4b3b17.gif" />
+  <img src="https://user-images.githubusercontent.com/90031266/163426260-acbe36ef-3488-449f-8425-02bdd532fb09.gif" width="600px"/>
 </div>
 
 <br/>
@@ -57,7 +57,7 @@ You will enter the lobby where you can see all the classes that you have enrolle
 <br/>
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/90031266/163424187-8c1c4e15-0320-4a09-ac90-a972df9845be.gif" />
+  <img src="https://user-images.githubusercontent.com/90031266/163426280-7dc46604-e94e-4877-b8c6-d185e0172bd1.gif" width="600px"/>
 </div>
 
 <br/>
@@ -67,7 +67,7 @@ Upon joining the room, you will see a gallery view of all the other users in the
 <br/>
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/90031266/163424819-502f2604-9fe7-466e-ae79-def3277d33c3.png" width="480px" />
+  <img src="https://user-images.githubusercontent.com/90031266/163424819-502f2604-9fe7-466e-ae79-def3277d33c3.png" width="600px" />
 </div>
 
 <br/>
@@ -77,7 +77,7 @@ If you are signing in as an admin (these could be teachers or school staff), you
 <br/>
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/90031266/163425014-24147b3a-1e68-4cd8-bdbe-5fb41e9b4f67.png" width="480px" />
+  <img src="https://user-images.githubusercontent.com/90031266/163425014-24147b3a-1e68-4cd8-bdbe-5fb41e9b4f67.png" width="600px" />
 </div>
 
 <br/>
