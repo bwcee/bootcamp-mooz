@@ -1,232 +1,99 @@
-# Technical Notes
+## Mooz
 
-- Run this command in terminal to start mongoose:
-  mongosh
+A video conferencing app with automated attendance-taking to ease teachers' administrative load!
 
-- Run this command in terminal to start express app:
-  npm start
+<details>
+  <summary> Table of Contents </summary>
+  
+- [About The Project](#about-the-project) 
+- [Usage/ Features](#usage-features)
+- [Built With](#built-with)
+- [Demo App](#demo-app)
+- [Contact](#contact)
+  
+</details>
 
-- this is what a fully populated klasses collection document looks like. attendance for 2 learners taken for class1 on 27 Jan 2022.
+## About The Project
 
-```
-{
-    "_id" : ObjectId("61eeb983d239cc6a736a50d7"),
-    "klassName" : "class1",
-    "members" : [
-        ObjectId("61eeb983d239cc6a736a50cb"),
-        ObjectId("61eeb983d239cc6a736a50cc"),
-        ObjectId("61eeb983d239cc6a736a50cd"),
-        ObjectId("61eeb983d239cc6a736a50ce"),
-        ObjectId("61eeb983d239cc6a736a50cf"),
-        ObjectId("61eeb983d239cc6a736a50d0"),
-        ObjectId("61eeb983d239cc6a736a50d1"),
-        ObjectId("61eeb983d239cc6a736a50d2")
-    ],
-    "attendance" : [
-        {
-            "date" : ISODate("2022-01-27T08:28:06.058Z"),
-            "attended" : [
-                ObjectId("61eeb983d239cc6a736a50cb"),
-                ObjectId("61eeb983d239cc6a736a50cc")
-            ],
-            "_id" : ObjectId("61f257967565a5772ff2f812")
-        }
-    ],
-    "createdAt" : ISODate("2022-01-24T14:36:51.490Z"),
-    "updatedAt" : ISODate("2022-01-27T08:41:02.308Z"),
-    "__v" : 2
-}
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/90031266/163418556-ebb32c65-cb2c-4930-8d6e-e8f301415cb8.png" />
+</div>
 
-```
+We all loved the energy of being part of great classes and workshops - where we leave the session feeling inspired and connected with people. But when teachers tried facilitating online classes ever since the pandemic started, something seemed to be off. Online workshops just didn’t feel as engaging as they used to be when they were in person. 
 
-- learnerDetails stored in local storage with `localStorage.setItem("learnerDetails", JSON.stringify(learnerDetails))` (see ## localStorage below on need to use JSON.stringify )
-  <br>sample learnerDetails: `{"id":"61f9ff939db94bf7f7bec157","learner":"daddy foong","role":"admin"}`
+We used to teach tuition online and we felt handicapped at not being able to manage sessions as easily as we used to - especially if we were the only teacher in the session. 
 
-# Project Learning Notes
+It’s a struggle because the attention span of students is very short when classes are held online. 
 
-- used/ learned a few new techs/ concepts for this project:
+What makes it worse is that we have to try to keep students engaged while:
+ - Taking attendance
+ - Taking notes on students’ progress, and
+ - Conducting activities
+ - 
+Our focus sometimes ended up being on the tech, not the discussions. 
 
-  - Server side
-    - mongodb/ mongoose
-    - socket.io
-  - Client side
-    - socket.io-client
-    - simple-peer
-    - Navigator object & `<video>` html element
-    - localStorage limitations
+Enter _**Mooz**_. Think zoom, but optimized for teaching. We want to enable teachers to put their energy into doing what they do best - running high energy sessions that students love. 
 
-- very importantly, also learnt we need to ensure we know how to use the tools within the context of our chosen tech stack => in this case MongoDB, Express, React, Node (MERN)
+We do that by first automating a tedious but key admin task - attendance taking.
 
-## mongodb/mongoose
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-- mongodb is one of several NoSQL (not only SQL) databases
-- mongodb is a document database => instead of tables, it has collections, and instead of records, data is stored in what are known as documents. data structured as key-value pairs in documents.
-- mongoose is mongodb's Object Data Modelling (ODM) library much like sequelize is SQL's Object-relational mapping (ORM) tool
-  <br>
+[(back to top)](#mooz)
+## Usage/ Features
 
-#### References
+First, you can sign up or log in.
 
-1. [The basics of NoSQL databases—and why we need them](https://www.freecodecamp.org/news/nosql-databases-5f6639ed9574/)
-2. official mongodb docs good ref for data modelling -> thinking about relationships between collections
-3. official mongoose docs good ref for models and documents and their various methods
-4. [Updating Documents in Mongoose](https://masteringjs.io/tutorials/mongoose/update)
-   - very useful in drawing distinction between updating mongodb thru documents or models
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/90031266/163424237-a6587544-f8b0-42a7-8a08-ed9adf4b3b17.gif" />
+</div>
 
-## socket.io
+You will enter the lobby where you can see all the classes that you have enrolled for. Click "join session to join the selected class instantly".
 
-- socket.io is a library built on top of websockets that allows real time comms between a server and a client. multiple clients can also be connected to the server which allows all connected clients to comms in real time
-- socket.io has another package for the client side, socket.io-client. when using react, need to install this as well, so it can be imported and used in react function components.
-- for this project, socket.io used as a "signaling server" to exchange signaling data between e various browsers until peer-to-peer connections r established (ref 7 explains why this is needed)
-  <br>
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/90031266/163424187-8c1c4e15-0320-4a09-ac90-a972df9845be.gif" />
+</div>
 
-#### References
+Upon joining the room, you will see a gallery view of all the other users in the room. You can choose to mute and unmute yourself, and switch on and off your camera using the toolbar on the left hand side.
 
-1. [Is socket.io the WebRTC or WebSocket or something else?](https://stackoverflow.com/questions/36104843/is-socket-io-the-webrtc-or-websocket-or-something-else/51850663)
-2. [Coding with Chaim - React Chat App Using Socket.IO | Socket IO Tutorial](https://www.youtube.com/watch?v=E4V6nbP_NoQ&t=485s)
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/90031266/163424819-502f2604-9fe7-466e-ae79-def3277d33c3.png" width="480px" />
+</div>
 
-   - good ref on using socket.io w react
-   - sample code below shows how to set-up a socket server in express root file
+If you are signing in as an admin (these could be teachers or school staff), you will see an additional button called "Download attendance" in the lobby. Everytime a student joins the class, he/she will be added to the attendance list automatically. The user with an admin role can choose to download the attendance any time. 
 
-   ```
-   const express = require("express");
-   const http = require("http");
-   const app = express();
-   const server = http.createServer(app);
-   const socket = require("socket.io");
-   const io = socket(server);
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/90031266/163425014-24147b3a-1e68-4cd8-bdbe-5fb41e9b4f67.png" width="480px" />
+</div>
 
-   io.on("connection", socket => {
-     socket.emit("your id", socket.id);
-     socket.on("send message", body => {
-         io.emit("message", body)
-     })
-   })
+Upon downloading the attendance sheet, you will see a list of all the students and their attendance (denoted by TRUE or FALSE) when class is started and ended.
 
+[(back to top)](#mooz)
+## Built With
+**Frontend**
+- React.js
 
-   server.listen(8000, () => console.log("server is running on port 8000"));
-   ```
+**Backend**
+- Express
+- MongoDB
+- Mongoose
 
-   - truncated code below shows how socket.io-client used in react component
+**Video Call Functionality**
+- Socket.IO
+- Simple Peer
 
-   ```
-   import React, { useState, useEffect, useRef } from "react";
-   import io from "socket.io-client";
-   ...
+[(back to top)](#mooz)
+## Demo App
+Try Mooz [here](https://mooz-sg.herokuapp.com/)!
 
-   const App = () => {
-    const [yourID, setYourID] = useState();
+Sign in to admin role with `teacha@teacha.com` and learner role with `boya@boya.com`. All passwords are `123`.
 
-    const socketRef = useRef();
+[(back to top)](#mooz)
+## Contact
+Tristan: teo.jia.jun.29@gmail.com, [Githhub](https://github.com/jjiajun)
 
-    useEffect(() => {
-      socketRef.current = io.connect('/');
+Justus: weizhengjustus.lim@gmail.com, [Githhub](https://github.com/wzjustuslim)
 
-      socketRef.current.on("your id", id => {
-        setYourID(id);
-      })
+Boon Wee: bwceemail@gmail.com, [Githhub](https://github.com/bwcee)
 
-      socketRef.current.on("message", (message) => {
-        console.log("here");
-        receivedMessage(message);
-      })
-    }, []);
-    ...
-   ```
+[(back to top)](#mooz)
 
-3. [Socket IO Chat Example](https://socket.io/get-started/chat)
-   - good for getting an overall sense of socket.io
-4. [Exploring Socket.IO in a React Working Environment](https://betterprogramming.pub/exploring-socket-io-in-react-working-environment-e505bf1c857c)
-   - post w super detailed explanations!
-5. [Getting started with React, Express, and Socket.io](https://medium.com/@vrinmkansal/getting-started-with-react-express-and-socket-io-658bbd441a9a)
-   - useful cos short, sweet, sharp explanation of how to set up socket in react
-6. [Socket.IO, React and Node.js: Going Real-Time](https://www.valentinog.com/blog/socket-react/)
-   - useful cos talks about closing socket connection when component containing the socket connection is removed frm e DOM
-7. [Building a Signaling Server for Simple-Peer](https://javascript.plainenglish.io/building-a-signaling-server-for-simple-peer-f92d754edc85)
-
-## simple-peer
-
-- webrtc is the technology tt allows real time video streaming to take place directly between browsers **without the use of intervening servers** (ref 1). simple-peer is a package tt makes it easier to use webrtc and to allow for real time video streaming between multiple clients
-  <br>
-
-#### References
-
-1. [Peer-to-peer communications with WebRTC](https://developer.mozilla.org/en-US/docs/Web/Guide/API/WebRTC/Peer-to-peer_communications_with_WebRTC)
-2. [Coding with Chaim - Create a React webRTC Video Chat Application Using Simple Peer](https://www.youtube.com/watch?v=BpN6ZwFjbCY)
-   - good, quick, sharp intro to setting up video chat in react using simple peer... requires knowledge of socket.io to start to make sense of it
-3. [How to Create a ReactJS Video Chat App with WebRTC and Socket.io](https://www.youtube.com/watch?v=gnM3Ld6_upE&t=5s)
-   - refs Chaim's video above, adds what happens when the other party ends a video chat
-4. [Let's build a video conferencing app](https://dev.to/kannndev/let-s-build-a-video-conferencing-app-pp)
-   - another potential link to look at wat happens when a call is disconnected
-
-## Navigator object & `<video>` html element
-
-- [Navigator](https://developer.mozilla.org/en-US/docs/Web/API/Navigator)
-  - Navigator is an object tt contains certain properties of a client sys, and has methods to access certain parts of a client sys
-  - Navigator.mediaDevices returns a MediaDevices object, which provides access to connected media input devices like cameras and microphones
-  - Navigator.mediaDevices.getUserMedia() => has params to specify type of media to request for; returns a promise tt resolves depending on whether user grants permission & whether e client sys can provide e type of media requested; if resolved successfully, a mediaStream object is returned
-- [Video](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video)
-  - `<video>` html element and it's attributes
-- [srcObject](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/srcObject)
-  - `<video>` generally uses src attribute which is a url/file path in order to gain access to video to play
-  - in our case, we haf a mediaStream object returned frm Navigator.mediaDevices.getUserMedia(), so haf to use srcObject instead
-
-## localStorage
-
-- [Storing and retrieving JavaScript objects in localStorage](https://blog.logrocket.com/storing-retrieving-javascript-objects-localstorage/)
-  - turns out localStorage can only store strings. so if want to store objects, need to use `JSON.stringify()` to convert objec to a JSON string before storage
-  - on retrieval. use `JSON.parse()` to convert the JSON string back into a javascript object literal
-
-## Misc References/ Notes
-
-- [Convert an array of objects to CSV string in JavaScript](https://dev.to/samueldjones/convert-an-array-of-objects-to-csv-string-in-javascript-337d) used this as ref to convert attendance results to csv string
-- There are many ways to download a csv file from the frontend, including creating an actual file, storing it somewhere in the backend and sending tt file file to the frontend. Chose the simplest way to do it => send csv data to frontend, use an invisible html link to download the data as a file. Prob not the most efficient way...
-
-# HOW SIMPLE-PEER CODE WORKS
-
-## peersRef:
-
-- Responsible for establishing signal connection with each user in the room
-- Contains each user's information
-  {
-  peerId: payload.callerId,
-  learnerId: userObj.learnerId,
-  learnerName: userObj.learnerName,
-  peer,
-  }
-- "peer" refers to a Peer object that contains a lot of different meta data.
-- When this peer accepts a signal from another user, it will send its own signal back to the user (via sockets) and the other user's peer will accept the incoming signal
-- This completes the "handshake", meaning these two users have established a signal connection between just the two of them.
-
-## peers:
-
-- Responsible for rendering each user's video stream on the frontend
-- Contains each user's peer
-- { peer1, peer2 ...}
-
-# Notes on how we debugged errors:
-
-## Error #1:
-
-- Error: When one user closes the browser, the other users' browsers will display an error called "process is not defined".
-
-- Solution: Reason is because peer.destroy only works when we install "process" i.e. npm i process + add some polyfill code (i dont know what polyfills are either). See https://github.com/feross/simple-peer/issues/611
-
-## Error #2:
-
-- Problem: Cannot read object that was stored in localStorage
-
-- Solution: local storage limited to handle only string key/value pairs. To store and access object in local storage, you should use JSON.stringify to store and JSON.parse to get the object
-  https://stackoverflow.com/questions/42020577/storing-objects-in-localstorage
-
-# DEPLOYMENT ONLINE
-
-## Mongo Atlas
-
-- DB is hosted on mongo atlas (free plan)
-- Updated mongoose URL (see .env details sent on chat)
-
-## Heroku
-
-- Tristan uploaded it on his personal heroku account.
-- To push to heroku, just push all new changes to origin main.
-- Tristan will push to heroku using my account from there
