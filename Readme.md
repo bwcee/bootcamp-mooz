@@ -16,7 +16,7 @@ A video conferencing app with automated attendance-taking to ease teachers' admi
 ## About The Project
 <br/>
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/90031266/163418556-ebb32c65-cb2c-4930-8d6e-e8f301415cb8.png" width="480px" />
+  <img src="https://user-images.githubusercontent.com/90031266/163418556-ebb32c65-cb2c-4930-8d6e-e8f301415cb8.png" width="600px" />
 </div>
 <br/>
 
