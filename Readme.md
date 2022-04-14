@@ -2,6 +2,8 @@
 
 A video conferencing app with automated attendance-taking to ease teachers' administrative load!
 
+Watch our demo [here](https://www.youtube.com/watch?v=3dB-qjx8m_k&list=PLRCJY_VHTZH7WN_N8UDEfePDNxxIzxm7l&index=2&ab_channel=TristanTeo): 
+
 <details>
   <summary> Table of Contents </summary>
   
