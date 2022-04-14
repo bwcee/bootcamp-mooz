@@ -14,10 +14,11 @@ A video conferencing app with automated attendance-taking to ease teachers' admi
 </details>
 
 ## About The Project
-
+<br/>
 <div align="center">
   <img src="https://user-images.githubusercontent.com/90031266/163418556-ebb32c65-cb2c-4930-8d6e-e8f301415cb8.png" width="480px" />
 </div>
+<br/>
 
 We all loved the energy of being part of great classes and workshops - where we leave the session feeling inspired and connected with people. But when teachers tried facilitating online classes ever since the pandemic started, something seemed to be off. Online workshops just didn’t feel as engaging as they used to be when they were in person. 
 
