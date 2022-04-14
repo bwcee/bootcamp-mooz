@@ -20,29 +20,29 @@ mongoose
 
 const userSeeds = [
   {
-    name: "Daddy Foong",
+    name: "Foong",
     email: "teacha@teacha.com",
     password: hash,
     role: "admin",
   },
-  { name: "Boon Wee", email: "boya@boya.com", password: hash, role: "learner" },
-  { name: "Justus", email: "boyb@boyb.com", password: hash, role: "learner" },
-  { name: "Tristan", email: "boyc@boyc.com", password: hash, role: "learner" },
+  { name: "Boon Wee", email: "boya@gmail.com", password: hash, role: "learner" },
+  { name: "Justus", email: "boyb@gmail.com", password: hash, role: "learner" },
+  { name: "Tristan", email: "boyc@gmail.com", password: hash, role: "learner" },
   {
-    name: "Bad Boi Foong",
-    email: "boyd@boyd.com",
+    name: "Alan",
+    email: "alan@gmail.com",
     password: hash,
     role: "learner",
   },
   {
-    name: "Naughty Foong",
-    email: "boye@boye.com",
+    name: "Turing",
+    email: "turing@gmail.com",
     password: hash,
     role: "learner",
   },
-  { name: "Gary", email: "boyf@boyf.com", password: hash, role: "learner" },
-  { name: "Jia Hao", email: "boyg@boyg.com", password: hash, role: "learner" },
-  { name: "Dom", email: "boyh@boyh.com", password: hash, role: "learner" },
+  { name: "Gary", email: "boyf@gmail.com", password: hash, role: "learner" },
+  { name: "Jia Hao", email: "boyg@gmail.com", password: hash, role: "learner" },
+  { name: "Dom", email: "boyh@gmail.com", password: hash, role: "learner" },
 ];
 
 /* 
