@@ -49,19 +49,21 @@ First, you can sign up or log in.
 
 You will enter the lobby where you can see all the classes that you have enrolled for. Click "join session to join the selected class instantly".
 
-< insert gif >
-
 <div align="center">
-  <img src="" />
+  <img src="https://user-images.githubusercontent.com/90031266/163424187-8c1c4e15-0320-4a09-ac90-a972df9845be.gif" />
 </div>
 
 Upon joining the room, you will see a gallery view of all the other users in the room. You can choose to mute and unmute yourself, and switch on and off your camera using the toolbar on the left hand side.
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/90031266/163424187-8c1c4e15-0320-4a09-ac90-a972df9845be.gif" />
+  <img src="https://user-images.githubusercontent.com/90031266/163424819-502f2604-9fe7-466e-ae79-def3277d33c3.png" width="480px" />
 </div>
 
 If you are signing in as an admin (these could be teachers or school staff), you will see an additional button called "Download attendance" in the lobby. Everytime a student joins the class, he/she will be added to the attendance list automatically. The user with an admin role can choose to download the attendance any time. 
+
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/90031266/163425014-24147b3a-1e68-4cd8-bdbe-5fb41e9b4f67.png" width="480px" />
+</div>
 
 Upon downloading the attendance sheet, you will see a list of all the students and their attendance (denoted by TRUE or FALSE) when class is started and ended.
 
