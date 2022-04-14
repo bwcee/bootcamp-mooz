@@ -30,7 +30,7 @@ What makes it worse is that we have to try to keep students engaged while:
  - Taking attendance
  - Taking notes on students’ progress, and
  - Conducting activities
- - 
+
 Our focus sometimes ended up being on the tech, not the discussions. 
 
 Enter _**Mooz**_. Think zoom, but optimized for teaching. We want to enable teachers to put their energy into doing what they do best - running high energy sessions that students love. 
