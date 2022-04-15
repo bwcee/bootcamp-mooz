@@ -152,7 +152,7 @@ const ChooseKlass = ({ setDisplay, setKlassId }) => {
               <li className="nav-item">
                 <a className="fw-bold btn btn-outline-light nav-link" href="#">
                   <small>
-                    <i className="fas fa-bullhorn"></i> Feeback?
+                    <i className="fas fa-bullhorn"></i> Feedback?
                   </small>
                 </a>
               </li>
