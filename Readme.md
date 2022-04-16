@@ -92,9 +92,13 @@ Upon downloading the attendance sheet, you will see a list of all the students a
 - MongoDB
 - Mongoose
 
+At this point of bootcamp, we have learnt SQL and worked with PostgreSQL + Sequelize. We wanted to explore NoSQL databases for this project, and chose MongoDB with Mongoose as they are very accessible options.  
+
 **Video Call Functionality**
 - Socket.IO
 - Simple Peer
+
+Real-time communication between browser and server is natively supported by all modern browsers through the Websocket API. We chose to use Socket.IO as it abstracts away details and fallbacks required for a vanilla Websocket implementation.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
