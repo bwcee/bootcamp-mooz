@@ -22,13 +22,9 @@ Watch our demo [here](https://www.youtube.com/watch?v=3dB-qjx8m_k&list=PLRCJY_VH
 </div>
 <br/>
 
-We all loved the energy of being part of great classes and workshops - where we leave the session feeling inspired and connected with people. But when teachers tried facilitating online classes ever since the pandemic started, something seemed to be off. Online workshops just didn’t feel as engaging as they used to be when they were in person. 
+We all love the energy of great classes and workshops - where we leave feeling inspired and connected with people. When the pandemic forced classes online, something seemed to be off. Online sessions just didn’t feel as engaging as in-person ones. 
 
-We used to teach tuition online and we felt handicapped at not being able to manage sessions as easily as we used to - especially if we were the only teacher in the session. 
-
-It’s a struggle because the attention span of students is very short when classes are held online. 
-
-What makes it worse is that we have to try to keep students engaged while:
+Teaching tuition online we felt handicapped at not being able to manage sessions as easily as before - especially if we were the only teacher in the session. Attention spans of students were much shorter. What made it worse was that we had to keep students engaged while:
  - Taking attendance
  - Taking notes on students’ progress, and
  - Conducting activities
