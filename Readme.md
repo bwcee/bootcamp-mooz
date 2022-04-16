@@ -37,7 +37,6 @@ We do that by first automating a tedious but key admin task - attendance taking.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-[(back to top)](#mooz)
 ## Usage/ Features
 
 First, you can sign up or log in.
@@ -82,7 +81,8 @@ If you are signing in as an admin (these could be teachers or school staff), you
 
 Upon downloading the attendance sheet, you will see a list of all the students and their attendance (denoted by TRUE or FALSE) when class is started and ended.
 
-[(back to top)](#mooz)
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ## Built With
 **Frontend**
 - React.js
@@ -96,13 +96,15 @@ Upon downloading the attendance sheet, you will see a list of all the students a
 - Socket.IO
 - Simple Peer
 
-[(back to top)](#mooz)
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ## Demo App
 Try Mooz [here](https://mooz-sg.herokuapp.com/)!
 
 Sign in to admin role with `teacha@teacha.com` and learner role with `boya@boya.com`. All passwords are `123`.
 
-[(back to top)](#mooz)
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ## Contact
 Tristan: teo.jia.jun.29@gmail.com, [Githhub](https://github.com/jjiajun)
 
@@ -110,5 +112,4 @@ Justus: weizhengjustus.lim@gmail.com, [Githhub](https://github.com/wzjustuslim)
 
 Boon Wee: bwceemail@gmail.com, [Githhub](https://github.com/bwcee)
 
-[(back to top)](#mooz)
-
+<p align="right">(<a href="#top">back to top</a>)</p>
