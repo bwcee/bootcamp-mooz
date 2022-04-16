@@ -92,7 +92,7 @@ Upon downloading the attendance sheet, you will see a list of all the students a
 - MongoDB
 - Mongoose
 
-At this point of bootcamp, we have learnt SQL and worked with PostgreSQL + Sequelize. We wanted to explore NoSQL databases for this project, and chose MongoDB with Mongoose as they are very accessible options.  
+At this point of bootcamp, we have learnt SQL and worked with PostgreSQL + Sequelize. We wanted to explore NoSQL databases for this project, and chose MongoDB with Mongoose as they are very accessible options. The database was eventually moved online to MongoDB Atlas in order to deploy the app on Heroku. 
 
 **Video Call Functionality**
 - Socket.IO
