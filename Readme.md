@@ -84,7 +84,7 @@ Upon downloading the attendance sheet, you will see a list of all the students a
 <br/>
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/90031266/163768924-0c5667fc-853a-4109-8a4b-7105bcdae118.png" width="600px" />
+  <img src="https://user-images.githubusercontent.com/90031266/163768924-0c5667fc-853a-4109-8a4b-7105bcdae118.png" width="480px" />
 </div>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
