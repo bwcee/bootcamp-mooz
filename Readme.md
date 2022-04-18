@@ -81,6 +81,12 @@ If you are signing in as an admin (these could be teachers or school staff), you
 
 Upon downloading the attendance sheet, you will see a list of all the students and their attendance (denoted by TRUE or FALSE) when class is started and ended.
 
+<br/>
+
+<div align="center">
+  <img src="Screenshot 2022-04-18 at 2 58 27 PM" src="https://user-images.githubusercontent.com/90031266/163768924-0c5667fc-853a-4109-8a4b-7105bcdae118.png" width="600px" />
+</div>
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Built With
